@@ -15,8 +15,8 @@ const theme = extendTheme({
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Header></Header>
-      <Intro></Intro>
+      {/* <Header></Header>
+      <Intro></Intro> */}
     </ChakraProvider>
   );
 }
