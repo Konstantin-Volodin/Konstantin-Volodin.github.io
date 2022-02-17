@@ -1,22 +1,20 @@
-import {
-  ChakraProvider,
-  extendTheme
-} from '@chakra-ui/react';
+import {ChakraProvider, extendTheme} from '@chakra-ui/react';
+import { Global } from '@emotion/react'
 
-import 'typeface-roboto'
+import Fonts from './assets/fonts/font'
+import theme from './assets/fonts/theme'
 
 import Header from './components/header';
 import Intro from './components/intro';
-
-const theme = extendTheme({
-  fonts: 'Roboto'
-})
+import Projects from './components/projects';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      {/* <Header></Header>
-      <Intro></Intro> */}
+      <Fonts />
+      <Header></Header>
+      <Intro></Intro>
+      <Projects></Projects>
     </ChakraProvider>
   );
 }
