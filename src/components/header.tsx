@@ -9,13 +9,16 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 
-const Links = ['github', 'linkedin'];
+const Links = [
+  {'name': 'github', 'link': 'https://github.com/Konstantin-Volodin'},
+  // {'name': 'linkedin', 'link': 'https://github.com/Konstantin-Volodin'}
+];
 
-function NavLink({ children }: { children: ReactNode }) {
+function NavLink(props : any) {
   return(
-    <Link px={4} py={2} rounded={'md'} href={'#'} _hover={{textDecoration: 'none', bg: 'gray.200',}}>
+    <Link px={4} py={2} rounded={'md'} href={props.link} _hover={{textDecoration: 'none', bg: 'gray.200',}}>
       <Text>
-        {children}
+        {props.name}
       </Text>
     </Link>
   )
@@ -26,25 +29,26 @@ function Header() {
 
   return (
     <>
-      <Box bg='white' position='sticky' top={0}>
+      <Box bg='white' position='sticky' top={0} zIndex={100}>
 
-        <Container maxW='1140px'>
+        <Container maxW='1300px'>
           <Flex h={16} alignItems={'center'}>
 
             {/* Logo */}
             <Heading size='md'>konstantin volodin</Heading>
-                      
             <Spacer />
 
             {/* Large Screen Links */}
             <HStack spacing={8} display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => ( <NavLink key={link}>{link}</NavLink> ))}
+              {Links.map((link) => {return(
+                <NavLink name={link.name} link={link.link} />
+              )})}
               <Box px={4} py={2} >
-                <LinkOverlay  href="mailto:volodin.kostia@gmail.com">
+                {/* <LinkOverlay  href="mailto:volodin.kostia@gmail.com"> */}
                   <Button colorScheme='teal' variant='solid'> 
                     email me
                   </Button>
-                </LinkOverlay >
+                {/* </LinkOverlay > */}
               </Box>
             </HStack>
             
@@ -57,16 +61,16 @@ function Header() {
         </Container>
         
         {/* Small Screen Links */}
-        <Modal isOpen={isOpen} onClose={onClose}>
+        {/* <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
 
           <ModalContent>
             <ModalCloseButton />
             <ModalBody>
                 <VStack spacing={8} alignItems={'center'}>
-                  {Links.map((link) => (
-                    <NavLink key={link}>{link}</NavLink>
-                  ))}
+                  {Links.map((link) => {return(
+                    <NavLink name={link.name} link={link.link} />
+                  )})}
                   <LinkOverlay  href="mailto:volodin.kostia@gmail.com">
                     <Button colorScheme='teal' variant='solid' px={4} py={2} h='46px'> 
                       email me
@@ -75,7 +79,7 @@ function Header() {
                 </VStack>
             </ModalBody>
         </ModalContent>
-        </Modal>
+        </Modal> */}
 
         <Divider />
       </Box>
