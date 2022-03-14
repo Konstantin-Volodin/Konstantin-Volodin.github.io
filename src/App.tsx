@@ -8,7 +8,7 @@ import theme from './assets/fonts/theme'
 import Header from './components/header';
 import Intro from './components/intro';
 import Projects from './components/projects';
-import Technology from './components/techSkills'
+import Skills from './components/skills'
 import ContactMe from './components/knowMore'
 
 function App() {
@@ -16,13 +16,14 @@ function App() {
     <ChakraProvider theme={theme}>
       <Helmet>
         <title>Welcome | Konstantin Volodin's Portfolio</title>
+        <meta name="description" content="Konstantin Volodin's Portfolio" />
       </Helmet>
       <Fonts />
       <Header />
       <Intro />
       <Projects />
-      {/* <Technology />
-      <ContactMe /> */}
+      {/* <Skills /> */}
+      {/* <ContactMe /> */}
     </ChakraProvider>
   );
 }

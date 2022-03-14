@@ -1,0 +1,2 @@
+@types
+declare module '*.pdf'
