@@ -24,6 +24,7 @@ function App() {
       <Projects />
       {/* <Skills /> */}
       {/* <ContactMe /> */}
+
     </ChakraProvider>
   );
 }

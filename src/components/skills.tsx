@@ -1,24 +1,24 @@
 import { useState, useRef, useEffect  } from 'react';
 import {
-  Box, Flex, Spacer, Image,
+  Box, Flex, Spacer, Image, Icon,
   Heading, Text, Container, Grid, SimpleGrid, 
   Tabs, TabList, Tab, TabPanels, TabPanel, Divider, SlideFade, Center
 } from '@chakra-ui/react';
 import VisibilitySensor   from "react-visibility-sensor";
 import skillData from './skills-data'
 
-// import Test from '../assets/images/python-logo-notext.svg'
-// import python from '../assets/images/python-logo-notext.svg'; // gives you a React component <Logo />
 
 function SkillIcon(props: any) {
   return(
     <Flex align='center' direction='column'>
-      <Image src={props.image} boxSize='50px' mb={3}></Image>
+      <Icon>
+        {props.image}
+        {/* <props.image fill="blue" width="50%" height="100%"/>  */}
+      </Icon>
       <Text fontSize='md' textAlign='center'> {props.name} </Text>
     </Flex>
   )
 }
-
 function SkillList(props: any) {
   const domRef: any = useRef();
   const [enteredScreen, setEneredScreen] = useState(false);
@@ -55,7 +55,8 @@ function Skills() {
       <Box>
         <Container maxW='1300px' mb={52}>
           <Heading maxW='500px' >
-              Skills
+              Skills & Technology
+              
             </Heading>
             {/* <Text maxW='700px' fontSize='lg' mt={8}>
               Coming Soon

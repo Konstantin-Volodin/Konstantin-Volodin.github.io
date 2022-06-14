@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlnsDc="http://purl.org/dc/elements/1.1/"
+   xmlnsCc="http://web.resource.org/cc/"
+   xmlnsRdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlnsSvg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlnsXlink="http://www.w3.org/1999/xlink"
+   xmlnsSodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlnsInkscape="http://www.inkscape.org/namespaces/inkscape"
    width="110.4211"
    height="109.8461"
    id="svg2169"
-   sodipodi:version="0.32"
-   inkscape:version="0.45.1"
+   sodipodiVersion="0.32"
+   inkscapeVersion="0.45.1"
    version="1.0"
-   sodipodi:docbase="/home/bene/Desktop"
-   sodipodi:docname="dessin-1.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   sodipodiDocbase="/home/bene/Desktop"
+   sodipodiDocname="dessin-1.svg"
+   inkscapeOutput_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs2171">
     <linearGradient
        id="linearGradient11301"
-       inkscape:collect="always">
+       inkscapeCollect="always">
       <stop
          id="stop11303"
          offset="0"
@@ -39,11 +39,11 @@
        y1="111.92053"
        x1="89.136749"
        id="linearGradient11307"
-       xlink:href="#linearGradient11301"
-       inkscape:collect="always" />
+       xlinkHref="#linearGradient11301"
+       inkscapeCollect="always" />
     <linearGradient
        id="linearGradient9515"
-       inkscape:collect="always">
+       inkscapeCollect="always">
       <stop
          id="stop9517"
          offset="0"
@@ -60,41 +60,41 @@
        y1="77.070274"
        x1="55.549179"
        id="linearGradient9521"
-       xlink:href="#linearGradient9515"
-       inkscape:collect="always" />
+       xlinkHref="#linearGradient9515"
+       inkscapeCollect="always" />
   </defs>
-  <sodipodi:namedview
+  <sodipodiNamedview
      id="base"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="-260.46312"
-     inkscape:cy="316.02744"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscapePageopacity="0.0"
+     inkscapePageshadow="2"
+     inkscapeZoom="0.24748737"
+     inkscapeCx="-260.46312"
+     inkscapeCy="316.02744"
+     inkscapeDocument-units="px"
+     inkscapeCurrent-layer="layer1"
      width="131.10236px"
      height="184.25197px"
-     inkscape:window-width="872"
-     inkscape:window-height="624"
-     inkscape:window-x="5"
-     inkscape:window-y="48" />
+     inkscapeWindow-width="872"
+     inkscapeWindow-height="624"
+     inkscapeWindow-x="5"
+     inkscapeWindow-y="48" />
   <metadata
      id="metadata2174">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
+    <rdfRDF>
+      <ccWork
+         rdfAbout="">
+        <dcFormat>image/svg+xml</dcFormat>
+        <dcType
+           rdfResource="http://purl.org/dc/dcmitype/StillImage" />
+      </ccWork>
+    </rdfRDF>
   </metadata>
   <g
-     inkscape:label="Calque 1"
-     inkscape:groupmode="layer"
+     inkscapeLabel="Calque 1"
+     inkscapeGroupmode="layer"
      id="layer1"
      transform="translate(-473.36088,-251.72485)">
     <g

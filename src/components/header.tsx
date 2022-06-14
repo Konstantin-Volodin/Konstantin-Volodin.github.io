@@ -1,25 +1,23 @@
-import { ReactNode } from 'react';
 import {
-  Box, Flex, Container, Center,
-  Text, Heading, Link, LinkOverlay, LinkBox,
-  HStack, VStack,
-  IconButton, Button, Spacer, Divider,
-  useDisclosure,
-  Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
+  Box, Flex, Container, Text, Heading, Link, LinkOverlay, LinkBox,
+  HStack, IconButton, Spacer, Divider,
+  useDisclosure,  Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
 } from '@chakra-ui/react';
-import { HamburgerIcon, EmailIcon } from '@chakra-ui/icons';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import Resume from "../assets/resume.pdf";
-import "../index.css"
+import "../index.css";
 
 const Links = [
-  {'name': 'github', 'link': 'https://github.com/Konstantin-Volodin'},
-  // {'name': 'linkedin', 'link': 'https://github.com/Konstantin-Volodin'},
-  {'name': 'resume', 'link': Resume},
+  // {'name': 'about', 'link': '#Projects', 'type': 'internal'},
+  {'name': 'github', 'link': 'https://github.com/Konstantin-Volodin', 'type': 'external'},
+  {'name': 'linkedin', 'link': 'https://www.linkedin.com/in/konstantin-volodin-90b04623b/', 'type': 'external'},
+  {'name': 'resume', 'link': Resume, 'type': 'external'},
 ];
 
 function NavLink(props : any) {
+  console.log(props.type)
   return(
-    <Link px={6} py={3} my={4} href={props.link} _hover={{textDecoration: 'none', bg: 'gray.200',}} isExternal>
+    <Link px={6} py={3} my={4} href={props.link} _hover={{textDecoration: 'none', bg: 'gray.200',}} isExternal={props.type == 'internal' ? false : true}>
       <Text letterSpacing='0.5px' textTransform='uppercase' fontWeight='600'>
         {props.name}
       </Text>
@@ -32,7 +30,7 @@ function Header() {
 
   return (
     <>
-      <Box bg='white' position='sticky' top={0} zIndex={100}>
+      <Box bg='white' top={0} zIndex={100}>
 
         <Container maxW='1300px'>
           <Flex h={16} alignItems={'center'}>
@@ -45,7 +43,7 @@ function Header() {
             <LinkBox>
               <HStack spacing={6} display={{ base: 'none', md: 'flex' }}>
                 {Links.map((link) => {return(
-                  <NavLink key={link.name} name={link.name} link={link.link} />
+                  <NavLink key={link.name} name={link.name} link={link.link} type={link.type} />
                 )})}
                 <Box px={4} py={2} >
                   <LinkOverlay  href="mailto:volodin.kostia@gmail.com" isExternal>
@@ -73,6 +71,7 @@ function Header() {
 
               <ModalBody>
                   <Flex direction='column' justify='center' align='center' opacity={"1 !important"} h="95vh">
+
                     {Links.map((link) => {return(
                       <NavLink key={link.name} name={link.name} link={link.link} />
                     )})}

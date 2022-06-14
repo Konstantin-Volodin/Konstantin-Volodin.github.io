@@ -37,7 +37,7 @@ function ProjectCard(props: any) {
 
 function Projects() {
   return(
-    <Box>
+    <Box id='Projects'>
       <Container maxW='1300px' mb={52}>
         <Heading maxW='500px' >
           Projects
