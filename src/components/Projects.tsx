@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect  } from 'react';
 import { Box, Container, Heading, Grid, Text, Stack, Image, AspectRatio, SlideFade  } from '@chakra-ui/react';
 import VisibilitySensor   from "react-visibility-sensor";
-import projData from './projects-data'
-import { isVisible } from '@testing-library/user-event/dist/utils';
+import projData from './projectsData'
 
 function ProjectCard(props: any) {  
   const domRef: any = useRef();

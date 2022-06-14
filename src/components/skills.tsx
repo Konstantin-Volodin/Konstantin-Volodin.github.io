@@ -5,21 +5,19 @@ import {
   Tabs, TabList, Tab, TabPanels, TabPanel, Divider, SlideFade, Center
 } from '@chakra-ui/react';
 import VisibilitySensor   from "react-visibility-sensor";
-import skillData from './skills-data'
+import skillData from './skillsData'
 
 
 function SkillIcon(props: any) {
   return(
     <Flex align='center' direction='column'>
-      <Icon>
-        {props.image}
-        {/* <props.image fill="blue" width="50%" height="100%"/>  */}
-      </Icon>
+      <Image src={props.image} maxW='100px' maxH='50px' mb={3}></Image>
       <Text fontSize='md' textAlign='center'> {props.name} </Text>
     </Flex>
   )
 }
-function SkillList(props: any) {
+
+function SkillCard(props: any) {
   const domRef: any = useRef();
   const [enteredScreen, setEneredScreen] = useState(false);
 
@@ -29,19 +27,21 @@ function SkillList(props: any) {
 
   return(
     <VisibilitySensor onChange={onChange} partialVisibility={true}>
-      <SlideFade in={enteredScreen} offsetY='100px' transition={{ enter: { duration: 0.2 } }}>
+      <SlideFade in={enteredScreen} offsetY='100px' transition={{ enter: { duration: 0.4 } }}>
 
-        <Box width='250px'>
+        <Box width="300px">
           
-          <Text letterSpacing='0.5px' textTransform='uppercase' fontWeight='600' textAlign='center'>
+
+          <Heading fontSize={'2xl'}> {props.name} </Heading>
+          <Heading letterSpacing='0.5px' textTransform='uppercase' fontSize={'lg'} textAlign='center'>
             {props.data.section}
-          </Text>
-          <Divider></Divider>
+          </Heading>
+          <Divider my={4}></Divider>
           
-          <Grid justifyContent='center' mt={14} templateColumns='repeat(2, 1fr)' gap={10}>
-            {props.data.skills.map((skill : any) => {
-              return( <SkillIcon image={skill.image} name={skill.name}> </SkillIcon> )
-            })}
+          <Grid justifyContent='center' templateColumns='repeat(2, 1fr)' gap={14}>
+              {props.data.skills.map((skill : any) => {
+                return( <Center><SkillIcon image={skill.image} name={skill.name}> </SkillIcon></Center> )
+              })}
           </Grid>
         </Box>
       </SlideFade>
@@ -55,16 +55,15 @@ function Skills() {
       <Box>
         <Container maxW='1300px' mb={52}>
           <Heading maxW='500px' >
-              Skills & Technology
-              
+              Knowledge & Skills
             </Heading>
             {/* <Text maxW='700px' fontSize='lg' mt={8}>
               Coming Soon
             </Text> */}
             <Center mt={16}>
-              <Grid width="min-content"columnGap={{"base":"24", "xl":"32"}} rowGap={10} justifyContent='center' templateColumns={{'base':'repeat(1,1fr)','md':'repeat(2,1fr)', 'lg':'repeat(3,1fr)'}}>
+              <Grid width="min-content"columnGap={{"base":"24", "xl":"32"}} rowGap={10} justifyContent='center' templateColumns={{'base':'repeat(1,1fr)','md':'repeat(2,1fr)', 'xl':'repeat(3,1fr)'}}>
                 {skillData.map((item) => {
-                    return( <SkillList data={item}> </SkillList> )
+                    return( <SkillCard data={item}> </SkillCard> )
                   })}
               </Grid>
             </Center>

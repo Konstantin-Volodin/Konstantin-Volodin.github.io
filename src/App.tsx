@@ -22,7 +22,7 @@ function App() {
       <Header />
       <Intro />
       <Projects />
-      {/* <Skills /> */}
+      <Skills />
       {/* <ContactMe /> */}
 
     </ChakraProvider>
