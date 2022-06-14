@@ -30,7 +30,7 @@ function Header() {
 
   return (
     <>
-      <Box bg='white' top={0} zIndex={100}>
+      <Box bg='white' top={0} zIndex={100} position='sticky'>
 
         <Container maxW='1300px'>
           <Flex h={16} alignItems={'center'}>

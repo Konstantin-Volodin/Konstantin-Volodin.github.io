@@ -18,6 +18,7 @@ function App() {
         <title>Welcome | Konstantin Volodin's Portfolio</title>
         <meta name="description" content="Konstantin Volodin's Portfolio" />
       </Helmet>
+      
       <Fonts />
       <Header />
       <Intro />
