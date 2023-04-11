@@ -10,34 +10,41 @@ import react from "../assets/logos/react-logo.png"
 import django from "../assets/logos/django-logo.png"
 import postman from "../assets/logos/postman-logo.png"
 import github from "../assets/logos/github-logo.png"
+import databricks from "../assets/logos/databricks_logo.png"
+import docker from "../assets/logos/docker-logo.png"
+import aws from "../assets/logos/aws-logo.png"
 
 
 export default [
     {
         'section': 'Technical',
         'skills': [
-            {'name': 'Python', 'image': python},
-            {'name': 'R', 'image': rlogo},
-            {'name': 'SQL', 'image': mysql},
-            {'name': 'Node.js', 'image': nodejs},
+            { 'name': 'Python', 'image': python },
+            { 'name': 'SQL', 'image': mysql },
+            { 'name': 'AWS', 'image': aws },
+            { 'name': 'Databricks', 'image': databricks },
+            { 'name': 'R', 'image': rlogo },
+
         ]
     },
     {
         'section': 'Analytics',
         'skills': [
-            {'name': 'Mathematical Optimization', 'image': gurobi},
-            {'name': 'Simulation Modelling', 'image': arena},
-            {'name': 'Machine Learning', 'image': tensorflow},
-            {'name': 'Data Visualization', 'image': plotly},
+            { 'name': 'Mathematical Optimization', 'image': gurobi },
+            { 'name': 'Simulation Modelling', 'image': arena },
+            { 'name': 'Machine Learning', 'image': tensorflow },
+            { 'name': 'Data Visualization', 'image': plotly },
         ]
     },
     {
         'section': 'Development Tools',
         'skills': [
-            {'name': 'React', 'image': react},
-            {'name': 'Django', 'image': django},
-            {'name': 'Postman', 'image': postman},
-            {'name': 'Github', 'image': github}
+            { 'name': 'Node.js', 'image': nodejs },
+            { 'name': 'Docker', 'image': docker },
+            { 'name': 'React', 'image': react },
+            { 'name': 'Django', 'image': django },
+            { 'name': 'Postman', 'image': postman },
+            { 'name': 'Github', 'image': github },
         ]
     }
 ]
