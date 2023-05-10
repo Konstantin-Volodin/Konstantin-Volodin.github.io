@@ -1,18 +1,21 @@
 {
   "files": {
     "main.css": "/static/css/main.ace24e33.css",
-    "main.js": "/static/js/main.a7bdc326.js",
+    "main.js": "/static/js/main.9488ed0f.js",
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
     "static/media/dynamic-knapsack.jpg": "/static/media/dynamic-knapsack.e65c0490c334900bb7d7.jpg",
     "static/media/block-scheduling.jpg": "/static/media/block-scheduling.bbfdd8a1c7ef5ec0beeb.jpg",
     "static/media/urgent-care.jpg": "/static/media/urgent-care.68df613dbdf83e88858d.jpg",
-    "static/media/workload-allocation.jpg": "/static/media/workload-allocation.820975f3eada039a6996.jpg",
+    "static/media/workload-allocation.png": "/static/media/workload-allocation.6c072eeda3e3a9b0883d.png",
+    "static/media/capstone.png": "/static/media/capstone.f0d17fc202b66e71417e.png",
+    "static/media/docker-logo.png": "/static/media/docker-logo.241804426ad6ca2e495c.png",
     "static/media/artf-apptimes.jpg": "/static/media/artf-apptimes.b5b799d27eae6f327296.jpg",
     "static/media/artf-dashboard.jpg": "/static/media/artf-dashboard.7a3dabc6f3166ee34a61.jpg",
     "static/media/postman-logo.png": "/static/media/postman-logo.72153fd87d92dfa43808.png",
-    "static/media/resume.pdf": "/static/media/resume.ca49b97e6f1bbd8d255c.pdf",
+    "static/media/KV - Resume.pdf": "/static/media/KV - Resume.ea4d6abd4cb2dda6cb12.pdf",
     "static/media/artf-baselines.jpg": "/static/media/artf-baselines.52c4d07a599b92963643.jpg",
-    "static/media/personal-forecasting.jpg": "/static/media/personal-forecasting.6a86e707e3773257272b.jpg",
+    "static/media/aws-logo.png": "/static/media/aws-logo.1d12dac553d9b80656ec.png",
+    "static/media/databricks_logo.png": "/static/media/databricks_logo.398a2cedd85a967cf560.png",
     "static/media/rlogo.png": "/static/media/rlogo.3925a9d915bef82cbc65.png",
     "static/media/nodejs-logo.png": "/static/media/nodejs-logo.10e170f84c32069d8555.png",
     "static/media/arena-logo.png": "/static/media/arena-logo.856f35c49799f4487c6d.png",
@@ -21,11 +24,11 @@
     "static/media/plotly-logo.png": "/static/media/plotly-logo.a8053ff98f3e0976756d.png",
     "index.html": "/index.html",
     "main.ace24e33.css.map": "/static/css/main.ace24e33.css.map",
-    "main.a7bdc326.js.map": "/static/js/main.a7bdc326.js.map",
+    "main.9488ed0f.js.map": "/static/js/main.9488ed0f.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ace24e33.css",
-    "static/js/main.a7bdc326.js"
+    "static/js/main.9488ed0f.js"
   ]
 }
