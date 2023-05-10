@@ -56,24 +56,8 @@ export default [
     'skills': ['Forecasting', 'Data Pipelines']
   },
   {
-    'company': 'uOttawa',
-    'name': 'MDP model for Stochastic Spine Surgery Scheduling',
-    'description': 'As a research assistant at the University of Ottawa, developed a cutting-edge scheduling model that uses a Markov Decision Process approach to optimally schedule spine surgery patients in a stochastic environment. The model was developed using Python and optimized on a Linux compute cluster, resulting in a highly effective system that maximizes the utilization of operating rooms and healthcare resources while minimizing patient wait times and overall costs.',
-    'picture': uOttawaDynamicKnapsack,
-    'technologies': ['Python', 'Linux', 'Gurobi'],
-    'skills': ['Optimization', 'Markov Decision Processes', 'Distributed Computing']
-  },
-  {
-    'company': 'uOttawa',
-    'name': "Optimization model for Automation of a Course Scheduling Process",
-    'description': 'Led the development of an optimization model that generates a course schedule for the Telfer School of Management. Incorporated front-end and back-end development expertise to create an intuitive, user-friendly interface. The outcome was a superior course scheduling system that has significantly reduced the time and effort required to create a course schedule while increasing student and professor satisfaction with the schedule',
-    'picture': uOttawaWorkloadAllocation,
-    'technologies': ['Python', 'React', 'Django', 'Gurobi', 'MySQL'],
-    'skills': ['Optimization', 'Front-End Web Dev', 'Back-End Web Dev', 'Database Management']
-  },
-  {
-    'company': 'McGill',
-    'name': 'Demand Forecasting for Efficient Inventory Management',
+    'company': 'CAE Inc.',
+    'name': 'Demand Forecasting and Inventory Management',
     'description': 'Developed a Python-based advanced timeseries forecasting solution for a company seeking to optimize inventory management by accurately predicting demand for thousands of items. Utilized statistical models and external economic variables to enhance forecast accuracy, resulting in increased operational efficiency, cost savings, and customer satisfaction.',
     'picture': personalForecasting,
     'technologies': ['Python', 'Statsforecast', 'Plotly'],
@@ -85,4 +69,20 @@ export default [
   //   'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras arcu nisl, luctus at laoreet sit amet, faucibus ut enim. Fusce ante sem, tincidunt vel lorem ac, dictum congue nunc. Donec sed hendrerit dui. Mauris at vestibulum nunc. Nunc volutpat pharetra tellus non mattis. Nunc malesuada varius sollicitudin. Mauris non metus eget leo rhoncus sagittis. Sed dapibus, ipsum a accumsan feugiat, est libero facilisis sem, quis porttitor risus odio eget nunc. Donec malesuada vehicula pellentesque. Integer sed venenatis tellus. Cras ut tristique lacus. Suspendisse efficitur nisl a arcu sollicitudin, sed consectetur massa consequat',
   //   'picture': ''
   // },
+  {
+    'company': 'uOttawa',
+    'name': 'Stochastic Spine Surgery Scheduling with MDP model',
+    'description': 'As a research assistant at the University of Ottawa, I developed an advanced scheduling model using a Markov Decision Process (MDP) approach for optimal spine surgery scheduling in a stochastic environment. Leveraging my expertise in optimization and MDPs, I created a cutting-edge model. By utilizing Python and optimizing the system on a Linux compute cluster, we successfully executed the model. The developed system maximizes healthcare resource utilization, minimizes patient wait times, and reduces overall costs. This project exemplifies the potential of MDP modeling in enhancing scheduling processes.',
+    'picture': uOttawaDynamicKnapsack,
+    'technologies': ['Python', 'Linux', 'Gurobi'],
+    'skills': ['Optimization', 'Markov Decision Processes', 'Distributed Computing']
+  },
+  {
+    'company': 'uOttawa',
+    'name': "Optimization Model for Automating Course Scheduling at uOttawa",
+    'description': 'At uOttawa, I led a group of students developing a robust mathematical optimization model aimed at automating the course scheduling process for the Telfer School of Management. Drawing upon our expertise in mathematical optimization, web development, and database management, we created an intuitive user interface that significantly improved the efficiency of scheduling tasks. The model results in reduction of time and effort required to generate course schedules, while also increasing satisfaction levels among students and professors.',
+    'picture': uOttawaWorkloadAllocation,
+    'technologies': ['Python', 'Gurobi', 'Django', 'React', 'MySQL'],
+    'skills': ['Optimization', 'Web Development', 'Database Management']
+  },
 ]
