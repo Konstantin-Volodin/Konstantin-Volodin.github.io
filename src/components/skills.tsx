@@ -41,7 +41,7 @@ function SkillCard(props: any) {
 
           <Wrap spacing={14} align='center' justify='center'>
             {props.data.skills.map((skill: any) => (
-              <WrapItem>
+              <WrapItem key={skill.name}>
                 <SkillIcon image={skill.image} name={skill.name} />
               </WrapItem>
             ))}
@@ -71,7 +71,7 @@ function Skills() {
             justifyContent='center'
             templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}>
             {skillData.map((item) => {
-              return (<SkillCard data={item}> </SkillCard>)
+              return (<SkillCard data={item} key={item.skills}> </SkillCard>)
             })}
           </Grid>
         </Center>

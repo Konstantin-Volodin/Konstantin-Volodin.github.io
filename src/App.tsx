@@ -1,9 +1,9 @@
-import {ChakraProvider, extendTheme} from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { Global } from '@emotion/react'
 import { Helmet } from "react-helmet";
 
-import Fonts from './assets/fonts/font'
-import theme from './assets/fonts/theme'
+import Fonts from './static/fonts/font'
+import theme from './static/fonts/theme'
 
 import Header from './components/header';
 import Intro from './components/intro';
@@ -18,7 +18,7 @@ function App() {
         <title>Welcome | Konstantin Volodin's Portfolio</title>
         <meta name="description" content="Konstantin Volodin's Portfolio" />
       </Helmet>
-      
+
       <Fonts />
       <Header />
       <Intro />

@@ -4,7 +4,7 @@ import {
   useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import Resume from "../assets/resume.pdf";
+import Resume from "../static/KV - Resume.pdf";
 import "../index.css";
 
 const Links = [

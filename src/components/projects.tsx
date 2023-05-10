@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Box, Container, Heading, Grid, Text, Stack, Image, AspectRatio, SlideFade, Tag, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Center, Container, Heading, Grid, Text, Stack, Image, AspectRatio, SlideFade, Tag, Wrap, WrapItem } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
@@ -11,16 +11,16 @@ function ProjectCard(props: any) {
     if (isVisible == true) { setEneredScreen(true) }
   };
 
-  console.log(props)
   return (
     <VisibilitySensor onChange={onChange} partialVisibility={true}>
       <SlideFade in={enteredScreen} offsetY='100px' transition={{ enter: { duration: 0.2 } }}>
         <Box w={'full'} boxShadow={'md'} border='1px' borderColor={'gray.100'} rounded={'md'}>
-          <Box bg='gray.200' p={6}>
-            <AspectRatio w='full' ratio={16 / 9} >
+
+          <Center bg='gray.200' p={4} h='200px'>
+            <AspectRatio w='100%' h='100%' ratio={16 / 9} >
               <Image src={props.pic} pos='relative' sx={{ 'filter': 'blur(0px)' }} />
             </AspectRatio>
-          </Box>
+          </Center>
 
           <Stack p={6}>
             <Text fontSize='lg'> {props.company} </Text>
@@ -31,7 +31,7 @@ function ProjectCard(props: any) {
                 <Tag key={text} w='fit-content' bg='blue.50'>{text}</Tag>
               ))}
               {props.skills.map((text: string) => (
-                <Tag w='fit-content' bg='purple.50'>{text}</Tag>
+                <Tag key={text} w='fit-content' bg='purple.50'>{text}</Tag>
               ))}
             </Wrap>
             <Text fontSize='md' whiteSpace='pre-wrap'>
