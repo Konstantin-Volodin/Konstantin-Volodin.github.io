@@ -10,7 +10,7 @@ import "../index.css";
 const Links = [
   // {'name': 'about', 'link': '#Projects', 'type': 'internal'},
   { 'name': 'github', 'link': 'https://github.com/Konstantin-Volodin', 'type': 'external' },
-  { 'name': 'linkedin', 'link': 'https://www.linkedin.com/in/konstantin-volodin-90b04623b/', 'type': 'external' },
+  { 'name': 'linkedin', 'link': 'https://www.linkedin.com/in/konstantin-volodin/', 'type': 'external' },
   { 'name': 'resume', 'link': Resume, 'type': 'external' },
 ];
 
