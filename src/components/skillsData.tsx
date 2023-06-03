@@ -13,6 +13,8 @@ import github from "../static/logos/github-logo.png"
 import databricks from "../static/logos/databricks_logo.png"
 import docker from "../static/logos/docker-logo.png"
 import aws from "../static/logos/aws-logo.png"
+import powerbi from '../static/logos/power-bi.png'
+import pytorch from '../static/logos/pytorch-logo.png'
 
 
 export default [
@@ -32,8 +34,8 @@ export default [
         'skills': [
             { 'name': 'Mathematical Optimization', 'image': gurobi },
             { 'name': 'Simulation Modelling', 'image': arena },
-            { 'name': 'Machine Learning', 'image': tensorflow },
-            { 'name': 'Data Visualization', 'image': plotly },
+            { 'name': 'Machine Learning', 'image': pytorch },
+            { 'name': 'Data Visualization', 'image': powerbi },
         ]
     },
     {
