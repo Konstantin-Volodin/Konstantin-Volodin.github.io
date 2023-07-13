@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.ace24e33.css",
-    "main.js": "/static/js/main.52c6cbe8.js",
+    "main.js": "/static/js/main.f0b67969.js",
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
     "static/media/dynamic-knapsack.jpg": "/static/media/dynamic-knapsack.e65c0490c334900bb7d7.jpg",
     "static/media/block-scheduling.jpg": "/static/media/block-scheduling.bbfdd8a1c7ef5ec0beeb.jpg",
@@ -13,7 +13,7 @@
     "static/media/artf-apptimes.jpg": "/static/media/artf-apptimes.b5b799d27eae6f327296.jpg",
     "static/media/artf-dashboard.jpg": "/static/media/artf-dashboard.7a3dabc6f3166ee34a61.jpg",
     "static/media/postman-logo.png": "/static/media/postman-logo.72153fd87d92dfa43808.png",
-    "static/media/KV - Resume.pdf": "/static/media/KV - Resume.f30886edaa881cfcb326.pdf",
+    "static/media/KV - Resume.pdf": "/static/media/KV - Resume.b50ea606ce2031fe6e4b.pdf",
     "static/media/artf-baselines.jpg": "/static/media/artf-baselines.52c4d07a599b92963643.jpg",
     "static/media/aws-logo.png": "/static/media/aws-logo.1d12dac553d9b80656ec.png",
     "static/media/databricks_logo.png": "/static/media/databricks_logo.398a2cedd85a967cf560.png",
@@ -25,11 +25,11 @@
     "static/media/django-logo.png": "/static/media/django-logo.4c677b78d12c96ea7add.png",
     "index.html": "/index.html",
     "main.ace24e33.css.map": "/static/css/main.ace24e33.css.map",
-    "main.52c6cbe8.js.map": "/static/js/main.52c6cbe8.js.map",
+    "main.f0b67969.js.map": "/static/js/main.f0b67969.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ace24e33.css",
-    "static/js/main.52c6cbe8.js"
+    "static/js/main.f0b67969.js"
   ]
 }
