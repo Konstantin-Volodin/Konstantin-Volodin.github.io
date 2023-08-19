@@ -1,35 +1,39 @@
 {
   "files": {
     "main.css": "/static/css/main.ace24e33.css",
-    "main.js": "/static/js/main.a9fd56fd.js",
+    "main.js": "/static/js/main.7c334c3f.js",
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
     "static/media/dynamic-knapsack.jpg": "/static/media/dynamic-knapsack.e65c0490c334900bb7d7.jpg",
     "static/media/block-scheduling.jpg": "/static/media/block-scheduling.bbfdd8a1c7ef5ec0beeb.jpg",
     "static/media/urgent-care.jpg": "/static/media/urgent-care.68df613dbdf83e88858d.jpg",
+    "static/media/mcgill-case.jpg": "/static/media/mcgill-case.b6979d053cd72c2fb03d.jpg",
     "static/media/workload-allocation.png": "/static/media/workload-allocation.6c072eeda3e3a9b0883d.png",
     "static/media/power-bi.png": "/static/media/power-bi.663c9dd3874bac0d44a1.png",
-    "static/media/capstone.png": "/static/media/capstone.f0d17fc202b66e71417e.png",
+    "static/media/mcgill-capstone.png": "/static/media/mcgill-capstone.f0d17fc202b66e71417e.png",
     "static/media/docker-logo.png": "/static/media/docker-logo.241804426ad6ca2e495c.png",
     "static/media/artf-apptimes.jpg": "/static/media/artf-apptimes.b5b799d27eae6f327296.jpg",
     "static/media/artf-dashboard.jpg": "/static/media/artf-dashboard.7a3dabc6f3166ee34a61.jpg",
     "static/media/postman-logo.png": "/static/media/postman-logo.72153fd87d92dfa43808.png",
-    "static/media/KV - Resume.pdf": "/static/media/KV - Resume.b50ea606ce2031fe6e4b.pdf",
+    "static/media/gcp-logo.png": "/static/media/gcp-logo.4cc74a54584da3d09d6d.png",
     "static/media/artf-baselines.jpg": "/static/media/artf-baselines.52c4d07a599b92963643.jpg",
     "static/media/aws-logo.png": "/static/media/aws-logo.1d12dac553d9b80656ec.png",
+    "static/media/airflow-logo.png": "/static/media/airflow-logo.b028904451fee565e7d7.png",
     "static/media/databricks_logo.png": "/static/media/databricks_logo.398a2cedd85a967cf560.png",
-    "static/media/rlogo.png": "/static/media/rlogo.3925a9d915bef82cbc65.png",
+    "static/media/KV - Resume.pdf": "/static/media/KV - Resume.aae4c0a4bd029e124159.pdf",
     "static/media/nodejs-logo.png": "/static/media/nodejs-logo.10e170f84c32069d8555.png",
-    "static/media/pytorch-logo.png": "/static/media/pytorch-logo.2aaa762785e20b4bf49f.png",
+    "static/media/front-end-logo.png": "/static/media/front-end-logo.aab59987a376edab2034.png",
+    "static/media/nosql-logo.png": "/static/media/nosql-logo.13b2181d7a3bf27d0aa2.png",
     "static/media/arena-logo.png": "/static/media/arena-logo.856f35c49799f4487c6d.png",
     "static/media/react-logo.png": "/static/media/react-logo.44319306359c7112276d.png",
     "static/media/django-logo.png": "/static/media/django-logo.4c677b78d12c96ea7add.png",
+    "static/media/pytorch-logo.png": "/static/media/pytorch-logo.0c542d5564f655262f0f.png",
     "index.html": "/index.html",
     "main.ace24e33.css.map": "/static/css/main.ace24e33.css.map",
-    "main.a9fd56fd.js.map": "/static/js/main.a9fd56fd.js.map",
+    "main.7c334c3f.js.map": "/static/js/main.7c334c3f.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ace24e33.css",
-    "static/js/main.a9fd56fd.js"
+    "static/js/main.7c334c3f.js"
   ]
 }
