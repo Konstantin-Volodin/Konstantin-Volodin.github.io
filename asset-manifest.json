@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.ace24e33.css",
-    "main.js": "/static/js/main.5f569164.js",
+    "main.js": "/static/js/main.2253a6f5.js",
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
     "static/media/dynamic-knapsack.jpg": "/static/media/dynamic-knapsack.e65c0490c334900bb7d7.jpg",
     "static/media/block-scheduling.jpg": "/static/media/block-scheduling.bbfdd8a1c7ef5ec0beeb.jpg",
@@ -15,8 +15,8 @@
     "static/media/artf-dashboard.jpg": "/static/media/artf-dashboard.7a3dabc6f3166ee34a61.jpg",
     "static/media/postman-logo.png": "/static/media/postman-logo.72153fd87d92dfa43808.png",
     "static/media/gcp-logo.png": "/static/media/gcp-logo.4cc74a54584da3d09d6d.png",
-    "static/media/KV - Resume.pdf": "/static/media/KV - Resume.9bda2eab533968f028d8.pdf",
     "static/media/artf-baselines.jpg": "/static/media/artf-baselines.52c4d07a599b92963643.jpg",
+    "static/media/KV - Resume.pdf": "/static/media/KV - Resume.e20b1f9c6f4c0ed209ce.pdf",
     "static/media/aws-logo.png": "/static/media/aws-logo.1d12dac553d9b80656ec.png",
     "static/media/airflow-logo.png": "/static/media/airflow-logo.b028904451fee565e7d7.png",
     "static/media/databricks_logo.png": "/static/media/databricks_logo.398a2cedd85a967cf560.png",
@@ -29,11 +29,11 @@
     "static/media/pytorch-logo.png": "/static/media/pytorch-logo.0c542d5564f655262f0f.png",
     "index.html": "/index.html",
     "main.ace24e33.css.map": "/static/css/main.ace24e33.css.map",
-    "main.5f569164.js.map": "/static/js/main.5f569164.js.map",
+    "main.2253a6f5.js.map": "/static/js/main.2253a6f5.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ace24e33.css",
-    "static/js/main.5f569164.js"
+    "static/js/main.2253a6f5.js"
   ]
 }
