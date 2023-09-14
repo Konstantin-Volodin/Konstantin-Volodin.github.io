@@ -10,15 +10,16 @@ function Intro() {
       <Flex maxW='1300px' h='80vh' p={5} mx='auto' direction='column' align={'baseline'}>
         <Spacer></Spacer>
         <Heading maxW='500px' >
-          Hi, I'm Konstantin - a data analyst and an OR expert
+          Hi, I'm Konstantin - a data scientist and an aspiring data engineer
         </Heading>
-        <Text maxW='700px' fontSize='lg' mt={8}>
-          I have worked on a variety of advanced analytics projects, with extensive experience in
-          predictive and prescriptive analytics. I am currently working as a data
-          scientist at a federal department for the Government of Canada and studying for master of management in analytics at McGill University.
+        <Text maxW='700px' fontSize='xl' mt={8}>
+          As a data scientist for the Government of Canada and a graduate student at McGill University, I am passionate about the power of data to drive evidence-based decision-making and transformative insights.
+          My experience and education have emphasized the importance of robust data engineering, which I aspire to contribute to.
+          I've used my data science and data engineering skills to improve decision-making for newcomer initiatives, harnessing the power of data for more effective outcomes.
         </Text>
-        <Text maxW='700px' fontSize='lg' mt={8}>
-          If you want to chat about any analytics projects, you are welcome to email me at <Link fontWeight={'bold'} href="mailto:volodin.kostia@gmail.com">volodin.kostia@gmail.com</Link>!
+        <Text maxW='700px' fontSize='xl' mt={8}>
+          Outside of my work, you can find me bouldering, indulging in binge-watching sessions, and dedicating an excessive amount of time to personal analytics projects.
+          {/* If you want to chat about any analytics projects, you are welcome to email me at <Link fontWeight={'bold'} href="mailto:volodin.kostia@gmail.com">volodin.kostia@gmail.com</Link>! */}
         </Text>
         <Spacer></Spacer>
       </Flex>
