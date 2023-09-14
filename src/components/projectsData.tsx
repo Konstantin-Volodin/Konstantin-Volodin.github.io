@@ -1,15 +1,38 @@
-import mcgillCapstone from "../static/images/capstone.png"
+import mcgillMonkey from '../static/images/mcgill-monkey.jpg'
+import mcgillGlyph from '../static/images/mcgill-glyphosates.jpg'
+import mcgillCapstone from "../static/images/mcgill-capstone.png"
+import mcgillCase from '../static/images/mcgill-case.jpg'
+
 import artfDashboard from "../static/images/artf-dashboard.jpg"
 import artfBaselines from "../static/images/artf-baselines.jpg"
 import artfAppTimes from "../static/images/artf-apptimes.jpg"
+
 import ohriUrgentCare from "../static/images/urgent-care.jpg"
 import ohriCTScheduling from "../static/images/urgent-care.jpg"
 import ohriBlockScheduling from "../static/images/block-scheduling.jpg"
+
 import uOttawaDynamicKnapsack from "../static/images/dynamic-knapsack.jpg"
 import uOttawaWorkloadAllocation from "../static/images/workload-allocation.png"
+
 import personalForecasting from "../static/images/personal-forecasting.jpg"
 
 export default [
+  // {
+  //   'company': 'McGill University',
+  //   'name': 'Monkey Bridges',
+  //   'description': '',
+  //   'picture': mcgillMonkey,
+  //   'technologies': ['React', 'GCP', 'Python'],
+  //   'skills': ['Web Development', 'Cloud Providers']
+  // },
+  // {
+  //   'company': 'McGill University',
+  //   'name': 'Science of Glyphosates',
+  //   'description': '',
+  //   'picture': mcgillGlyph,
+  //   'technologies': ['React', 'AWS', 'Python'],
+  //   'skills': ['Web Development', 'Cloud Providers']
+  // },
   {
     'company': 'CAE Inc.',
     'name': 'Demand Forecasting and Inventory Management',
@@ -17,6 +40,14 @@ export default [
     'picture': mcgillCapstone,
     'technologies': ['Python', 'Statsforecast', 'Plotly'],
     'skills': ['Forecasting', 'Data Pipelines', 'Visualization']
+  },
+  {
+    'company': 'McGill University',
+    'name': 'Case Study - ExportCo',
+    'description': 'Participated in a case study with 3 other students achieving second place in a competition. We developed a strategy to manage risks and leverage rising commodity pricee by conductingh a sensitivity analysis on train capacity and station cycle time, we achieved a 19% throughput increase in Q1 and 59% in Q4. Additionally, we created a dashboard using to support dynamic train scheduling and enhance operational adaptability.',
+    'picture': mcgillCase,
+    'technologies': ['Python', 'PowerBi'],
+    'skills': ['Data Analysis', 'Data Visualization']
   },
 
   // {
