@@ -11,7 +11,7 @@ const Links = [
   // {'name': 'about', 'link': '#Projects', 'type': 'internal'},
   { 'name': 'github', 'link': 'https://github.com/Konstantin-Volodin', 'type': 'external' },
   { 'name': 'linkedin', 'link': 'https://www.linkedin.com/in/konstantin-volodin/', 'type': 'external' },
-  { 'name': 'resume', 'link': Resume, 'type': 'external' },
+  { 'name': 'resume', 'link': process.env.PUBLIC_URL + '/resume.pdf', 'type': 'external' },
 ];
 
 function NavLink(props: any) {
