@@ -44,7 +44,7 @@ export default [
   {
     'company': 'McGill University',
     'name': 'Case Study - ExportCo',
-    'description': 'Participated in a case study with 3 other students achieving second place in a competition. We developed a strategy to manage risks and leverage rising commodity pricee by conductingh a sensitivity analysis on train capacity and station cycle time, we achieved a 19% throughput increase in Q1 and 59% in Q4. Additionally, we created a dashboard using to support dynamic train scheduling and enhance operational adaptability.',
+    'description': 'Participated in a case study with 3 other students achieving second place in a competition. We developed a strategy to manage risks and leverage rising commodity pricee by conductingh a sensitivity analysis on train capacity and station cycle time, we achieved a 19% throughput increase in Q1 and 59% in Q4. Additionally, we created a dashboard to support dynamic train scheduling and enhance operational adaptability.',
     'picture': mcgillCase,
     'technologies': ['Python', 'PowerBi'],
     'skills': ['Data Analysis', 'Data Visualization']
