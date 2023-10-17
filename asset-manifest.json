@@ -1,8 +1,10 @@
 {
   "files": {
     "main.css": "/static/css/main.ace24e33.css",
-    "main.js": "/static/js/main.6c67c94c.js",
+    "main.js": "/static/js/main.84663b19.js",
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
+    "static/media/mcgill-monkey.jpg": "/static/media/mcgill-monkey.f34331562e381839c47c.jpg",
+    "static/media/mcgill-glyphosates.jpg": "/static/media/mcgill-glyphosates.4274edca4bb370d58cef.jpg",
     "static/media/dynamic-knapsack.jpg": "/static/media/dynamic-knapsack.e65c0490c334900bb7d7.jpg",
     "static/media/block-scheduling.jpg": "/static/media/block-scheduling.bbfdd8a1c7ef5ec0beeb.jpg",
     "static/media/urgent-care.jpg": "/static/media/urgent-care.68df613dbdf83e88858d.jpg",
@@ -11,6 +13,7 @@
     "static/media/power-bi.png": "/static/media/power-bi.663c9dd3874bac0d44a1.png",
     "static/media/mcgill-capstone.png": "/static/media/mcgill-capstone.f0d17fc202b66e71417e.png",
     "static/media/docker-logo.png": "/static/media/docker-logo.241804426ad6ca2e495c.png",
+    "static/media/personal-hackathon.jpg": "/static/media/personal-hackathon.943da91d54603a8dd76c.jpg",
     "static/media/artf-apptimes.jpg": "/static/media/artf-apptimes.b5b799d27eae6f327296.jpg",
     "static/media/artf-dashboard.jpg": "/static/media/artf-dashboard.7a3dabc6f3166ee34a61.jpg",
     "static/media/postman-logo.png": "/static/media/postman-logo.72153fd87d92dfa43808.png",
@@ -28,11 +31,11 @@
     "static/media/pytorch-logo.png": "/static/media/pytorch-logo.0c542d5564f655262f0f.png",
     "index.html": "/index.html",
     "main.ace24e33.css.map": "/static/css/main.ace24e33.css.map",
-    "main.6c67c94c.js.map": "/static/js/main.6c67c94c.js.map",
+    "main.84663b19.js.map": "/static/js/main.84663b19.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ace24e33.css",
-    "static/js/main.6c67c94c.js"
+    "static/js/main.84663b19.js"
   ]
 }
