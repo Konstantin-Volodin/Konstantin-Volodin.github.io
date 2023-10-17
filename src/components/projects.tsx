@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Box, Center, Container, Heading, Grid, Text, Stack, Image, AspectRatio, SlideFade, Tag, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Center, Container, Heading, Grid, Text, Stack, Image, AspectRatio, SlideFade, Tag, Wrap, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
@@ -8,37 +8,49 @@ function ProjectCard(props: any) {
   const [enteredScreen, setEneredScreen] = useState(false);
 
   function onChange(isVisible: boolean) {
-    if (isVisible == true) { setEneredScreen(true) }
+    if (isVisible == true) { setEneredScreen(true); console.log(props) }
   };
 
   return (
     <VisibilitySensor onChange={onChange} partialVisibility={true}>
       <SlideFade in={enteredScreen} offsetY='100px' transition={{ enter: { duration: 0.2 } }}>
-        <Box w={'full'} boxShadow={'md'} border='1px' borderColor={'gray.100'} rounded={'md'}>
 
-          <Center bg='gray.200' p={4} h='200px'>
-            <AspectRatio w='100%' h='100%' ratio={16 / 9} >
-              <Image src={props.pic} pos='relative' sx={{ 'filter': 'blur(0px)' }} />
-            </AspectRatio>
-          </Center>
 
-          <Stack p={6}>
-            <Text fontSize='lg'> {props.company} </Text>
-            <Heading fontSize={'2xl'}> {props.name} </Heading>
+        <LinkBox as='article'>
+          <Box w={'full'} boxShadow={'md'} border='1px' borderColor={'gray.100'} rounded={'md'}>
 
-            <Wrap>
-              {props.technologies.map((text: string) => (
-                <Tag key={text} w='fit-content' bg='blue.50'>{text}</Tag>
-              ))}
-              {props.skills.map((text: string) => (
-                <Tag key={text} w='fit-content' bg='purple.50'>{text}</Tag>
-              ))}
-            </Wrap>
-            <Text fontSize='md' whiteSpace='pre-wrap'>
-              {props.description}
-            </Text>
-          </Stack>
-        </Box>
+            {/* IMAGE / LINK */}
+            <LinkOverlay isExternal href={props.link}>
+              <Center bg='gray.200' p={4} h='200px'>
+                <AspectRatio w='100%' h='100%' ratio={16 / 9} >
+                  <Image src={props.pic} pos='relative' sx={{ 'filter': 'blur(0px)' }} />
+                </AspectRatio>
+              </Center>
+            </LinkOverlay>
+
+            {/* SKILLS / TECHNOLOGIES */}
+            <Stack p={6}>
+              <Text fontSize='lg'> {props.company} </Text>
+              <Heading fontSize={'2xl'}> {props.name} </Heading>
+
+              <Wrap>
+                {props.technologies.map((text: string) => (
+                  <Tag key={text} w='fit-content' bg='blue.50'>{text}</Tag>
+                ))}
+                {props.skills.map((text: string) => (
+                  <Tag key={text} w='fit-content' bg='purple.50'>{text}</Tag>
+                ))}
+              </Wrap>
+
+              {/* DESCRIPTION */}
+              <Text fontSize='md' whiteSpace='pre-wrap'>
+                {props.description}
+              </Text>
+
+            </Stack>
+          </Box>
+        </LinkBox>
+
       </SlideFade>
     </VisibilitySensor>
   );
@@ -64,6 +76,7 @@ function Projects() {
                 pic={item.picture}
                 skills={item.skills}
                 technologies={item.technologies}
+                link={item.link}
               > </ProjectCard>
             )
           })}
