@@ -10,7 +10,7 @@ function Intro() {
       <Flex maxW='1300px' h='80vh' p={5} mx='auto' direction='column' align={'baseline'}>
         <Spacer></Spacer>
         <Heading maxW='500px' >
-          Hi, I'm Konstantin - a data scientist and an aspiring data engineer
+          Hi, I'm Konstantin - a data scientist
         </Heading>
         <Text maxW='700px' fontSize='xl' mt={8}>
           As a data scientist for the Government of Canada and a graduate student at McGill University, I am passionate about the power of data to drive evidence-based decision-making and transformative insights.

@@ -14,7 +14,7 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Helmet>
-        <title>Welcome | Konstantin Volodin's Portfolio</title>
+        <title>Konstantin Volodin's Portfolio</title>
         <meta name="description" content="Konstantin Volodin's Portfolio" />
       </Helmet>
 
