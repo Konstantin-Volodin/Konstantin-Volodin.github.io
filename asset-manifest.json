@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.ace24e33.css",
-    "main.js": "/static/js/main.e06a3e7f.js",
+    "main.css": "/static/css/main.fbed7c34.css",
+    "main.js": "/static/js/main.b807c4b7.js",
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
     "static/media/mcgill-monkey.jpg": "/static/media/mcgill-monkey.f34331562e381839c47c.jpg",
     "static/media/mcgill-glyphosates.jpg": "/static/media/mcgill-glyphosates.4274edca4bb370d58cef.jpg",
@@ -30,12 +30,12 @@
     "static/media/django-logo.png": "/static/media/django-logo.4c677b78d12c96ea7add.png",
     "static/media/pytorch-logo.png": "/static/media/pytorch-logo.0c542d5564f655262f0f.png",
     "index.html": "/index.html",
-    "main.ace24e33.css.map": "/static/css/main.ace24e33.css.map",
-    "main.e06a3e7f.js.map": "/static/js/main.e06a3e7f.js.map",
+    "main.fbed7c34.css.map": "/static/css/main.fbed7c34.css.map",
+    "main.b807c4b7.js.map": "/static/js/main.b807c4b7.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ace24e33.css",
-    "static/js/main.e06a3e7f.js"
+    "static/css/main.fbed7c34.css",
+    "static/js/main.b807c4b7.js"
   ]
 }
