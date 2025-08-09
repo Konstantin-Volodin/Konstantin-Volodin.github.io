@@ -1,11 +1,11 @@
 // @ts-nocheck
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider, VStack } from '@chakra-ui/react';
+import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
-  const [enteredScreen, setEneredScreen] = useState(false);
+  const [enteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
   const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
