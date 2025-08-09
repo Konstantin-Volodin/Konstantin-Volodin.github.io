@@ -1,28 +1,39 @@
 import {
   Box, Flex, Container, Text, Heading, Link, LinkOverlay, LinkBox,
   HStack, IconButton, Spacer, Divider,
-  useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
+  useDisclosure,
+  // Replace Modal with Drawer for mobile navigation
+  Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerCloseButton,
+  VStack,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import Resume from "../static/KV - Resume.pdf";
 import "../index.css";
 
-const Links = [
-  // {'name': 'about', 'link': '#Projects', 'type': 'internal'},
-  { 'name': 'github', 'link': 'https://github.com/Konstantin-Volodin', 'type': 'external' },
-  { 'name': 'linkedin', 'link': 'https://www.linkedin.com/in/konstantin-volodin/', 'type': 'external' },
-  { 'name': 'resume', 'link': process.env.PUBLIC_URL + '/resume.pdf', 'type': 'external' },
+// Define Link item type and annotate the array so `type` narrows to the literal union
+type LinkItem = { name: string; link: string; type?: 'internal' | 'external' };
+const Links: LinkItem[] = [
+  // { name: 'about', link: '#Projects', type: 'internal' },
+  { name: 'github', link: 'https://github.com/Konstantin-Volodin', type: 'external' },
+  { name: 'linkedin', link: 'https://www.linkedin.com/in/konstantin-volodin/', type: 'external' },
+  { name: 'resume', link: process.env.PUBLIC_URL + '/resume.pdf', type: 'external' },
 ];
 
-function NavLink(props: any) {
-  console.log(props.type)
+// Strongly type NavLink props and infer external links when type is not provided
+interface NavLinkProps {
+  name: string;
+  link: string;
+  type?: 'internal' | 'external';
+}
+
+function NavLink({ name, link, type }: NavLinkProps) {
+  const isExternal = typeof type !== 'undefined' ? type === 'external' : /^(https?:|mailto:)/.test(link);
   return (
-    <Link px={6} py={3} my={4} href={props.link} _hover={{ textDecoration: 'none', bg: 'gray.200', }} isExternal={props.type == 'internal' ? false : true}>
+    <Link px={6} py={3} my={4} href={link} _hover={{ textDecoration: 'none', bg: 'gray.200' }} isExternal={isExternal}>
       <Text letterSpacing='0.5px' textTransform='uppercase' fontWeight='600'>
-        {props.name}
+        {name}
       </Text>
     </Link>
-  )
+  );
 }
 
 function Header() {
@@ -30,9 +41,18 @@ function Header() {
 
   return (
     <>
-      <Box bg='white' top={0} zIndex={100} position='sticky'>
+      <Box
+        bg='rgba(255,255,255,0.75)'
+        backdropFilter='saturate(180%) blur(10px)'
+        top={0}
+        zIndex={100}
+        position='sticky'
+        shadow='sm'
+        borderBottomWidth='1px'
+        borderBottomColor='slate.200'
+      >
 
-        <Container maxW='1300px'>
+        <Container maxW='container.lg'>
           <Flex h={16} alignItems={'center'}>
 
             {/* Logo */}
@@ -47,45 +67,36 @@ function Header() {
                     <NavLink key={link.name} name={link.name} link={link.link} type={link.type} />
                   )
                 })}
-                <Box px={4} py={2} >
-                  <LinkOverlay href="mailto:volodin.kostia@gmail.com" isExternal>
-                    <button className="btn btn-1 btn-1d">
-                      email me
-                    </button>
-                  </LinkOverlay >
-                </Box>
+                {/* Removed email CTA per request */}
               </HStack>
             </LinkBox>
 
             {/* Small Screen Button */}
             <IconButton size={'md'} display={{ base: 'flex', md: 'none' }}
-              aria-label={'Open Menu'} icon={<HamburgerIcon />}
-              onClick={isOpen ? onClose : onOpen}
+              aria-label={'Open navigation menu'} icon={<HamburgerIcon />}
+              onClick={onOpen}
+              variant='ghost'
             />
           </Flex>
         </Container>
 
-        {/* Small Screen Links */}
-        <Modal isOpen={isOpen} onClose={onClose} isCentered size='full'>
-          <ModalOverlay />
-          <ModalContent opacity={"0.9 !important"} borderRadius='none'>
-
-            <ModalBody p={0} m={0}>
-              <Box h={16} p={0} m={0}><ModalCloseButton top="12px" right='16px' w="40px" h="40px" /></Box>
-              <Flex direction='column' justify='center' align='center' opacity={"1 !important"} h='calc(100vh - 128px)'>
-
+        {/* Mobile Navigation Drawer */}
+        <Drawer isOpen={isOpen} placement='right' onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerBody display='flex' alignItems='center' justifyContent='center'>
+              <VStack spacing={4}>
                 {Links.map((link) => {
                   return (
-                    <NavLink key={link.name} name={link.name} link={link.link} />
+                    <NavLink key={link.name} name={link.name} link={link.link} type={link.type} />
                   )
                 })}
-                <NavLink name='email me' link="mailto:volodin.kostia@gmail.com"></NavLink>
-              </Flex>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-
-        <Divider />
+                {/* Removed email CTA per request */}
+              </VStack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
       </Box>
     </>
   );

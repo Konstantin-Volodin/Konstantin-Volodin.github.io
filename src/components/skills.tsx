@@ -3,7 +3,7 @@ import {
   Wrap, WrapItem,
   Box, Flex, Spacer, Image, Icon,
   Heading, Text, Container, Grid, SimpleGrid,
-  Tabs, TabList, Tab, TabPanels, TabPanel, Divider, SlideFade, Center
+  Tabs, TabList, Tab, TabPanels, TabPanel, Divider, SlideFade, Center, usePrefersReducedMotion
 } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import skillData from './skillsData'
@@ -21,6 +21,7 @@ function SkillIcon(props: any) {
 function SkillCard(props: any) {
   const domRef: any = useRef();
   const [enteredScreen, setEneredScreen] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   function onChange(isVisible: boolean) {
     if (isVisible == true) { setEneredScreen(true) }
@@ -28,12 +29,12 @@ function SkillCard(props: any) {
 
   return (
     <VisibilitySensor onChange={onChange} partialVisibility={true}>
-      <SlideFade in={enteredScreen} offsetY='100px' transition={{ enter: { duration: 0.4 } }}>
+      <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.3 } }}>
 
         <Box width="300px">
 
 
-          <Heading fontSize={'2xl'}> {props.name} </Heading>
+          <Heading fontSize={'2xl'} textTransform='none'> {props.name} </Heading>
           <Heading letterSpacing='0.5px' textTransform='uppercase' fontSize={'lg'} textAlign='center'>
             {props.data.section}
           </Heading>
@@ -56,9 +57,9 @@ function SkillCard(props: any) {
 function Skills() {
   return (
 
-    <Box>
-      <Container maxW='1300px' mb={52}>
-        <Heading maxW='500px' >
+    <Box id='Skills' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='slate.100'>
+      <Container maxW='container.lg' py={'112px'}>
+        <Heading maxW='500px' textTransform='none'>
           Knowledge & Skills
         </Heading>
         {/* <Text maxW='700px' fontSize='lg' mt={8}>
@@ -67,7 +68,7 @@ function Skills() {
         <Center mt={16}>
           <Grid width="min-content"
             columnGap={{ "base": "24", "xl": "32" }}
-            rowGap={10}
+            rowGap={12}
             justifyContent='center'
             templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}>
             {skillData.map((item) => {
