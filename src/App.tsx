@@ -1,14 +1,18 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { Helmet } from "react-helmet";
+import { Suspense, lazy } from 'react';
 
 import Fonts from './static/fonts/font'
 import theme from './static/fonts/theme'
 
 import Header from './components/header';
 import Intro from './components/intro';
-import Projects from './components/projects';
-import Skills from './components/skills'
-import ContactMe from './components/knowMore'
+import ProjectsSkeleton from './components/ProjectsSkeleton';
+import SkillsSkeleton from './components/SkillsSkeleton';
+
+// Lazy load heavy components
+const Projects = lazy(() => import('./components/projects'));
+const Skills = lazy(() => import('./components/skills'));
 
 function App() {
   return (
@@ -21,8 +25,17 @@ function App() {
       <Fonts />
       <Header />
       <Intro />
-      <Projects />
-      <Skills />
+      
+      {/* Lazy load Projects with skeleton fallback */}
+      <Suspense fallback={<ProjectsSkeleton />}>
+        <Projects />
+      </Suspense>
+      
+      {/* Lazy load Skills with skeleton fallback */}
+      <Suspense fallback={<SkillsSkeleton />}>
+        <Skills />
+      </Suspense>
+      
       {/* <ContactMe /> */}
 
     </ChakraProvider>
