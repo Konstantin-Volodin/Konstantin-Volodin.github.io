@@ -1,0 +1,107 @@
+[
+  {
+    "title": "Migrate from CRA to Vite",
+    "body": "Why: Faster dev/builds, smaller bundles, CRA is aging.\n\nTasks:\n- [ ] Replace react-scripts with Vite (react-ts template)\n- [ ] Update tsconfig and paths\n- [ ] Update scripts (dev/build/preview)\n- [ ] Remove CRA-specific polyfills and service worker config\n\nAcceptance Criteria:\n- [ ] App starts with `vite` in dev and builds successfully\n- [ ] HMR works\n- [ ] Bundle size reduced vs current build\n",
+    "labels": ["ai", "tech-debt", "p0"]
+  },
+  {
+    "title": "Upgrade to React 18 and Chakra UI v2+",
+    "body": "Why: Modern APIs and maintained ecosystem.\n\nTasks:\n- [ ] React 18 `createRoot` migration\n- [ ] Chakra UI v2+ upgrade guide applied\n- [ ] Framer Motion compatibility verified\n\nAcceptance Criteria:\n- [ ] App runs without warnings; all components render\n- [ ] No breaking style regressions\n",
+    "labels": ["ai", "tech-debt", "p0"]
+  },
+  {
+    "title": "Replace react-helmet with react-helmet-async",
+    "body": "Why: Safe with concurrent rendering.\n\nTasks:\n- [ ] Install and wrap app with HelmetProvider\n- [ ] Replace Helmet imports\n\nAcceptance Criteria:\n- [ ] Head tags render correctly\n",
+    "labels": ["ai", "tech-debt", "p1", "seo"]
+  },
+  {
+    "title": "Remove IE polyfills and modernize browserslist",
+    "body": "Why: Reduce bundle, IE11 is EOL.\n\nTasks:\n- [ ] Remove react-app-polyfill and core-js imports\n- [ ] Update package.json browserslist to modern targets\n\nAcceptance Criteria:\n- [ ] App loads without polyfills; Lighthouse score improved\n",
+    "labels": ["ai", "tech-debt", "performance", "p1"]
+  },
+  {
+    "title": "Enable TypeScript strict mode and upgrade to TS 5.x",
+    "body": "Why: Catch more bugs with types.\n\nTasks:\n- [ ] Upgrade TypeScript to 5.x\n- [ ] Enable `strict` in tsconfig\n- [ ] Fix resulting type errors\n\nAcceptance Criteria:\n- [ ] `tsc --noEmit` passes\n",
+    "labels": ["ai", "testing", "tech-debt", "p1"]
+  },
+  {
+    "title": "Remove @ts-nocheck and add proper types to components",
+    "body": "Why: Improve type safety.\n\nFiles: `src/components/projects.tsx`, `src/components/intro.tsx`.\n\nTasks:\n- [ ] Define Project and Skills interfaces\n- [ ] Type props and state\n\nAcceptance Criteria:\n- [ ] No @ts-nocheck markers; typecheck passes\n",
+    "labels": ["ai", "tech-debt", "p1"]
+  },
+  {
+    "title": "Fix invalid React keys in Skills grid",
+    "body": "Why: Prevent reconciliation bugs.\n\nTasks:\n- [ ] Use a stable, unique key (e.g., section or name)\n\nAcceptance Criteria:\n- [ ] No React key warnings in console\n",
+    "labels": ["ai", "bug", "p0"]
+  },
+  {
+    "title": "Normalize technology naming in project data",
+    "body": "Why: Filters rely on exact string match.\n\nTasks:\n- [ ] Standardize names (e.g., Power BI vs PowerBi, Node.js vs NodeJS)\n- [ ] Add unit test asserting filter coverage\n\nAcceptance Criteria:\n- [ ] Filters surface all relevant items consistently\n",
+    "labels": ["ai", "bug", "p1"]
+  },
+  {
+    "title": "Introduce dark mode and color mode toggle",
+    "body": "Why: Accessibility and UX.\n\nTasks:\n- [ ] Configure Chakra color mode manager\n- [ ] Add toggle in Header\n- [ ] Ensure contrast meets AA in both modes\n\nAcceptance Criteria:\n- [ ] Toggle persists; audited with axe\n",
+    "labels": ["ai", "design", "a11y", "p2"]
+  },
+  {
+    "title": "Unify typography and fonts",
+    "body": "Why: Theme references custom fonts; packages include Open Sans/Raleway.\n\nTasks:\n- [ ] Choose a single font family via @fontsource (e.g., Inter)\n- [ ] Update theme to use that family for heading/body\n- [ ] Remove unused font packages and custom font loader if obsolete\n\nAcceptance Criteria:\n- [ ] Visual parity; CLS not worsened; font-display swap configured\n",
+    "labels": ["ai", "design", "tech-debt", "p2"]
+  },
+  {
+    "title": "Refine card grid spacing and section paddings",
+    "body": "Why: Improve visual rhythm.\n\nTasks:\n- [ ] Review container paddings and gaps\n- [ ] Align to a consistent spacing scale\n\nAcceptance Criteria:\n- [ ] Grid feels balanced on mobile/desktop\n",
+    "labels": ["ai", "design", "ux", "p3"]
+  },
+  {
+    "title": "Responsive images and modern formats",
+    "body": "Why: Performance and clarity.\n\nTasks:\n- [ ] Add srcset/sizes for project images\n- [ ] Generate WebP/AVIF with fallbacks\n\nAcceptance Criteria:\n- [ ] Improved Lighthouse performance; crisp images on retina\n",
+    "labels": ["ai", "performance", "p2"]
+  },
+  {
+    "title": "Remove unused legacy CSS",
+    "body": "Why: Reduce CSS bloat.\n\nTasks:\n- [ ] Delete unused .btn styles from index.css if not referenced\n\nAcceptance Criteria:\n- [ ] No visual regression; CSS size reduced\n",
+    "labels": ["ai", "tech-debt", "performance", "p3"]
+  },
+  {
+    "title": "Code-split heavy sections",
+    "body": "Why: Faster first load.\n\nTasks:\n- [ ] Lazy-load Projects and Skills\n- [ ] Add skeletons/placeholders\n\nAcceptance Criteria:\n- [ ] Lower initial JS; no layout shift\n",
+    "labels": ["ai", "performance", "p2"]
+  },
+  {
+    "title": "Filter UX: counts and persistence polish",
+    "body": "Why: Transparency and shareability.\n\nTasks:\n- [ ] Show counts on filter chips\n- [ ] Ensure URL sync resilient and has unit tests\n\nAcceptance Criteria:\n- [ ] Back/forward works; deep links stable\n",
+    "labels": ["ai", "ux", "testing", "p2"]
+  },
+  {
+    "title": "Clean up copy and fix typos in project descriptions",
+    "body": "Why: Professional polish.\n\nTasks:\n- [ ] Proofread and correct spelling/grammar\n\nAcceptance Criteria:\n- [ ] No typos; consistent tense/style\n",
+    "labels": ["ai", "content", "p2"]
+  },
+  {
+    "title": "Improve SEO metadata and social cards",
+    "body": "Why: Better previews and discoverability.\n\nTasks:\n- [ ] Add OG/Twitter meta tags\n- [ ] Per-page/section titles where relevant\n\nAcceptance Criteria:\n- [ ] Link previews show title/description/image\n",
+    "labels": ["ai", "seo", "p3"]
+  },
+  {
+    "title": "Stop committing build/ to main and use GH Pages Action",
+    "body": "Why: Keep repo clean; reproducible deploys.\n\nTasks:\n- [ ] Remove build/ from repo, add to .gitignore\n- [ ] Add pages deploy workflow (build, upload, deploy)\n- [ ] Remove gh-pages npm script if unused\n\nAcceptance Criteria:\n- [ ] Site deploys on push to main via Actions\n",
+    "labels": ["ai", "infra", "tech-debt", "p1"]
+  },
+  {
+    "title": "Add ESLint + Prettier + Husky + lint-staged",
+    "body": "Why: Consistent code quality.\n\nTasks:\n- [ ] Configure ESLint (react, ts) and Prettier\n- [ ] Husky pre-commit with lint-staged\n- [ ] CI lint job\n\nAcceptance Criteria:\n- [ ] Lint passes locally and in CI\n",
+    "labels": ["ai", "testing", "infra", "p2"]
+  },
+  {
+    "title": "Add unit tests for filters and URL sync",
+    "body": "Why: Prevent regressions.\n\nTasks:\n- [ ] Add RTL tests for Projects filter logic\n- [ ] Add unit tests for URL helpers\n\nAcceptance Criteria:\n- [ ] CI runs tests with coverage threshold\n",
+    "labels": ["ai", "testing", "p2"]
+  },
+  {
+    "title": "Add e2e smoke tests with Playwright",
+    "body": "Why: Validate critical flows.\n\nTasks:\n- [ ] Open modal\n- [ ] Filter projects\n- [ ] Keyboard navigate between projects\n\nAcceptance Criteria:\n- [ ] Headless run passes in CI\n",
+    "labels": ["ai", "testing", "p3"]
+  }
+]

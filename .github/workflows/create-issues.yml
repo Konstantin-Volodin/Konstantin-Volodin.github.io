@@ -1,0 +1,18 @@
+name: Create backlog issues
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create issues from file
+        uses: nashmaniac/create-issue-action@v1.2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issues: .github/issues.json

@@ -1,0 +1,18 @@
+name: Seed labels
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync-labels:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+      repository-projects: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync labels
+        uses: EndBug/label-sync@v2
+        with:
+          config-file: .github/labels.yml
