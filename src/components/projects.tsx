@@ -14,7 +14,7 @@ function ProjectCard(props: any) {
   const modalHeaderId = `${slug}-header`;
 
   function onChange(isVisible: boolean) {
-    if (isVisible) { setEneredScreen(true); }
+    if (isVisible) { setEnteredScreen(true); }
   };
 
   const meta = useMemo(() => {
