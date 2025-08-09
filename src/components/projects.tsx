@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider, VStack } from '@chakra-ui/react';
+import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
-  const [enteredScreen, setEneredScreen] = useState(false);
+  const [enteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+  const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
   // IDs for a11y wiring
   const modalId = `${slug}-modal`;
@@ -92,8 +92,7 @@ function ProjectCard(props: any) {
       <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
 
         <>
-          <LinkBox as='article' aria-labelledby={`${slug}-title`} role='group'
-                   aria-haspopup='dialog' aria-expanded={isOpen} aria-controls={modalId}
+          <LinkBox as='article' aria-labelledby={`${slug}-title`}
                    _focus={{ outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
                    _focusWithin={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
@@ -401,7 +400,7 @@ function Projects() {
   }, [activeGroup, activeTech]);
 
   // Build slugs of visible items for keyboard navigation in modal
-  const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, ''), []);
+  const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''), []);
   const slugs = useMemo(() => items.map((i: any) => slugify(i.name)), [items, slugify]);
 
   // Local helper to read current project from URL
