@@ -24,7 +24,7 @@ function SkillCard(props: any) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   function onChange(isVisible: boolean) {
-    if (isVisible == true) { setEneredScreen(true) }
+    if (isVisible) { setEneredScreen(true) }
   };
 
   return (
