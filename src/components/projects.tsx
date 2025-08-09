@@ -5,7 +5,7 @@ import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
-  const [enteredScreen, setEneredScreen] = useState(false);
+  const [enteredScreen, setEnteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
   const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -387,6 +387,39 @@ function Projects() {
     }
   };
 
+  // Calculate counts for each category filter
+  const categoryFilterCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    GROUP_NAMES.forEach(cat => {
+      const fn = GROUPS[cat] || GROUPS.All;
+      let filteredData = projData.filter(fn);
+      // Apply current technology filter when calculating category counts
+      if (activeTech && activeTech !== 'All') {
+        filteredData = filteredData.filter((i: any) => Array.isArray(i.technologies) && i.technologies.includes(activeTech));
+      }
+      counts[cat] = filteredData.length;
+    });
+    return counts;
+  }, [activeTech]);
+
+  // Calculate counts for each technology filter
+  const technologyFilterCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    TECH_NAMES.forEach(tech => {
+      // Apply current category filter when calculating technology counts
+      const fn = GROUPS[activeGroup] || GROUPS.All;
+      let filteredData = projData.filter(fn);
+      // Apply technology filter
+      if (tech === 'All') {
+        counts[tech] = filteredData.length;
+      } else {
+        const techFilteredData = filteredData.filter((i: any) => Array.isArray(i.technologies) && i.technologies.includes(tech));
+        counts[tech] = techFilteredData.length;
+      }
+    });
+    return counts;
+  }, [activeGroup]);
+
   // Show a clear control only when filters are active
   const hasActiveFilters = useMemo(() => activeGroup !== 'All' || activeTech !== 'All', [activeGroup, activeTech]);
   const clearFilters = useCallback(() => { setActiveGroup('All'); setActiveTech('All'); }, []);
@@ -449,6 +482,7 @@ function Projects() {
           <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1}>{CATEGORY_LABEL}:</Text>
           {GROUP_NAMES.map((cat) => {
             const isActive = activeGroup === cat;
+            const count = categoryFilterCounts[cat] || 0;
             return (
               <Tag key={cat}
                    as='button'
@@ -469,7 +503,7 @@ function Projects() {
                    _hover={{ borderColor: isActive ? 'brand.300' : 'slate.300' }}
                    _focus={{ boxShadow: 'none', outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}>
-                {cat}
+                {cat} <Text as='span' ml={1} opacity={0.7} fontSize='xs'>({count})</Text>
               </Tag>
             )
           })}
@@ -480,6 +514,7 @@ function Projects() {
           <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1}>Technology:</Text>
           {TECH_NAMES.map((tech) => {
             const isActive = activeTech === tech;
+            const count = technologyFilterCounts[tech] || 0;
             return (
               <Tag key={tech}
                    as='button'
@@ -500,7 +535,7 @@ function Projects() {
                    _hover={{ borderColor: isActive ? 'brand.300' : 'slate.300' }}
                    _focus={{ boxShadow: 'none', outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}>
-                {tech}
+                {tech} <Text as='span' ml={1} opacity={0.7} fontSize='xs'>({count})</Text>
               </Tag>
             )
           })}
