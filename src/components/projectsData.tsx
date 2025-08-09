@@ -17,7 +17,9 @@ import uOttawaWorkloadAllocation from "../static/images/workload-allocation.png"
 import personalForecasting from "../static/images/personal-forecasting.jpg"
 import personalHackathon from "../static/images/personal-hackathon.jpg"
 
-export default [
+import { Project } from '../types';
+
+const projectsData: Project[] = [
   {
     'company': 'Personal',
     'name': 'Case Study - Data Product with Databricks',
@@ -177,3 +179,5 @@ export default [
   //   'picture': ''
   // },
 ]
+
+export default projectsData;

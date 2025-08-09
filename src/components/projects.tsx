@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider, VStack } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
+import { ProjectCardProps, Project } from '../types';
 
-function ProjectCard(props: any) {
-  const [enteredScreen, setEneredScreen] = useState(false);
+function ProjectCard(props: ProjectCardProps) {
+  const [enteredScreen, setEnteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
   const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -112,7 +112,6 @@ function ProjectCard(props: any) {
                        alt={`${props.name} preview`}
                        loading='lazy'
                        decoding='async'
-                       fetchPriority='low'
                        w='100%'
                        h='100%'
                        objectFit='cover'
@@ -222,7 +221,6 @@ function ProjectCard(props: any) {
                            alt={`${props.name} preview`}
                            loading='lazy'
                            decoding='async'
-                           fetchPriority='low'
                            w='100%'
                            h='auto'
                            objectFit='cover'
@@ -242,7 +240,7 @@ function ProjectCard(props: any) {
 }
 
 // Predefined category groups
-const GROUPS: Record<string, (item: any) => boolean> = {
+const GROUPS: Record<string, (item: Project) => boolean> = {
   All: () => true,
   Web: (i) => (i.skills || []).includes('Web Development') || (i.technologies || []).some((t: string) => ['React', 'Django'].includes(t)),
   ML: (i) => (i.skills || []).includes('Data Science') || (i.technologies || []).some((t: string) => ['PyTorch', 'Statsforecast'].includes(t)),
@@ -287,7 +285,7 @@ function Projects() {
   // All technologies present in data, ordered with common ones first
   const allTechs = useMemo(() => {
     const set = new Set<string>();
-    projData.forEach((i: any) => Array.isArray(i.technologies) && i.technologies.forEach((t: string) => set.add(t)));
+    projData.forEach((i: Project) => Array.isArray(i.technologies) && i.technologies.forEach((t: string) => set.add(t)));
     const TOP_TECHS = ['Python','R','SQL','JavaScript','TypeScript','React','Django','PyTorch','GCP','AWS','Docker','Airflow','Databricks','Power BI','Postman','Node.js','NoSQL'];
     const top = TOP_TECHS.filter(t => set.has(t));
     const rest = Array.from(set).filter(t => !TOP_TECHS.includes(t));
@@ -395,14 +393,14 @@ function Projects() {
     const fn = GROUPS[activeGroup] || GROUPS.All;
     let arr = projData.filter(fn);
     if (activeTech && activeTech !== 'All') {
-      arr = arr.filter((i: any) => Array.isArray(i.technologies) && i.technologies.includes(activeTech));
+      arr = arr.filter((i: Project) => Array.isArray(i.technologies) && i.technologies.includes(activeTech));
     }
     return arr;
   }, [activeGroup, activeTech]);
 
   // Build slugs of visible items for keyboard navigation in modal
   const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, ''), []);
-  const slugs = useMemo(() => items.map((i: any) => slugify(i.name)), [items, slugify]);
+  const slugs = useMemo(() => items.map((i: Project) => slugify(i.name)), [items, slugify]);
 
   // Local helper to read current project from URL
   const getProjectFromUrlLocal = useCallback(() => {
@@ -526,7 +524,7 @@ function Projects() {
 
         {/* 2 per row on md+ (no toggle) */}
         <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={16}>
-          {items.map((item: any) => (
+          {items.map((item: Project) => (
             <ProjectCard key={item.name}
               name={item.name}
               company={item.company}

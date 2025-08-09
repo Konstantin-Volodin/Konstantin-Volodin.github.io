@@ -21,8 +21,9 @@ import postman from "../static/logos/postman-logo.png"
 import github from "../static/logos/github-logo.png"
 import docker from "../static/logos/docker-logo.png"
 
+import { SkillSection } from '../types';
 
-export default [
+const skillsData: SkillSection[] = [
     {
         'section': 'Programming',
         'skills': [
@@ -60,3 +61,5 @@ export default [
         ]
     }
 ]
+
+export default skillsData;
