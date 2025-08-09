@@ -1,4 +1,4 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme } from '@chakra-ui/react';
 
 const theme = extendTheme({
   fonts: {
@@ -36,7 +36,9 @@ const theme = extendTheme({
     Button: {
       baseStyle: {
         _focus: { boxShadow: 'none' },
-        _focusVisible: { boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' },
+        _focusVisible: {
+          boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)',
+        },
       },
       variants: {
         cta: {
@@ -53,13 +55,17 @@ const theme = extendTheme({
     IconButton: {
       baseStyle: {
         _focus: { boxShadow: 'none' },
-        _focusVisible: { boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' },
+        _focusVisible: {
+          boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)',
+        },
       },
     },
     CloseButton: {
       baseStyle: {
         _focus: { boxShadow: 'none' },
-        _focusVisible: { boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' },
+        _focusVisible: {
+          boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)',
+        },
       },
     },
     Link: {
@@ -95,6 +101,6 @@ const theme = extendTheme({
       body: { scrollSnapType: 'y proximity', scrollPaddingTop: '64px' },
     },
   },
-})
+});
 
-export default theme
+export default theme;

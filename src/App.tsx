@@ -1,14 +1,13 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import { Helmet } from "react-helmet";
+import { ChakraProvider } from '@chakra-ui/react';
+import { Helmet } from 'react-helmet';
 
-import Fonts from './static/fonts/font'
-import theme from './static/fonts/theme'
+import Fonts from './static/fonts/font';
+import theme from './static/fonts/theme';
 
 import Header from './components/header';
 import Intro from './components/intro';
 import Projects from './components/projects';
-import Skills from './components/skills'
-import ContactMe from './components/knowMore'
+import Skills from './components/skills';
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
       <Projects />
       <Skills />
       {/* <ContactMe /> */}
-
     </ChakraProvider>
   );
 }
