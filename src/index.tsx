@@ -1,6 +1,10 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import 'core-js/stable'
+
+// Import Inter font with font-display: swap for optimal CLS
+import '@fontsource/inter'; // Includes 400 and 700 weights with font-display: swap
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
