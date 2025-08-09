@@ -1,11 +1,10 @@
-// @ts-nocheck
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider, VStack } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
-  const [enteredScreen, setEneredScreen] = useState(false);
+  const [enteredScreen, setEnteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
   const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -112,7 +111,6 @@ function ProjectCard(props: any) {
                        alt={`${props.name} preview`}
                        loading='lazy'
                        decoding='async'
-                       fetchPriority='low'
                        w='100%'
                        h='100%'
                        objectFit='cover'
@@ -222,7 +220,6 @@ function ProjectCard(props: any) {
                            alt={`${props.name} preview`}
                            loading='lazy'
                            decoding='async'
-                           fetchPriority='low'
                            w='100%'
                            h='auto'
                            objectFit='cover'
