@@ -6,7 +6,7 @@ function Intro() {
     <Box
       as="section"
       borderTopWidth='1px'
-      borderColor='slate.100'
+      borderColor='border-subtle'
       scrollMarginTop='80px'
       style={{
         scrollSnapAlign: 'start',
@@ -17,7 +17,7 @@ function Intro() {
       minH='calc(100vh - 64px)'
     >
       <Box maxW='64rem' mx='auto' px='20px' textAlign={{ base: 'center', md: 'left' }} width='100%'>
-        <Text fontSize='sm' color='slate.500' mx={{ base: 'auto', md: '0' }} mb='0.5rem'>
+        <Text fontSize='sm' color='text-muted' mx={{ base: 'auto', md: '0' }} mb='0.5rem'>
           Welcome — I'm Konstantin 👋
         </Text>
 
