@@ -1,2 +1,1 @@
-@types
-declare module '*.pdf'
+declare module '*.pdf';
