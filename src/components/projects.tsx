@@ -128,7 +128,7 @@ function ProjectCard(props: any) {
               </Box>
 
               {/* CONTENT (minimalist) */}
-              <Stack p={{ base: '16px', md: '20px' }} spacing={3} flex={1}>
+              <Stack p={6} spacing={3} flex={1}>
                 <Tag size='sm' bg='slate.50' color='slate.700' borderWidth='1px' borderColor='slate.200' rounded='none' w='fit-content'>
                   {props.company}
                 </Tag>
@@ -439,13 +439,13 @@ function Projects() {
 
   return (
     <Box id='Projects' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='slate.100'>
-      <Container maxW='container.lg' py={'112px'}>
+      <Container maxW='container.lg' py={{ base: 20, md: 24 }}>
         <Heading maxW='500px' textTransform='none'>
           Projects
         </Heading>
 
         {/* Category descriptor + compact chips */}
-        <HStack mt={5} spacing={2} flexWrap='wrap' alignItems='center'>
+        <HStack mt={6} spacing={2} flexWrap='wrap' alignItems='center'>
           <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1}>{CATEGORY_LABEL}:</Text>
           {GROUP_NAMES.map((cat) => {
             const isActive = activeGroup === cat;
@@ -476,7 +476,7 @@ function Projects() {
         </HStack>
 
         {/* Technology descriptor + compact chips (limited list) */}
-        <HStack mt={3} spacing={2} flexWrap='wrap' alignItems='center'>
+        <HStack mt={4} spacing={2} flexWrap='wrap' alignItems='center'>
           <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1}>Technology:</Text>
           {TECH_NAMES.map((tech) => {
             const isActive = activeTech === tech;
@@ -524,8 +524,8 @@ function Projects() {
           )}
         </HStack>
 
-        {/* 2 per row on md+ (no toggle) */}
-        <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={16}>
+        {/* 2 per row on md+ with improved spacing */}
+        <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={{ base: 12, md: 16 }}>
           {items.map((item: any) => (
             <ProjectCard key={item.name}
               name={item.name}
