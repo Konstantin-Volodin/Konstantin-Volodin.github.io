@@ -1,0 +1,20 @@
+{
+  "labels": [
+    { "name": "ai", "color": "5319e7", "description": "For AI agent execution" },
+    { "name": "backlog", "color": "cfd3d7", "description": "Backlog item" },
+    { "name": "p0", "color": "d73a4a", "description": "Highest priority" },
+    { "name": "p1", "color": "fbca04", "description": "High priority" },
+    { "name": "p2", "color": "0e8a16", "description": "Medium priority" },
+    { "name": "p3", "color": "1d76db", "description": "Low priority" },
+    { "name": "design", "color": "0052cc", "description": "Visual and UX design" },
+    { "name": "ux", "color": "0366d6", "description": "User experience" },
+    { "name": "a11y", "color": "5319e7", "description": "Accessibility" },
+    { "name": "performance", "color": "0e8a16", "description": "Performance improvements" },
+    { "name": "testing", "color": "a2eeef", "description": "Tests and quality" },
+    { "name": "tech-debt", "color": "7057ff", "description": "Refactors and upgrades" },
+    { "name": "infra", "color": "bfd4f2", "description": "CI/CD and tooling" },
+    { "name": "bug", "color": "d73a4a", "description": "Something is not working" },
+    { "name": "content", "color": "5319e7", "description": "Copy and content changes" },
+    { "name": "seo", "color": "0e8a16", "description": "SEO and metadata" }
+  ]
+}

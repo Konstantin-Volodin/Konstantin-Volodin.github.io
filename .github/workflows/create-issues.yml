@@ -11,8 +11,21 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - name: Create issues from file
-        uses: nashmaniac/create-issue-action@v1.2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issues: .github/issues.json
+      - name: Create issues from JSON via gh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y jq
+          fi
+          jq -c '.[]' .github/issues.json | while read -r issue; do
+            title=$(echo "$issue" | jq -r '.title')
+            body=$(echo "$issue" | jq -r '.body')
+            labels=$(echo "$issue" | jq -r '.labels | join(",")')
+            echo "Creating: $title"
+            if [ -n "$labels" ] && [ "$labels" != "null" ]; then
+              gh issue create --title "$title" --body "$body" --label "$labels"
+            else
+              gh issue create --title "$title" --body "$body"
+            fi
+          done
