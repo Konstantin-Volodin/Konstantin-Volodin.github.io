@@ -1,13 +1,14 @@
 // @ts-nocheck
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider, VStack } from '@chakra-ui/react';
+import { Box, Container, Heading, Grid, Text, Stack, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
+import ResponsiveImage from './ResponsiveImage';
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
-  const [enteredScreen, setEneredScreen] = useState(false);
+  const [enteredScreen, setEnteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+  const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
   // IDs for a11y wiring
   const modalId = `${slug}-modal`;
@@ -92,7 +93,7 @@ function ProjectCard(props: any) {
       <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
 
         <>
-          <LinkBox as='article' aria-labelledby={`${slug}-title`} role='group'
+          <LinkBox as='article' aria-labelledby={`${slug}-title`}
                    aria-haspopup='dialog' aria-expanded={isOpen} aria-controls={modalId}
                    _focus={{ outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
@@ -108,11 +109,11 @@ function ProjectCard(props: any) {
 
               {/* IMAGE: fixed height for uniform cards */}
               <Box bg='slate.100' position='relative' flexShrink={0} h={{ base: '140px', md: '160px', lg: '180px' }}>
-                <Image src={props.pic}
+                <ResponsiveImage 
+                       src={props.pic}
                        alt={`${props.name} preview`}
-                       loading='lazy'
-                       decoding='async'
-                       fetchPriority='low'
+                       sizes="(max-width: 768px) 100vw, 50vw"
+                       priority={false}
                        w='100%'
                        h='100%'
                        objectFit='cover'
@@ -218,11 +219,11 @@ function ProjectCard(props: any) {
                 {/* Media preview, compact size (no enforced aspect ratio) */}
                 {props.pic && (
                   <Box mt={7} p={{ base: 2, md: 3 }} bg='slate.50' borderWidth='1px' borderColor='slate.200'>
-                    <Image src={props.pic}
+                    <ResponsiveImage 
+                           src={props.pic}
                            alt={`${props.name} preview`}
-                           loading='lazy'
-                           decoding='async'
-                           fetchPriority='low'
+                           sizes="(max-width: 768px) 90vw, 800px"
+                           priority={false}
                            w='100%'
                            h='auto'
                            objectFit='cover'
@@ -401,7 +402,7 @@ function Projects() {
   }, [activeGroup, activeTech]);
 
   // Build slugs of visible items for keyboard navigation in modal
-  const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, ''), []);
+  const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''), []);
   const slugs = useMemo(() => items.map((i: any) => slugify(i.name)), [items, slugify]);
 
   // Local helper to read current project from URL

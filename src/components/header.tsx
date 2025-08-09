@@ -1,6 +1,6 @@
 import {
-  Box, Flex, Container, Text, Heading, Link, LinkOverlay, LinkBox,
-  HStack, IconButton, Spacer, Divider,
+  Box, Flex, Container, Text, Heading, Link, LinkBox,
+  HStack, IconButton, Spacer,
   useDisclosure,
   // Replace Modal with Drawer for mobile navigation
   Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerCloseButton,
