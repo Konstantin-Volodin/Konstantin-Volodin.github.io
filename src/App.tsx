@@ -1,4 +1,4 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { Helmet } from "react-helmet";
 
 import Fonts from './static/fonts/font'
@@ -8,7 +8,6 @@ import Header from './components/header';
 import Intro from './components/intro';
 import Projects from './components/projects';
 import Skills from './components/skills'
-import ContactMe from './components/knowMore'
 
 function App() {
   return (

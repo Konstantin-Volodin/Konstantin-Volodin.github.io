@@ -1,6 +1,6 @@
 import {
-  Box, Flex, Container, Text, Heading, Link, LinkOverlay, LinkBox,
-  HStack, IconButton, Spacer, Divider,
+  Box, Flex, Container, Text, Heading, Link, LinkBox,
+  HStack, IconButton, Spacer,
   useDisclosure,
   // Replace Modal with Drawer for mobile navigation
   Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerCloseButton,
@@ -28,7 +28,14 @@ interface NavLinkProps {
 function NavLink({ name, link, type }: NavLinkProps) {
   const isExternal = typeof type !== 'undefined' ? type === 'external' : /^(https?:|mailto:)/.test(link);
   return (
-    <Link px={6} py={3} my={4} href={link} _hover={{ textDecoration: 'none', bg: 'gray.200' }} isExternal={isExternal}>
+    // @ts-expect-error - Bypass complex union type issue in TS 5.x with Chakra UI v1
+    <Link 
+      px={6} 
+      py={3} 
+      my={4} 
+      href={link} 
+      isExternal={isExternal}
+    >
       <Text letterSpacing='0.5px' textTransform='uppercase' fontWeight='600'>
         {name}
       </Text>
