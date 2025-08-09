@@ -22,7 +22,7 @@ export default [
     'company': 'Personal',
     'name': 'Case Study - Data Product with Databricks',
     'description': 'Sports analytics platform',
-    'longDescription': 'Participated in a hackathon with a team of other professionals centered around using Databricks platform for a comprehensive sports analytics data product. Together we created comprehensive data engineering product, processing data through Bronze to Gold layer. As part of data analytics portion, we transformed gold stage data into actionable insights via an intuitive dashboard. Finally for the data science portion, we tested and designed a predictive model, featuring data preparation, feature engineering, and model selection. This experience showcased our adaptability, collaborative prowess, and proficiency in cutting-edge tools for impactful solutions in sports analytics.',
+    'longDescription': 'Participated in a hackathon with a team of other professionals centered around using Databricks platform for a comprehensive sports analytics data product. Together we created a comprehensive data engineering product, processing data through Bronze to Gold layer. As part of data analytics portion, we transformed gold stage data into actionable insights via an intuitive dashboard. Finally for the data science portion, we tested and designed a predictive model, featuring data preparation, feature engineering, and model selection. This experience showcased our adaptability, collaborative prowess, and proficiency in cutting-edge tools for impactful solutions in sports analytics.',
     'picture': personalHackathon,
     'technologies': ['Databricks', 'Python', 'SQL'],
     'skills': ['Data Pipelines', 'Data Analytics', 'Data Science'],
