@@ -71,7 +71,7 @@ function Skills() {
             justifyContent='center'
             templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}>
             {skillData.map((item) => {
-              return (<SkillCard data={item} key={item.skills}> </SkillCard>)
+              return (<SkillCard data={item} key={item.section}> </SkillCard>)
             })}
           </Grid>
         </Center>
