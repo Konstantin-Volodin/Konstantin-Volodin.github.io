@@ -91,8 +91,8 @@ function ProjectCard(props: any) {
       <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
 
         <>
-          <LinkBox as='article' aria-labelledby={`${slug}-title`} role='group'
-                   aria-haspopup='dialog' aria-expanded={isOpen} aria-controls={modalId}
+          <LinkBox as='article' aria-labelledby={`${slug}-title`} role='button'
+                   aria-expanded={isOpen} aria-controls={modalId}
                    _focus={{ outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
                    _focusWithin={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}

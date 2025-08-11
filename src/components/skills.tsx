@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {
   Wrap, WrapItem,
   Box, Flex, Image,
-  Heading, Text, Container, Grid, Divider, SlideFade, Center, usePrefersReducedMotion
+  Heading, Text, Container, Grid,
+  Divider, SlideFade, Center, usePrefersReducedMotion
 } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import skillData from './skillsData'
@@ -18,7 +19,6 @@ function SkillIcon(props: any) {
 }
 
 function SkillCard(props: any) {
-  const domRef: any = useRef();
   const [enteredScreen, setEnteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 
