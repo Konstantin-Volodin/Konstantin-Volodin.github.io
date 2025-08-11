@@ -5,7 +5,7 @@ export interface Project {
   name: string;
   description: string;
   longDescription: string;
-  picture: any; // Image imports from webpack
+  picture: string; // Image imports from webpack
   technologies: string[];
   skills: string[];
   link: string | null;
