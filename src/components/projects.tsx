@@ -338,7 +338,13 @@ function Projects() {
       localStorage.setItem(STORAGE_TECH_KEY, tech);
       // Update the URL's search params while preserving hash
       const url = new URL(window.location.href);
-      url.searchParams.set('cat', cat as string);
+      // Only include cat when not 'All'
+      if (cat && cat !== 'All') {
+        url.searchParams.set('cat', cat as string);
+      } else {
+        url.searchParams.delete('cat');
+      }
+      // Only include tech when not 'All'
       if (tech && tech !== 'All') {
         url.searchParams.set('tech', tech);
       } else {
