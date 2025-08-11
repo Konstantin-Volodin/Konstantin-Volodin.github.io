@@ -5,7 +5,6 @@ import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
-  const [enteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
   const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
