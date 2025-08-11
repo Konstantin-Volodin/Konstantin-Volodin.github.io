@@ -24,7 +24,7 @@ export interface ProjectCardProps {
 
 export interface Skill {
   name: string;
-  image: any; // Image imports from webpack
+  image: string; // Image imports from webpack
 }
 
 export interface SkillSection {
