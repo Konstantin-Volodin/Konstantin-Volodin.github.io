@@ -16,7 +16,7 @@ export interface ProjectCardProps {
   company: string;
   description: string;
   longDescription: string;
-  pic: any; // Image imports from webpack
+  pic: string; // Image imports from webpack
   skills: string[];
   technologies: string[];
   link: string | null;
