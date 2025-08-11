@@ -400,7 +400,7 @@ function Projects() {
   }, [activeGroup, activeTech]);
 
   // Build slugs of visible items for keyboard navigation in modal
-  const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''), []);
+  const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, ''), []);
   const slugs = useMemo(() => items.map((i: any) => slugify(i.name)), [items, slugify]);
 
   // Local helper to read current project from URL
