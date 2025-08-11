@@ -5,15 +5,17 @@ import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
+  // Initialize as visible when user prefers reduced motion (avoid hidden content)
   const prefersReducedMotion = usePrefersReducedMotion();
-  const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+  const [enteredScreen, setEnteredScreen] = useState(() => prefersReducedMotion);
+  const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
   // IDs for a11y wiring
   const modalId = `${slug}-modal`;
   const modalHeaderId = `${slug}-header`;
 
   function onChange(isVisible: boolean) {
-    if (isVisible) { setEnteredScreen(true); }
+    if (isVisible && !enteredScreen) { setEnteredScreen(true); }
   };
 
   const meta = useMemo(() => {
@@ -87,11 +89,11 @@ function ProjectCard(props: any) {
   }, [openModal]);
 
   return (
-    <VisibilitySensor onChange={onChange} partialVisibility={true}>
+    <VisibilitySensor onChange={onChange} partialVisibility={true} delayedCall>
       <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
 
         <>
-          <LinkBox as='article' aria-labelledby={`${slug}-title`} role='button'
+          <LinkBox as='article' aria-labelledby={`${slug}-title`} role='group'
                    aria-expanded={isOpen} aria-controls={modalId}
                    _focus={{ outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
@@ -400,7 +402,7 @@ function Projects() {
   }, [activeGroup, activeTech]);
 
   // Build slugs of visible items for keyboard navigation in modal
-  const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, ''), []);
+  const slugify = useCallback((s: string) => String(s || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''), []);
   const slugs = useMemo(() => items.map((i: any) => slugify(i.name)), [items, slugify]);
 
   // Local helper to read current project from URL
@@ -526,6 +528,9 @@ function Projects() {
         {/* 2 per row on md+ (no toggle) */}
         <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={16}>
           {items.map((item: any) => (
+            // <div key={item.name}>
+            //   {item.name}
+            // </div>
             <ProjectCard key={item.name}
               name={item.name}
               company={item.company}
