@@ -8,16 +8,14 @@ import artfBaselines from "../static/images/artf-baselines.jpg"
 import artfAppTimes from "../static/images/artf-apptimes.jpg"
 
 import ohriUrgentCare from "../static/images/urgent-care.jpg"
-import ohriCTScheduling from "../static/images/urgent-care.jpg"
 import ohriBlockScheduling from "../static/images/block-scheduling.jpg"
 
 import uOttawaDynamicKnapsack from "../static/images/dynamic-knapsack.jpg"
 import uOttawaWorkloadAllocation from "../static/images/workload-allocation.png"
 
-import personalForecasting from "../static/images/personal-forecasting.jpg"
 import personalHackathon from "../static/images/personal-hackathon.jpg"
 
-export default [
+const projectsData = [
   {
     'company': 'Personal',
     'name': 'Case Study - Data Product with Databricks',
@@ -176,4 +174,6 @@ export default [
   //   'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras arcu nisl, luctus at laoreet sit amet, faucibus ut enim. Fusce ante sem, tincidunt vel lorem ac, dictum congue nunc. Donec sed hendrerit dui. Mauris at vestibulum nunc. Nunc volutpat pharetra tellus non mattis. Nunc malesuada varius sollicitudin. Mauris non metus eget leo rhoncus sagittis. Sed dapibus, ipsum a accumsan feugiat, est libero facilisis sem, quis porttitor risus odio eget nunc. Donec malesuada vehicula pellentesque. Integer sed venenatis tellus. Cras ut tristique lacus. Suspendisse efficitur nisl a arcu sollicitudin, sed consectetur massa consequat',
   //   'picture': ''
   // },
-]
+];
+
+export default projectsData;
