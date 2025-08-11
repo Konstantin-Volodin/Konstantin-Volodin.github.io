@@ -6,7 +6,7 @@ import projData from './projectsData'
 
 function ProjectCard(props: any) {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
   // IDs for a11y wiring
   const modalId = `${slug}-modal`;
