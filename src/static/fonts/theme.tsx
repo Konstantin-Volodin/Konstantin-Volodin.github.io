@@ -1,9 +1,18 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
+
+// 1. Add color mode config
+const config: ThemeConfig = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
+}
 
 const theme = extendTheme({
+  config,
   fonts: {
-    heading: 'Roboto-Header',
-    body: 'Roboto Body',
+    // Space Grotesk for headings, system stack for body
+    heading: 'SpaceGroteskVariable, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
+    body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
+    mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace'
   },
   colors: {
     // Modern Slate + Amber
@@ -30,6 +39,46 @@ const theme = extendTheme({
       700: '#334155',
       800: '#1E293B',
       900: '#0F172A',
+    },
+  },
+  semanticTokens: {
+    colors: {
+      // Background colors
+      bg: {
+        default: 'slate.50',
+        _dark: 'slate.900',
+      },
+      'bg-subtle': {
+        default: 'white',
+        _dark: 'slate.800',
+      },
+      'bg-glass': {
+        default: 'rgba(255,255,255,0.75)',
+        _dark: 'rgba(15,23,42,0.75)',
+      },
+      // Text colors
+      text: {
+        default: 'slate.900',
+        _dark: 'slate.50',
+      },
+      'text-muted': {
+        default: 'slate.500',
+        _dark: 'slate.400',
+      },
+      // Border colors
+      border: {
+        default: 'slate.200',
+        _dark: 'slate.700',
+      },
+      'border-subtle': {
+        default: 'slate.100',
+        _dark: 'slate.800',
+      },
+      // Hover states
+      'hover-bg': {
+        default: 'gray.200',
+        _dark: 'slate.700',
+      },
     },
   },
   components: {
@@ -71,15 +120,17 @@ const theme = extendTheme({
     },
     Heading: {
       baseStyle: {
-        letterSpacing: '0.5px',
-        textTransform: 'uppercase',
-        fontWeight: 700,
+        letterSpacing: '-0.25px', // tighter with Space Grotesk
+        textTransform: 'none', // keep natural case now
+        fontWeight: 600,
         cursor: 'default',
+        color: 'text',
       },
     },
     Text: {
       baseStyle: {
         cursor: 'default',
+        color: 'text',
       },
     },
     Modal: {
@@ -90,7 +141,11 @@ const theme = extendTheme({
   },
   styles: {
     global: {
-      'html, body': { bg: 'slate.50', color: 'slate.900' },
+      'html, body': { 
+        bg: 'bg', 
+        color: 'text',
+        transition: 'background-color 0.2s, color 0.2s',
+      },
       html: { scrollBehavior: 'smooth' },
       body: { scrollSnapType: 'y proximity', scrollPaddingTop: '64px' },
     },
