@@ -5,7 +5,7 @@ import { Suspense, lazy } from 'react';
 import Fonts from './static/fonts/font'
 import theme from './static/fonts/theme'
 
-import Header from './components/header';
+import Header from './components/HeaderEnhanced';
 import Intro from './components/intro';
 import ProjectsSkeleton from './components/ProjectsSkeleton';
 import SkillsSkeleton from './components/SkillsSkeleton';

@@ -26,7 +26,12 @@ const projectsData: Project[] = [
     'picture': personalHackathon,
     'technologies': ['Databricks', 'Python', 'SQL'],
     'skills': ['Data Pipelines', 'Data Analytics', 'Data Science'],
-    'link': null
+    'link': null,
+    'status': 'Completed',
+    'startDate': '2024-01',
+    'endDate': '2024-01',
+    'teamSize': 4,
+    'featured': true
   },
   {
     'company': 'McGill University',
@@ -36,7 +41,12 @@ const projectsData: Project[] = [
     'picture': mcgillMonkey,
     'technologies': ['React', 'GCP', 'Python'],
     'skills': ['Web Development', 'Cloud Providers'],
-    'link': "https://www.mono-sos.com/"
+    'link': "https://www.mono-sos.com/",
+    'status': 'Active',
+    'startDate': '2022-09',
+    'endDate': '2023-04',
+    'teamSize': 3,
+    'featured': true
   },
   {
     'company': 'McGill University',
