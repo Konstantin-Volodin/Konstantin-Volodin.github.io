@@ -1,12 +1,12 @@
-// @ts-nocheck
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
-  const [enteredScreen, setEnteredScreen] = useState(false);
+  // Initialize as visible when user prefers reduced motion (avoid hidden content)
   const prefersReducedMotion = usePrefersReducedMotion();
+  const [enteredScreen, setEnteredScreen] = useState(() => prefersReducedMotion);
   const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
   // IDs for a11y wiring
@@ -14,7 +14,7 @@ function ProjectCard(props: any) {
   const modalHeaderId = `${slug}-header`;
 
   function onChange(isVisible: boolean) {
-    if (isVisible) { setEnteredScreen(true); }
+    if (isVisible && !enteredScreen) { setEnteredScreen(true); }
   };
 
   const meta = useMemo(() => {
@@ -88,7 +88,7 @@ function ProjectCard(props: any) {
   }, [openModal]);
 
   return (
-    <VisibilitySensor onChange={onChange} partialVisibility={true}>
+    <VisibilitySensor onChange={onChange} partialVisibility={true} delayedCall>
       <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
 
         <>
@@ -111,7 +111,6 @@ function ProjectCard(props: any) {
                        alt={`${props.name} preview`}
                        loading='lazy'
                        decoding='async'
-                       fetchPriority='low'
                        w='100%'
                        h='100%'
                        objectFit='cover'
@@ -161,7 +160,7 @@ function ProjectCard(props: any) {
           <Modal isOpen={isOpen} onClose={closeModal} isCentered motionPreset={prefersReducedMotion ? 'none' : 'scale'}>
             <ModalOverlay bg='blackAlpha.400' backdropFilter='blur(6px)' />
             <ModalContent id={modalId} aria-labelledby={modalHeaderId} aria-describedby={`${slug}-desc`} rounded='none' maxW='container.lg' w='full'>
-              <ModalHeader id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'>{props.name}</ModalHeader>
+              <ModalHeader as='h2' id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'>{props.name}</ModalHeader>
               <ModalCloseButton _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }} />
               <ModalBody px={{ base: 7, md: 10 }} py={{ base: 7, md: 10 }}>
                 {/* Summary band - improved readability & semantics */}
@@ -221,7 +220,6 @@ function ProjectCard(props: any) {
                            alt={`${props.name} preview`}
                            loading='lazy'
                            decoding='async'
-                           fetchPriority='low'
                            w='100%'
                            h='auto'
                            objectFit='cover'
@@ -339,7 +337,13 @@ function Projects() {
       localStorage.setItem(STORAGE_TECH_KEY, tech);
       // Update the URL's search params while preserving hash
       const url = new URL(window.location.href);
-      url.searchParams.set('cat', cat as string);
+      // Only include cat when not 'All'
+      if (cat && cat !== 'All') {
+        url.searchParams.set('cat', cat as string);
+      } else {
+        url.searchParams.delete('cat');
+      }
+      // Only include tech when not 'All'
       if (tech && tech !== 'All') {
         url.searchParams.set('tech', tech);
       } else {
@@ -526,6 +530,9 @@ function Projects() {
         {/* 2 per row on md+ (no toggle) */}
         <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={16}>
           {items.map((item: any) => (
+            // <div key={item.name}>
+            //   {item.name}
+            // </div>
             <ProjectCard key={item.name}
               name={item.name}
               company={item.company}

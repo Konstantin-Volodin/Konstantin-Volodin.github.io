@@ -15,7 +15,7 @@ const Links: LinkItem[] = [
   // { name: 'about', link: '#Projects', type: 'internal' },
   { name: 'github', link: 'https://github.com/Konstantin-Volodin', type: 'external' },
   { name: 'linkedin', link: 'https://www.linkedin.com/in/konstantin-volodin/', type: 'external' },
-  { name: 'resume', link: process.env.PUBLIC_URL + '/resume.pdf', type: 'external' },
+  { name: 'resume', link: '/resume.pdf', type: 'external' },
 ];
 
 // Strongly type NavLink props and infer external links when type is not provided

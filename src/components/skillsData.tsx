@@ -57,6 +57,6 @@ const skillsData = [
             { 'name': 'Postman', 'image': postman },
         ]
     }
-]
+];
 
 export default skillsData;
