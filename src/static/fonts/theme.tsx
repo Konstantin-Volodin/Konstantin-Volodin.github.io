@@ -1,6 +1,13 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
+
+// 1. Add color mode config
+const config: ThemeConfig = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
+}
 
 const theme = extendTheme({
+  config,
   fonts: {
     heading: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
     body: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
@@ -30,6 +37,46 @@ const theme = extendTheme({
       700: '#334155',
       800: '#1E293B',
       900: '#0F172A',
+    },
+  },
+  semanticTokens: {
+    colors: {
+      // Background colors
+      bg: {
+        default: 'slate.50',
+        _dark: 'slate.900',
+      },
+      'bg-subtle': {
+        default: 'white',
+        _dark: 'slate.800',
+      },
+      'bg-glass': {
+        default: 'rgba(255,255,255,0.75)',
+        _dark: 'rgba(15,23,42,0.75)',
+      },
+      // Text colors
+      text: {
+        default: 'slate.900',
+        _dark: 'slate.50',
+      },
+      'text-muted': {
+        default: 'slate.500',
+        _dark: 'slate.400',
+      },
+      // Border colors
+      border: {
+        default: 'slate.200',
+        _dark: 'slate.700',
+      },
+      'border-subtle': {
+        default: 'slate.100',
+        _dark: 'slate.800',
+      },
+      // Hover states
+      'hover-bg': {
+        default: 'gray.200',
+        _dark: 'slate.700',
+      },
     },
   },
   components: {
@@ -75,11 +122,13 @@ const theme = extendTheme({
         textTransform: 'uppercase',
         fontWeight: 700,
         cursor: 'default',
+        color: 'text',
       },
     },
     Text: {
       baseStyle: {
         cursor: 'default',
+        color: 'text',
       },
     },
     Modal: {
@@ -90,7 +139,11 @@ const theme = extendTheme({
   },
   styles: {
     global: {
-      'html, body': { bg: 'slate.50', color: 'slate.900' },
+      'html, body': { 
+        bg: 'bg', 
+        color: 'text',
+        transition: 'background-color 0.2s, color 0.2s',
+      },
       html: { scrollBehavior: 'smooth' },
       body: { scrollSnapType: 'y proximity', scrollPaddingTop: '64px' },
     },

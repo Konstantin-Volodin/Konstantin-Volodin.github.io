@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Wrap, WrapItem,
-  Box, Flex, Spacer, Image, Icon,
-  Heading, Text, Container, Grid, SimpleGrid,
-  Tabs, TabList, Tab, TabPanels, TabPanel, Divider, SlideFade, Center, usePrefersReducedMotion
+  Box, Flex, Image,
+  Heading, Text, Container, Grid,
+  Divider, SlideFade, Center, usePrefersReducedMotion
 } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import skillData from './skillsData'
@@ -19,12 +19,11 @@ function SkillIcon(props: any) {
 }
 
 function SkillCard(props: any) {
-  const domRef: any = useRef();
-  const [enteredScreen, setEneredScreen] = useState(false);
+  const [enteredScreen, setEnteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   function onChange(isVisible: boolean) {
-    if (isVisible) { setEneredScreen(true) }
+    if (isVisible) { setEnteredScreen(true) }
   };
 
   return (
@@ -72,7 +71,7 @@ function Skills() {
             justifyContent='center'
             templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}>
             {skillData.map((item) => {
-              return (<SkillCard data={item} key={item.skills}> </SkillCard>)
+              return (<SkillCard data={item} key={item.section}> </SkillCard>)
             })}
           </Grid>
         </Center>
