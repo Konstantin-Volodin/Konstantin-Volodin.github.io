@@ -1,5 +1,5 @@
-import { ChakraProvider } from '@chakra-ui/react';
-import { Helmet } from "react-helmet";
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import Fonts from './static/fonts/font'
 import theme from './static/fonts/theme'
@@ -11,20 +11,22 @@ import Skills from './components/skills'
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Helmet>
-        <title>Konstantin Volodin's Portfolio</title>
-        <meta name="description" content="Konstantin Volodin's Portfolio" />
-      </Helmet>
+    <HelmetProvider>
+      <ChakraProvider theme={theme}>
+        <Helmet>
+          <title>Konstantin Volodin's Portfolio</title>
+          <meta name="description" content="Konstantin Volodin's Portfolio" />
+        </Helmet>
 
-      <Fonts />
-      <Header />
-      <Intro />
-      <Projects />
-      <Skills />
-      {/* <ContactMe /> */}
+        <Fonts />
+        <Header />
+        <Intro />
+        <Projects />
+        <Skills />
+        {/* <ContactMe /> */}
 
-    </ChakraProvider>
+      </ChakraProvider>
+    </HelmetProvider>
   );
 }
 
