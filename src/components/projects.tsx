@@ -92,7 +92,7 @@ function ProjectCard(props: any) {
       <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
 
         <>
-          <LinkBox as='article' aria-labelledby={`${slug}-title`} role='group'
+          <LinkBox as='article' aria-labelledby={`${slug}-title`}
                    aria-expanded={isOpen} aria-controls={modalId}
                    _focus={{ outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
@@ -161,7 +161,7 @@ function ProjectCard(props: any) {
           <Modal isOpen={isOpen} onClose={closeModal} isCentered motionPreset={prefersReducedMotion ? 'none' : 'scale'}>
             <ModalOverlay bg='blackAlpha.400' backdropFilter='blur(6px)' />
             <ModalContent id={modalId} aria-labelledby={modalHeaderId} aria-describedby={`${slug}-desc`} rounded='none' maxW='container.lg' w='full'>
-              <ModalHeader id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'>{props.name}</ModalHeader>
+              <ModalHeader as='h2' id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'>{props.name}</ModalHeader>
               <ModalCloseButton _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }} />
               <ModalBody px={{ base: 7, md: 10 }} py={{ base: 7, md: 10 }}>
                 {/* Summary band - improved readability & semantics */}
