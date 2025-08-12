@@ -1,12 +1,12 @@
-// @ts-nocheck
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider } from '@chakra-ui/react';
 import VisibilitySensor from "react-visibility-sensor";
 import projData from './projectsData'
 
 function ProjectCard(props: any) {
-  const [enteredScreen, setEnteredScreen] = useState(false);
+  // Initialize as visible when user prefers reduced motion (avoid hidden content)
   const prefersReducedMotion = usePrefersReducedMotion();
+  const [enteredScreen, setEnteredScreen] = useState(() => prefersReducedMotion);
   const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   const { isOpen, onOpen, onClose } = useDisclosure();
   // IDs for a11y wiring
@@ -14,7 +14,7 @@ function ProjectCard(props: any) {
   const modalHeaderId = `${slug}-header`;
 
   function onChange(isVisible: boolean) {
-    if (isVisible) { setEnteredScreen(true); }
+    if (isVisible && !enteredScreen) { setEnteredScreen(true); }
   };
 
   const meta = useMemo(() => {
@@ -88,7 +88,7 @@ function ProjectCard(props: any) {
   }, [openModal]);
 
   return (
-    <VisibilitySensor onChange={onChange} partialVisibility={true}>
+    <VisibilitySensor onChange={onChange} partialVisibility={true} delayedCall>
       <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
 
         <>
@@ -111,7 +111,6 @@ function ProjectCard(props: any) {
                        alt={`${props.name} preview`}
                        loading='lazy'
                        decoding='async'
-                       fetchPriority='low'
                        w='100%'
                        h='100%'
                        objectFit='cover'
@@ -127,7 +126,7 @@ function ProjectCard(props: any) {
               </Box>
 
               {/* CONTENT (minimalist) */}
-              <Stack p={{ base: '16px', md: '20px' }} spacing={3} flex={1}>
+              <Stack p={6} spacing={3} flex={1}>
                 <Tag size='sm' bg='slate.50' color='slate.700' borderWidth='1px' borderColor='slate.200' rounded='none' w='fit-content'>
                   {props.company}
                 </Tag>
@@ -161,7 +160,7 @@ function ProjectCard(props: any) {
           <Modal isOpen={isOpen} onClose={closeModal} isCentered motionPreset={prefersReducedMotion ? 'none' : 'scale'}>
             <ModalOverlay bg='blackAlpha.400' backdropFilter='blur(6px)' />
             <ModalContent id={modalId} aria-labelledby={modalHeaderId} aria-describedby={`${slug}-desc`} rounded='none' maxW='container.lg' w='full'>
-              <ModalHeader id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'>{props.name}</ModalHeader>
+              <ModalHeader as='h2' id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'>{props.name}</ModalHeader>
               <ModalCloseButton _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }} />
               <ModalBody px={{ base: 7, md: 10 }} py={{ base: 7, md: 10 }}>
                 {/* Summary band - improved readability & semantics */}
@@ -221,7 +220,6 @@ function ProjectCard(props: any) {
                            alt={`${props.name} preview`}
                            loading='lazy'
                            decoding='async'
-                           fetchPriority='low'
                            w='100%'
                            h='auto'
                            objectFit='cover'
@@ -339,7 +337,13 @@ function Projects() {
       localStorage.setItem(STORAGE_TECH_KEY, tech);
       // Update the URL's search params while preserving hash
       const url = new URL(window.location.href);
-      url.searchParams.set('cat', cat as string);
+      // Only include cat when not 'All'
+      if (cat && cat !== 'All') {
+        url.searchParams.set('cat', cat as string);
+      } else {
+        url.searchParams.delete('cat');
+      }
+      // Only include tech when not 'All'
       if (tech && tech !== 'All') {
         url.searchParams.set('tech', tech);
       } else {
@@ -438,13 +442,13 @@ function Projects() {
 
   return (
     <Box id='Projects' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='slate.100'>
-      <Container maxW='container.lg' py={'112px'}>
+      <Container maxW='container.lg' py={{ base: 20, md: 24 }}>
         <Heading maxW='500px' textTransform='none'>
           Projects
         </Heading>
 
         {/* Category descriptor + compact chips */}
-        <HStack mt={5} spacing={2} flexWrap='wrap' alignItems='center'>
+        <HStack mt={6} spacing={2} flexWrap='wrap' alignItems='center'>
           <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1}>{CATEGORY_LABEL}:</Text>
           {GROUP_NAMES.map((cat) => {
             const isActive = activeGroup === cat;
@@ -475,7 +479,7 @@ function Projects() {
         </HStack>
 
         {/* Technology descriptor + compact chips (limited list) */}
-        <HStack mt={3} spacing={2} flexWrap='wrap' alignItems='center'>
+        <HStack mt={4} spacing={2} flexWrap='wrap' alignItems='center'>
           <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1}>Technology:</Text>
           {TECH_NAMES.map((tech) => {
             const isActive = activeTech === tech;
@@ -523,9 +527,12 @@ function Projects() {
           )}
         </HStack>
 
-        {/* 2 per row on md+ (no toggle) */}
-        <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={16}>
+        {/* 2 per row on md+ with improved spacing */}
+        <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={{ base: 12, md: 16 }}>
           {items.map((item: any) => (
+            // <div key={item.name}>
+            //   {item.name}
+            // </div>
             <ProjectCard key={item.name}
               name={item.name}
               company={item.company}

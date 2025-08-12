@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Suspense, lazy } from 'react';
 
 import Fonts from './static/fonts/font'
@@ -16,29 +16,30 @@ const Skills = lazy(() => import('./components/skills'));
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Helmet>
-        <title>Konstantin Volodin's Portfolio</title>
-        <meta name="description" content="Konstantin Volodin's Portfolio" />
-      </Helmet>
+    <HelmetProvider>
+      <ChakraProvider theme={theme}>
+        <Helmet>
+          <title>Konstantin Volodin's Portfolio</title>
+          <meta name="description" content="Konstantin Volodin's Portfolio" />
+        </Helmet>
 
-      <Fonts />
-      <Header />
-      <Intro />
-      
-      {/* Lazy load Projects with skeleton fallback */}
-      <Suspense fallback={<ProjectsSkeleton />}>
-        <Projects />
-      </Suspense>
-      
-      {/* Lazy load Skills with skeleton fallback */}
-      <Suspense fallback={<SkillsSkeleton />}>
-        <Skills />
-      </Suspense>
-      
-      {/* <ContactMe /> */}
+        <Fonts />
+        <Header />
+        <Intro />
 
-    </ChakraProvider>
+        {/* Lazy load Projects with skeleton fallback */}
+        <Suspense fallback={<ProjectsSkeleton />}>
+          <Projects />
+        </Suspense>
+
+        {/* Lazy load Skills with skeleton fallback */}
+        <Suspense fallback={<SkillsSkeleton />}>
+          <Skills />
+        </Suspense>
+
+        {/* <ContactMe /> */}
+      </ChakraProvider>
+    </HelmetProvider>
   );
 }
 

@@ -29,7 +29,7 @@ function SkillCard(props: any) {
     <VisibilitySensor onChange={onChange} partialVisibility={true}>
       <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.3 } }}>
 
-        <Box width="300px">
+        <Box minWidth={{ base: "280px", md: "300px" }} maxWidth="340px">
 
 
           <Heading fontSize={'2xl'} textTransform='none'> {props.name} </Heading>
@@ -38,7 +38,7 @@ function SkillCard(props: any) {
           </Heading>
           <Divider my={4}></Divider>
 
-          <Wrap spacing={14} align='center' justify='center'>
+          <Wrap spacing={12} align='center' justify='center'>
             {props.data.skills.map((skill: any) => (
               <WrapItem key={skill.name}>
                 <SkillIcon image={skill.image} name={skill.name} />
@@ -56,21 +56,21 @@ function Skills() {
   return (
 
     <Box id='Skills' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='slate.100'>
-      <Container maxW='container.lg' py={'112px'}>
+      <Container maxW='container.lg' py={{ base: 20, md: 24 }}>
         <Heading maxW='500px' textTransform='none'>
           Knowledge & Skills
         </Heading>
         {/* <Text maxW='700px' fontSize='lg' mt={8}>
               Coming Soon
             </Text> */}
-        <Center mt={16}>
+        <Center mt={12}>
           <Grid width="min-content"
-            columnGap={{ "base": "24", "xl": "32" }}
+            columnGap={{ "base": 16, "md": 20, "xl": 24 }}
             rowGap={12}
             justifyContent='center'
             templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}>
             {skillData.map((item) => {
-              return (<SkillCard data={item} key={item.skills}> </SkillCard>)
+              return (<SkillCard data={item} key={item.section}> </SkillCard>)
             })}
           </Grid>
         </Center>
