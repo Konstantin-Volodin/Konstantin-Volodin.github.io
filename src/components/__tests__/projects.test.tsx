@@ -1,11 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
+import { vi } from 'vitest';
 import Projects from '../projects';
 import theme from '../../static/fonts/theme';
 
 // Mock the project data to have a controlled test environment
-jest.mock('../projectsData', () => [
+vi.mock('../projectsData', () => ({
+  default: [
   {
     name: 'Test Web Project',
     company: 'Test Company',
@@ -66,7 +68,7 @@ const setMockLocation = (href: string, search = '', hash = '') => {
   });
   
   // Mock URL constructor to work with the mock location
-  global.URL = jest.fn().mockImplementation((url) => {
+  global.URL = vi.fn().mockImplementation((url) => {
     const urlObj = new URL(url, `http://localhost:3000`);
     return {
       href: urlObj.href,
@@ -80,10 +82,10 @@ const setMockLocation = (href: string, search = '', hash = '') => {
 
 // Mock localStorage
 const mockLocalStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn()
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn()
 };
 
 Object.defineProperty(window, 'localStorage', {
@@ -94,14 +96,14 @@ Object.defineProperty(window, 'localStorage', {
 describe('Projects Component - URL Sync and Persistence', () => {
   beforeEach(() => {
     // Reset mocks before each test
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     setMockLocation('http://localhost:3000');
     
     // Set up history mock
     Object.defineProperty(window, 'history', {
       value: {
-        pushState: jest.fn(),
-        replaceState: jest.fn(),
+        pushState: vi.fn(),
+        replaceState: vi.fn(),
         state: {}
       },
       writable: true,
@@ -142,7 +144,7 @@ describe('Projects Component - URL Sync and Persistence', () => {
     test('should handle malformed URLs gracefully', () => {
       // Mock URL constructor to throw error
       const originalURL = global.URL;
-      global.URL = jest.fn().mockImplementation(() => {
+      global.URL = vi.fn().mockImplementation(() => {
         throw new Error('Invalid URL');
       });
 
@@ -310,8 +312,8 @@ describe('Projects Component - URL Sync and Persistence', () => {
       // Mock history to throw error
       Object.defineProperty(window, 'history', {
         value: {
-          pushState: jest.fn(),
-          replaceState: jest.fn().mockImplementation(() => {
+          pushState: vi.fn(),
+          replaceState: vi.fn().mockImplementation(() => {
             throw new Error('History API error');
           }),
           state: {}

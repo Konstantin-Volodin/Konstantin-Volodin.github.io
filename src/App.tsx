@@ -12,7 +12,7 @@ import SkillsSkeleton from './components/SkillsSkeleton';
 
 // Lazy load heavy components
 const Projects = lazy(() => import('./components/projects'));
-const Skills = lazy(() => import('./components/skills'));
+const Skills = lazy(() => import('./components/SkillsEnhanced'));
 
 function App() {
   return (
