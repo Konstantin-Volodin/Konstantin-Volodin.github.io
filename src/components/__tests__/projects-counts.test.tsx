@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
+import { vi } from 'vitest';
 import Projects from '../projects';
 import theme from '../../static/fonts/theme';
 
@@ -14,10 +15,10 @@ const renderWithChakra = (component: React.ReactElement) => {
 
 // Simple mock for localStorage to avoid errors
 const mockLocalStorage = {
-  getItem: jest.fn().mockReturnValue(null),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn()
+  getItem: vi.fn().mockReturnValue(null),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn()
 };
 
 Object.defineProperty(window, 'localStorage', {
@@ -29,8 +30,8 @@ Object.defineProperty(window, 'localStorage', {
 // Mock window.history to avoid errors
 Object.defineProperty(window, 'history', {
   value: {
-    pushState: jest.fn(),
-    replaceState: jest.fn(),
+    pushState: vi.fn(),
+    replaceState: vi.fn(),
     state: {}
   },
   writable: true,
@@ -39,7 +40,7 @@ Object.defineProperty(window, 'history', {
 
 describe('Projects Component - Filter Counts and Basic Functionality', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('should display filter chips with counts', () => {

@@ -1,21 +1,23 @@
-import mcgillMonkey from '../static/images/mcgill-monkey.jpg'
-import mcgillGlyph from '../static/images/mcgill-glyphosates.jpg'
-import mcgillCapstone from "../static/images/mcgill-capstone.png"
-import mcgillCase from '../static/images/mcgill-case.jpg'
+import mcgillMonkey from '../static/assets/images/mcgill-monkey.jpg'
+import mcgillGlyph from '../static/assets/images/mcgill-glyphosates.jpg'
+import mcgillCapstone from "../static/assets/images/mcgill-capstone.png"
+import mcgillCase from '../static/assets/images/mcgill-case.jpg'
 
-import artfDashboard from "../static/images/artf-dashboard.jpg"
-import artfBaselines from "../static/images/artf-baselines.jpg"
-import artfAppTimes from "../static/images/artf-apptimes.jpg"
+import artfDashboard from "../static/assets/images/artf-dashboard.jpg"
+import artfBaselines from "../static/assets/images/artf-baselines.jpg"
+import artfAppTimes from "../static/assets/images/artf-apptimes.jpg"
 
-import ohriUrgentCare from "../static/images/urgent-care.jpg"
-import ohriBlockScheduling from "../static/images/block-scheduling.jpg"
+import ohriUrgentCare from "../static/assets/images/urgent-care.jpg"
+import ohriBlockScheduling from "../static/assets/images/block-scheduling.jpg"
 
-import uOttawaDynamicKnapsack from "../static/images/dynamic-knapsack.jpg"
-import uOttawaWorkloadAllocation from "../static/images/workload-allocation.png"
+import uOttawaDynamicKnapsack from "../static/assets/images/dynamic-knapsack.jpg"
+import uOttawaWorkloadAllocation from "../static/assets/images/workload-allocation.png"
 
-import personalHackathon from "../static/images/personal-hackathon.jpg"
+import personalHackathon from "../static/assets/images/personal-hackathon.jpg"
 
-const projectsData = [
+import { Project } from '../types';
+
+const projectsData: Project[] = [
   {
     'company': 'Personal',
     'name': 'Case Study - Data Product with Databricks',
@@ -24,7 +26,12 @@ const projectsData = [
     'picture': personalHackathon,
     'technologies': ['Databricks', 'Python', 'SQL'],
     'skills': ['Data Pipelines', 'Data Analytics', 'Data Science'],
-    'link': null
+    'link': null,
+    'status': 'Completed',
+    'startDate': '2024-01',
+    'endDate': '2024-01',
+    'teamSize': 4,
+    'featured': true
   },
   {
     'company': 'McGill University',
@@ -34,7 +41,12 @@ const projectsData = [
     'picture': mcgillMonkey,
     'technologies': ['React', 'GCP', 'Python'],
     'skills': ['Web Development', 'Cloud Providers'],
-    'link': "https://www.mono-sos.com/"
+    'link': "https://www.mono-sos.com/",
+    'status': 'Active',
+    'startDate': '2022-09',
+    'endDate': '2023-04',
+    'teamSize': 3,
+    'featured': true
   },
   {
     'company': 'McGill University',

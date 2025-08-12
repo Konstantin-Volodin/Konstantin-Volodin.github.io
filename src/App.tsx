@@ -5,14 +5,14 @@ import { Suspense, lazy } from 'react';
 import Fonts from './static/fonts/font'
 import theme from './static/fonts/theme'
 
-import Header from './components/header';
-import Intro from './components/intro';
+import Header from './components/HeaderEnhanced';
+import Intro from './components/IntroEnhanced';
 import ProjectsSkeleton from './components/ProjectsSkeleton';
 import SkillsSkeleton from './components/SkillsSkeleton';
 
 // Lazy load heavy components
 const Projects = lazy(() => import('./components/projects'));
-const Skills = lazy(() => import('./components/skills'));
+const Skills = lazy(() => import('./components/SkillsEnhanced'));
 
 function App() {
   return (
