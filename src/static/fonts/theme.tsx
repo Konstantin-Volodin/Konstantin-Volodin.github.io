@@ -9,8 +9,10 @@ const config: ThemeConfig = {
 const theme = extendTheme({
   config,
   fonts: {
-    heading: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
-    body: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+    // Space Grotesk for headings, system stack for body
+    heading: 'SpaceGroteskVariable, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
+    body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
+    mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace'
   },
   colors: {
     // Modern Slate + Amber
@@ -118,9 +120,9 @@ const theme = extendTheme({
     },
     Heading: {
       baseStyle: {
-        letterSpacing: '0.5px',
-        textTransform: 'uppercase',
-        fontWeight: 700,
+        letterSpacing: '-0.25px', // tighter with Space Grotesk
+        textTransform: 'none', // keep natural case now
+        fontWeight: 600,
         cursor: 'default',
         color: 'text',
       },
