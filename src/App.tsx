@@ -6,7 +6,7 @@ import Fonts from './static/fonts/font'
 import theme from './static/fonts/theme'
 
 import Header from './components/HeaderEnhanced';
-import Intro from './components/intro';
+import Intro from './components/IntroEnhanced';
 import ProjectsSkeleton from './components/ProjectsSkeleton';
 import SkillsSkeleton from './components/SkillsSkeleton';
 
