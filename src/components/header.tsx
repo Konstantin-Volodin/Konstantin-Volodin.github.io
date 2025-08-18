@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Box, Flex, Text, IconButton, Stack, HStack,
   Collapse, useColorMode, useColorModeValue, useDisclosure,
@@ -20,7 +20,6 @@ const NAV_ITEMS: Array<NavItem> = [
   { label: 'Skills', href: '#Skills' },
   { label: 'GitHub', href: 'https://github.com/Konstantin-Volodin', external: true },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/konstantin-volodin/', external: true },
-  // { label: 'CV', href: '/resume.pdf', external: true },
 ];
 
 interface NavLinkProps {
@@ -95,6 +94,8 @@ export default function HeaderEnhanced() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
+  const [activeId, setActiveId] = useState<string>('');
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -102,7 +103,28 @@ export default function HeaderEnhanced() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const bg = useColorModeValue('rgba(255, 255, 255, 0.85)', 'rgba(26, 32, 44, 0.85)');
+  // IntersectionObserver to highlight active section
+  useEffect(() => {
+    const sections = ['Projects', 'Skills'];
+    const opts: IntersectionObserverInit = { root: null, rootMargin: '-50% 0px -40% 0px', threshold: 0 };
+    observerRef.current?.disconnect();
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          if (id) setActiveId(id);
+        }
+      });
+    }, opts);
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observerRef.current?.observe(el);
+    });
+    return () => observerRef.current?.disconnect();
+  }, []);
+
+  const bg = useColorModeValue('bg-glass', 'bg-glass');
+  const borderClr = useColorModeValue('border', 'border');
 
   return (
     <MotionBox
@@ -114,34 +136,52 @@ export default function HeaderEnhanced() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' } as any}
       bg={bg}
-      backdropFilter="blur(10px)"
-      borderBottom={scrolled ? '1px solid' : '0'}
-      borderColor={useColorModeValue('gray.200', 'gray.700')}
-      shadow={scrolled ? 'sm' : 'none'}
+      backdropFilter="blur(12px) saturate(1.2)" shadow={scrolled ? 'sm' : 'none'}
+      borderBottom={'1px solid'} borderColor={borderClr}
     >
       <Container maxW="container.lg">
         <Flex minH={'60px'} py={{ base: 1, md: 2 }} align={'center'} justify={'space-between'}>
+          {/* Logo / Name */}
           <MotionBox whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Text
               fontFamily={'heading'}
               fontSize={{ base: 'md', md: 'lg' }}
               fontWeight={700}
               letterSpacing='0.5px'
-              color={useColorModeValue('gray.800', 'white')}
+              color={useColorModeValue('slate.800', 'white')}
               cursor="pointer"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
-              konstantin volodin
+              konstantin <Box as='span' color='brand.500'>volodin</Box>
             </Text>
           </MotionBox>
 
           {/* Desktop nav */}
-          <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {NAV_ITEMS.map((navItem) => (
-              <NavLink key={navItem.label} href={navItem.href} external={navItem.external}>
-                {navItem.label}
-              </NavLink>
-            ))}
+          <HStack spacing={2} display={{ base: 'none', md: 'flex' }}>
+            {NAV_ITEMS.map((navItem) => {
+              const isActive = activeId && navItem.href === `#${activeId}`;
+              return (
+                <NavLink key={navItem.label} href={navItem.href} external={navItem.external}
+                  position='relative'
+                  fontWeight={isActive ? 600 : 500}
+                  color={isActive ? useColorModeValue('slate.900','white') : undefined}
+                  _after={{
+                    content: '""',
+                    position: 'absolute',
+                    left: 8,
+                    right: 8,
+                    bottom: 2,
+                    height: '2px',
+                    bg: 'brand.500',
+                    opacity: isActive ? 1 : 0,
+                    transform: isActive ? 'translateY(0)' : 'translateY(4px)',
+                    transition: 'all .25s'
+                  }}
+                >
+                  {navItem.label}
+                </NavLink>
+              );
+            })}
           </HStack>
 
           {/* Controls */}
@@ -152,7 +192,7 @@ export default function HeaderEnhanced() {
               aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
               onClick={toggleColorMode}
               variant={'ghost'}
-              _hover={{ bg: useColorModeValue('gray.200', 'gray.700'), transform: 'rotate(180deg)' }}
+              _hover={{ bg: useColorModeValue('slate.200', 'slate.700'), transform: 'rotate(180deg)' }}
               transition="all 0.3s"
             />
             <IconButton
@@ -162,7 +202,7 @@ export default function HeaderEnhanced() {
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
               display={{ md: 'none' }}
               aria-expanded={isOpen}
-              _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
+              _hover={{ bg: useColorModeValue('slate.200', 'slate.700') }}
             />
           </HStack>
         </Flex>

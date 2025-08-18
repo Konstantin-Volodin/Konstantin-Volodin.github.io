@@ -98,24 +98,23 @@ function ProjectCard(props: any) {
                    _focusWithin={{ boxShadow: '0 0 0 2px var(--chakra-colors-slate-300)' }}
                    onClick={openModal} onKeyDown={onKeyDown} tabIndex={0} cursor='pointer'>
             <Box w='full' h='100%' display='flex' flexDirection='column'
-                 border='1px' borderColor='slate.200' rounded='none' bg='white' overflow='hidden'
-                 boxShadow='xs'
+                 border='1px' borderColor='border' rounded='none' bg='bg-subtle' overflow='hidden'
+                 boxShadow='subtle'
                  outline='1px solid transparent'
                  _dark={{ bg: 'slate.800', borderColor: 'slate.700' }}
                  transition='box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease, background-color 0.25s ease'
                  _hover={{
-                   // Softer hover: slight shadow & very small lift
-                   boxShadow: 'md',
-                   borderColor: 'slate.300',
-                   bg: 'slate.50',
-                   transform: prefersReducedMotion ? undefined : 'translateY(-2px)',
-                   _dark: { borderColor: 'slate.600', boxShadow: 'sm', bg: 'slate.700', transform: prefersReducedMotion ? undefined : 'translateY(-2px)' }
+                   boxShadow: 'lift',
+                   borderColor: 'brand.300',
+                   bg: 'white',
+                   transform: prefersReducedMotion ? undefined : 'translateY(-4px)',
+                   _dark: { borderColor: 'slate.600', boxShadow: 'md', bg: 'slate.700', transform: prefersReducedMotion ? undefined : 'translateY(-4px)' }
                  }}
-                 _active={{ transform: prefersReducedMotion ? undefined : 'translateY(-1px)', boxShadow: 'sm' }}
+                 _active={{ transform: prefersReducedMotion ? undefined : 'translateY(-2px)', boxShadow: 'sm' }}
                  minH={{ base: '240px', md: '320px' }}>
 
               {/* IMAGE: fixed height for uniform cards */}
-              <Box bg='slate.100' position='relative' flexShrink={0} h={{ base: '100px', md: '160px', lg: '170px' }}>
+              <Box bg='slate.100' position='relative' flexShrink={0} h={{ base: '110px', md: '170px' }}>
                 <Image src={props.pic}
                        alt={`${props.name} preview`}
                        loading='lazy'
@@ -141,7 +140,7 @@ function ProjectCard(props: any) {
                   {props.company}
                 </Tag>
 
-                <Heading as='h3' fontSize={{ base: 'md', md: 'lg' }} lineHeight='1.25' id={`${slug}-title`} fontWeight='semibold' noOfLines={2}
+                <Heading as='h3' fontSize={{ base: 'lg', md: 'xl' }} lineHeight='1.25' id={`${slug}-title`} fontWeight='semibold' noOfLines={2}
                          color='slate.800'
                          transition='color 0.25s ease'
                          _groupHover={{ color: 'slate.900', _dark: { color: 'white' } }}
@@ -150,7 +149,7 @@ function ProjectCard(props: any) {
                 </Heading>
 
                 {props.description && (
-                  <Text fontSize='sm' color='slate.600' noOfLines={1} display={{ base: 'none', md: 'block' }}
+                  <Text fontSize='sm' color='slate.600' noOfLines={2} display={{ base: 'none', md: 'block' }}
                         _dark={{ color: 'slate.300' }}>
                     {props.description}
                   </Text>
@@ -525,21 +524,21 @@ function Projects() {
                    onMouseDown={(e) => e.preventDefault()}
                    onClick={() => handleSelect(cat as any)}
                    aria-pressed={isActive}
-                   rounded='none'
+                   rounded='full'
                    px={3}
                    py={1.5}
                    fontSize={{ base: 'sm', md: 'sm' }}
                    fontWeight='medium'
                    letterSpacing='wide'
-                   transition='border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease'
-                   bg={isActive ? 'brand.50' : 'white'}
-                   color={isActive ? 'brand.900' : 'slate.800'}
+                   transition='all 0.15s ease'
+                   bg={isActive ? 'brand.500' : 'slate.100'}
+                   color={isActive ? 'white' : 'slate.800'}
                    borderWidth='1px'
-                   borderColor={isActive ? 'brand.200' : 'slate.200'}
+                   borderColor={isActive ? 'brand.500' : 'slate.200'}
                    sx={{ _dark: darkStyles }}
                    _focus={{ boxShadow: 'none', outline: 'none' }}
-                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}>
-                {cat} <Text as='span' ml={1} opacity={0.7} fontSize='xs'>({count})</Text>
+                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-focus-ring)' }}>
+                {cat} <Text as='span' ml={1} opacity={0.75} fontSize='xs'>({count})</Text>
               </Tag>
             )
           })}
@@ -558,21 +557,21 @@ function Projects() {
                    onMouseDown={(e) => e.preventDefault()}
                    onClick={() => handleSelectTech(tech)}
                    aria-pressed={isActive}
-                   rounded='none'
+                   rounded='full'
                    px={3}
                    py={1.5}
                    fontSize={{ base: 'sm', md: 'sm' }}
                    fontWeight='medium'
                    letterSpacing='wide'
-                   transition='border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease'
-                   bg={isActive ? 'brand.50' : 'white'}
-                   color={isActive ? 'brand.900' : 'slate.800'}
+                   transition='all 0.15s ease'
+                   bg={isActive ? 'brand.500' : 'slate.100'}
+                   color={isActive ? 'white' : 'slate.800'}
                    borderWidth='1px'
-                   borderColor={isActive ? 'brand.200' : 'slate.200'}
+                   borderColor={isActive ? 'brand.500' : 'slate.200'}
                    sx={{ _dark: darkStyles }}
                    _focus={{ boxShadow: 'none', outline: 'none' }}
-                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}>
-                {tech} <Text as='span' ml={1} opacity={0.7} fontSize='xs'>({count})</Text>
+                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-focus-ring)' }}>
+                {tech} <Text as='span' ml={1} opacity={0.75} fontSize='xs'>({count})</Text>
               </Tag>
             )
           })}

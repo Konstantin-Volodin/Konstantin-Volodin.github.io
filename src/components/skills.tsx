@@ -69,14 +69,14 @@ function SkillCard({ data }: SkillCardProps) {
           w="full"
           p={5}
           rounded='none'
-          bg="white"
-          shadow="md"
+          bg="bg-subtle"
+          shadow="subtle"
           borderWidth="1px"
-          borderColor="gray.200"
+          borderColor="border"
           sx={{
             _dark: { 
-              bg: "gray.800", 
-              borderColor: "gray.600" 
+              bg: 'slate.800',
+              borderColor: 'slate.600' 
             }
           }}
         >
@@ -106,8 +106,8 @@ function Skills() {
   return (
     <Box id='Skills' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='border-subtle' 
       sx={{
-        bg: "gray.50",
-        _dark: { bg: "gray.900" }
+        bg: 'bg-alt',
+        _dark: { bg: 'slate.900' }
       }}
     >
       <Container maxW='container.lg' py={{ base: 16, md: 20 }}>
