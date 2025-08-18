@@ -1,82 +1,147 @@
 import { useState } from 'react';
 import {
-  Wrap, WrapItem,
-  Box, Flex, Image,
-  Heading, Text, Container, Grid, Divider, SlideFade, Center, usePrefersReducedMotion
+  Wrap, WrapItem, Box, Image, Heading, Text, Container, Divider, 
+  SlideFade, usePrefersReducedMotion, VStack, Center, Grid
 } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import VisibilitySensor from "react-visibility-sensor";
-import skillData from './skillsData'
+import skillData from './SkillsData';
+import { Skill } from '../types';
 
+const MotionBox = motion(Box);
 
-function SkillIcon(props: any) {
-  return (
-    <Flex align='center' direction='column' width='100px'>
-      <Image src={props.image} maxW='100px' maxH='50px' mb={3}></Image>
-      <Text fontSize='md' textAlign='center'> {props.name} </Text>
-    </Flex>
-  )
+interface SkillIconProps {
+  skill: Skill;
+  variant?: 'default' | 'compact';
 }
 
-function SkillCard(props: any) {
+function SkillIcon({ skill, variant = 'default' }: SkillIconProps) {
+  const { name, image } = skill;
+  const hasImage = Boolean(image);
+
+  if (variant === 'compact') {
+    return (
+      <VStack spacing={2} width="80px" cursor="default" aria-label={name}>
+        {hasImage && <Image src={image} maxW="60px" maxH="40px" draggable={false} />}
+        <Text fontSize="sm" textAlign="center" noOfLines={2}>{name}</Text>
+      </VStack>
+    );
+  }
+
+  return (
+    <MotionBox
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 280, damping: 18 } as any}
+    >
+      {/* Square design: remove rounding */}
+      <VStack spacing={2} width="104px" cursor="default" p={3} rounded='none' aria-label={name}
+        sx={{
+          _hover: { 
+            bg: 'gray.50',
+            _dark: { bg: 'gray.700' }
+          }
+        }}
+      >
+        {hasImage && <Image src={image} maxW="64px" maxH="44px" draggable={false} />}
+        <Text fontSize="sm" textAlign="center" fontWeight="medium" noOfLines={2}>{name}</Text>
+      </VStack>
+    </MotionBox>
+  );
+}
+
+interface SkillCardProps {
+  data: any;
+}
+
+function SkillCard({ data }: SkillCardProps) {
   const [enteredScreen, setEnteredScreen] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   function onChange(isVisible: boolean) {
-    if (isVisible) { setEnteredScreen(true) }
-  };
+    if (isVisible) { setEnteredScreen(true); }
+  }
 
   return (
     <VisibilitySensor onChange={onChange} partialVisibility={true}>
-      <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.3 } }}>
+      <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
+        <Box 
+          w="full"
+          p={5}
+          rounded='none'
+          bg="white"
+          shadow="md"
+          borderWidth="1px"
+          borderColor="gray.200"
+          sx={{
+            _dark: { 
+              bg: "gray.800", 
+              borderColor: "gray.600" 
+            }
+          }}
+        >
+          <VStack spacing={3} align="stretch">
+            <VStack spacing={1}>
+              <Heading fontSize="lg" textTransform="none" textAlign="center">
+                {data.section}
+              </Heading>
+              <Divider />
+            </VStack>
 
-        <Box minWidth={{ base: "280px", md: "300px" }} maxWidth="340px">
-
-
-          <Heading fontSize={'2xl'} textTransform='none'> {props.name} </Heading>
-          <Heading letterSpacing='0.5px' textTransform='uppercase' fontSize={'lg'} textAlign='center'>
-            {props.data.section}
-          </Heading>
-          <Divider my={4}></Divider>
-
-          <Wrap spacing={12} align='center' justify='center'>
-            {props.data.skills.map((skill: any) => (
-              <WrapItem key={skill.name}>
-                <SkillIcon image={skill.image} name={skill.name} />
-              </WrapItem>
-            ))}
-          </Wrap>
-
+            <Wrap spacing={{ base: 4, md: 5 }} align="center" justify="center">
+              {data.skills.map((skill: Skill, idx: number) => (
+                <WrapItem key={`${data.section}-${idx}-${skill.name}`}>
+                  <SkillIcon skill={skill} />
+                </WrapItem>
+              ))}
+            </Wrap>
+          </VStack>
         </Box>
       </SlideFade>
     </VisibilitySensor>
-  )
+  );
 }
 
 function Skills() {
   return (
+    <Box id='Skills' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='border-subtle' 
+      sx={{
+        bg: "gray.50",
+        _dark: { bg: "gray.900" }
+      }}
+    >
+      <Container maxW='container.lg' py={{ base: 16, md: 20 }}>
+        <VStack spacing={12} align="stretch">
+          <VStack spacing={2} align="center">
+            <Heading maxW='500px' textTransform='none' textAlign="center">
+              Skills that drive outcomes
+            </Heading>
+            <Text maxW='600px' fontSize='md' textAlign="center" 
+              sx={{
+                color: "gray.600",
+                _dark: { color: "gray.400" }
+              }}
+            >
+              Practical tools I use to ship reliable data products and clear decision support.
+            </Text>
+          </VStack>
 
-    <Box id='Skills' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='slate.100'>
-      <Container maxW='container.lg' py={{ base: 20, md: 24 }}>
-        <Heading maxW='500px' textTransform='none'>
-          Knowledge & Skills
-        </Heading>
-        {/* <Text maxW='700px' fontSize='lg' mt={8}>
-              Coming Soon
-            </Text> */}
-        <Center mt={12}>
-          <Grid width="min-content"
-            columnGap={{ "base": 16, "md": 20, "xl": 24 }}
-            rowGap={12}
-            justifyContent='center'
-            templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}>
-            {skillData.map((item) => {
-              return (<SkillCard data={item} key={item.section}> </SkillCard>)
-            })}
-          </Grid>
-        </Center>
+          <Center>
+            <Grid
+              width="max-content"
+              columnGap={{ "base": "1rem", "md": "1.5rem", "xl": "2rem" }}
+              rowGap={{ base: 4, md: 6 }}
+              templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}
+            >
+              {skillData.map((item) => (
+                <SkillCard key={item.section} data={item} />
+              ))}
+            </Grid>
+          </Center>
+        </VStack>
       </Container>
     </Box>
-  )
+  );
 }
 
-export default Skills
+export default Skills;

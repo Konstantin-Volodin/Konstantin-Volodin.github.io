@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { vi } from 'vitest';
-import Projects from '../projects';
+import Projects from '../Projects';
 import theme from '../../static/fonts/theme';
 
 // Helper to render component with ChakraProvider

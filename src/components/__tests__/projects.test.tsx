@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { vi } from 'vitest';
-import Projects from '../projects';
+import Projects from '../Projects';
 import theme from '../../static/fonts/theme';
 
 // Mock the project data to have a controlled test environment
@@ -38,7 +38,7 @@ vi.mock('../projectsData', () => ({
     skills: ['Data Analysis'],
     link: null
   }
-]);
+]}));
 
 // Helper to render component with ChakraProvider
 const renderWithChakra = (component: React.ReactElement) => {
@@ -68,8 +68,8 @@ const setMockLocation = (href: string, search = '', hash = '') => {
   });
   
   // Mock URL constructor to work with the mock location
-  global.URL = vi.fn().mockImplementation((url) => {
-    const urlObj = new URL(url, `http://localhost:3000`);
+  (global as any).URL = vi.fn().mockImplementation((url: string) => {
+    const urlObj = new (window as any).URL(url, `http://localhost:3000`);
     return {
       href: urlObj.href,
       search: urlObj.search,
@@ -143,8 +143,8 @@ describe('Projects Component - URL Sync and Persistence', () => {
 
     test('should handle malformed URLs gracefully', () => {
       // Mock URL constructor to throw error
-      const originalURL = global.URL;
-      global.URL = vi.fn().mockImplementation(() => {
+      const originalURL = global.URL as any;
+      (global as any).URL = vi.fn().mockImplementation(() => {
         throw new Error('Invalid URL');
       });
 
@@ -155,7 +155,7 @@ describe('Projects Component - URL Sync and Persistence', () => {
       expect(allButtons).toHaveLength(2);
       
       // Restore URL constructor
-      global.URL = originalURL;
+      (global as any).URL = originalURL;
     });
   });
 

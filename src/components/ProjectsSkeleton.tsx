@@ -35,7 +35,7 @@ function ProjectCardSkeleton() {
 
 function ProjectsSkeleton() {
   return (
-    <Box id='Projects' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='slate.100'>
+    <Box id='Projects' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='border-subtle'>
       <Container maxW='container.lg' py={'112px'}>
         <Heading maxW='500px' textTransform='none'>
           Projects

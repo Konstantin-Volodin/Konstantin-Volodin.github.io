@@ -1,129 +1,177 @@
+import { useState, useEffect } from 'react';
 import {
-  Box, Flex, Container, Text, Heading, Link, LinkBox,
-  HStack, IconButton, Spacer,
-  useDisclosure, useColorMode,
-  // Replace Modal with Drawer for mobile navigation
-  Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerCloseButton,
-  VStack,
+  Box, Flex, Text, IconButton, Stack, HStack,
+  Collapse, useColorMode, useColorModeValue, useDisclosure,
+  Link as ChakraLink, Container
 } from '@chakra-ui/react';
-import { HamburgerIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
-import "../index.css";
+import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
+import { motion } from 'framer-motion';
 
-// Define Link item type and annotate the array so `type` narrows to the literal union
-type LinkItem = { name: string; link: string; type?: 'internal' | 'external' };
-const Links: LinkItem[] = [
-  // { name: 'about', link: '#Projects', type: 'internal' },
-  { name: 'github', link: 'https://github.com/Konstantin-Volodin', type: 'external' },
-  { name: 'linkedin', link: 'https://www.linkedin.com/in/konstantin-volodin/', type: 'external' },
-  { name: 'resume', link: '/resume.pdf', type: 'external' },
+const MotionBox = motion(Box);
+
+interface NavItem {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+const NAV_ITEMS: Array<NavItem> = [
+  { label: 'Projects', href: '#Projects' },
+  { label: 'Skills', href: '#Skills' },
+  { label: 'GitHub', href: 'https://github.com/Konstantin-Volodin', external: true },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/konstantin-volodin/', external: true },
+  // { label: 'CV', href: '/resume.pdf', external: true },
 ];
 
-// Strongly type NavLink props and infer external links when type is not provided
 interface NavLinkProps {
-  name: string;
-  link: string;
-  type?: 'internal' | 'external';
+  children: React.ReactNode;
+  href: string;
+  external?: boolean;
+  onClick?: () => void;
+  // Allow style/layout props to be forwarded
+  [key: string]: any;
 }
 
-function NavLink({ name, link, type }: NavLinkProps) {
-  const isExternal = typeof type !== 'undefined' ? type === 'external' : /^(https?:|mailto:)/.test(link);
+const NavLink = ({ children, href, external, onClick, ...rest }: NavLinkProps) => {
+  const linkColor = useColorModeValue('gray.600', 'gray.200');
+  const linkHoverColor = useColorModeValue('gray.800', 'white');
   return (
-    <Link px={6} py={3} my={4} href={link} _hover={{ textDecoration: 'none', bg: 'hover-bg' }} isExternal={isExternal}>
-      <Text letterSpacing='0.5px' textTransform='uppercase' fontWeight='600'>
-        {name}
-      </Text>
-    </Link>
+    <ChakraLink
+      px={2}
+      py={1}
+      rounded={'md'}
+      _hover={{
+        textDecoration: 'none',
+        color: linkHoverColor,
+        bg: useColorModeValue('gray.200', 'gray.700'),
+        transform: 'translateY(-2px)',
+      }}
+      transition="all 0.2s"
+      href={href}
+      onClick={onClick}
+      isExternal={external}
+      color={linkColor}
+      fontWeight={500}
+      {...rest}>
+      {children}
+    </ChakraLink>
   );
-}
+};
 
-function Header() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const MobileNav = ({ onNavigate }: { onNavigate: () => void }) => (
+  <Stack bg={useColorModeValue('white', 'gray.800')} px={4} pb={4} pt={2} spacing={1} display={{ md: 'none' }}>
+    {NAV_ITEMS.map((navItem) => (
+      <MobileNavItem key={navItem.label} {...navItem} onNavigate={onNavigate} />
+    ))}
+  </Stack>
+);
+
+const MobileNavItem = ({ label, href, external, onNavigate }: NavItem & { onNavigate: () => void }) => (
+  <Box>
+    <NavLink
+      href={href}
+      external={external}
+      onClick={() => {
+        onNavigate();
+        if (href.startsWith('#')) {
+          // smooth scroll for internal anchors
+          setTimeout(() => {
+            const el = document.querySelector(href);
+            el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
+        }
+      }}
+      w='full'
+      display='block'
+      fontSize='lg'
+      py={3}
+    >
+      <Text fontWeight={600}>{label}</Text>
+    </NavLink>
+  </Box>
+);
+
+export default function HeaderEnhanced() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onToggle, onClose } = useDisclosure();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const bg = useColorModeValue('rgba(255, 255, 255, 0.85)', 'rgba(26, 32, 44, 0.85)');
 
   return (
-    <>
-      <Box
-        bg='bg-glass'
-        backdropFilter='saturate(180%) blur(10px)'
-        top={0}
-        zIndex={100}
-        position='sticky'
-        shadow='sm'
-        borderBottomWidth='1px'
-        borderBottomColor='border'
-      >
+    <MotionBox
+      position="fixed"
+      top={0}
+      w="full"
+      zIndex={999}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: 'easeOut' } as any}
+      bg={bg}
+      backdropFilter="blur(10px)"
+      borderBottom={scrolled ? '1px solid' : '0'}
+      borderColor={useColorModeValue('gray.200', 'gray.700')}
+      shadow={scrolled ? 'sm' : 'none'}
+    >
+      <Container maxW="container.lg">
+        <Flex minH={'60px'} py={{ base: 1, md: 2 }} align={'center'} justify={'space-between'}>
+          <MotionBox whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Text
+              fontFamily={'heading'}
+              fontSize={{ base: 'md', md: 'lg' }}
+              fontWeight={700}
+              letterSpacing='0.5px'
+              color={useColorModeValue('gray.800', 'white')}
+              cursor="pointer"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              konstantin volodin
+            </Text>
+          </MotionBox>
 
-        <Container maxW='container.lg'>
-          <Flex h={16} alignItems={'center'}>
+          {/* Desktop nav */}
+          <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
+            {NAV_ITEMS.map((navItem) => (
+              <NavLink key={navItem.label} href={navItem.href} external={navItem.external}>
+                {navItem.label}
+              </NavLink>
+            ))}
+          </HStack>
 
-            {/* Logo */}
-            <Heading size='sm' letterSpacing='0.5px' textTransform='uppercase' fontWeight='700'>konstantin volodin</Heading>
-            <Spacer />
+          {/* Controls */}
+          <HStack spacing={1}>
+            <IconButton
+              size={'sm'}
+              icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+              aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+              onClick={toggleColorMode}
+              variant={'ghost'}
+              _hover={{ bg: useColorModeValue('gray.200', 'gray.700'), transform: 'rotate(180deg)' }}
+              transition="all 0.3s"
+            />
+            <IconButton
+              onClick={onToggle}
+              icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
+              variant={'ghost'}
+              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              display={{ md: 'none' }}
+              aria-expanded={isOpen}
+              _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
+            />
+          </HStack>
+        </Flex>
 
-            {/* Large Screen Links */}
-            <LinkBox>
-              <HStack spacing={6} display={{ base: 'none', md: 'flex' }}>
-                {Links.map((link) => {
-                  return (
-                    <NavLink key={link.name} name={link.name} link={link.link} type={link.type} />
-                  )
-                })}
-                {/* Color Mode Toggle */}
-                <IconButton
-                  aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-                  icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-                  onClick={toggleColorMode}
-                  variant="ghost"
-                  size="sm"
-                />
-              </HStack>
-            </LinkBox>
-
-            {/* Small Screen Buttons */}
-            <HStack display={{ base: 'flex', md: 'none' }}>
-              <IconButton
-                aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-                icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-                onClick={toggleColorMode}
-                variant="ghost"
-                size="sm"
-              />
-              <IconButton size={'md'}
-                aria-label={'Open navigation menu'} icon={<HamburgerIcon />}
-                onClick={onOpen}
-                variant='ghost'
-              />
-            </HStack>
-          </Flex>
-        </Container>
-
-        {/* Mobile Navigation Drawer */}
-        <Drawer isOpen={isOpen} placement='right' onClose={onClose}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerBody display='flex' alignItems='center' justifyContent='center'>
-              <VStack spacing={4}>
-                {Links.map((link) => {
-                  return (
-                    <NavLink key={link.name} name={link.name} link={link.link} type={link.type} />
-                  )
-                })}
-                {/* Color Mode Toggle for Mobile */}
-                <IconButton
-                  aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-                  icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-                  onClick={toggleColorMode}
-                  variant="ghost"
-                  size="md"
-                />
-              </VStack>
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-      </Box>
-    </>
+        {/* Mobile navigation collapse */}
+        <Collapse in={isOpen} animateOpacity>
+          <MobileNav onNavigate={onClose} />
+        </Collapse>
+      </Container>
+    </MotionBox>
   );
 }
-
-export default Header

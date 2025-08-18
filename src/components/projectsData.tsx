@@ -60,9 +60,9 @@ const projectsData: Project[] = [
   },
   {
     'company': 'CAE Inc.',
-    'name': 'Demand Forecasting and Inventory Management',
+    'name': 'Capstone Project - Demand Forecasting and Inventory Management',
     'description': 'Demand forecasting',
-    'longDescription': 'At CAE Inc, I contributed to the development of a Python-based time series forecasting solution aimed at optimizing inventory management. By accurately predicting demand for thousands of items, we enhanced operational efficiency, achieved cost savings, and improved customer satisfaction. Leveraging statistical models and incorporating external economic variables, we significantly improved forecast accuracy. Additionally, we formulated an effective inventory management policy to align with the demand forecast. To showcase the insights gained, we created compelling visualizations using Power BI, enabling stakeholders to easily understand and act upon the information.',
+    'longDescription': 'As a McGill student working with CAE Inc, I contributed to the development of a Python-based time series forecasting solution aimed at optimizing inventory management. By accurately predicting demand for thousands of items, we enhanced operational efficiency, achieved cost savings, and improved customer satisfaction. Leveraging statistical models and incorporating external economic variables, we significantly improved forecast accuracy. Additionally, we formulated an effective inventory management policy to align with the demand forecast. To showcase the insights gained, we created compelling visualizations using Power BI, enabling stakeholders to easily understand and act upon the information.',
     'picture': mcgillCapstone,
     'technologies': ['Python', 'Statsforecast', 'Plotly'],
     'skills': ['Forecasting', 'Data Pipelines', 'Visualization'],

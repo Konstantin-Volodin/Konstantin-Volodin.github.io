@@ -27,9 +27,8 @@ function ProjectCard(props: any) {
     return uniq.slice(0, 3);
   }, [props.technologies, props.skills]);
 
-  const hoverTransform = prefersReducedMotion ? 'none' : 'translateY(-4px)';
-  const imageHover = prefersReducedMotion ? 'none' : 'scale(1.02)';
-
+  // Slightly more noticeable hover (small lift + shadow + bg tint)
+  // Respect reduced motion preference by only translating when animations are allowed.
   // URL helpers for deep-linking the modal
   const getProjectFromUrl = useCallback(() => {
     try {
@@ -94,19 +93,29 @@ function ProjectCard(props: any) {
         <>
           <LinkBox as='article' aria-labelledby={`${slug}-title`} role='group'
                    _focus={{ outline: 'none' }}
-                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
-                   _focusWithin={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
+                   // Removed brand (orange) focus ring in favor of neutral slate tone
+                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-slate-300)' }}
+                   _focusWithin={{ boxShadow: '0 0 0 2px var(--chakra-colors-slate-300)' }}
                    onClick={openModal} onKeyDown={onKeyDown} tabIndex={0} cursor='pointer'>
             <Box w='full' h='100%' display='flex' flexDirection='column'
                  border='1px' borderColor='slate.200' rounded='none' bg='white' overflow='hidden'
                  boxShadow='xs'
                  outline='1px solid transparent'
-                 transition='transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, outline-color 0.25s ease'
-                 _hover={{ transform: hoverTransform, boxShadow: 'lg', borderColor: 'slate.300', outline: '1px solid var(--chakra-colors-brand-200)' }}
-                 minH={{ base: '340px', md: '360px' }}>
+                 _dark={{ bg: 'slate.800', borderColor: 'slate.700' }}
+                 transition='box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease, background-color 0.25s ease'
+                 _hover={{
+                   // Softer hover: slight shadow & very small lift
+                   boxShadow: 'md',
+                   borderColor: 'slate.300',
+                   bg: 'slate.50',
+                   transform: prefersReducedMotion ? undefined : 'translateY(-2px)',
+                   _dark: { borderColor: 'slate.600', boxShadow: 'sm', bg: 'slate.700', transform: prefersReducedMotion ? undefined : 'translateY(-2px)' }
+                 }}
+                 _active={{ transform: prefersReducedMotion ? undefined : 'translateY(-1px)', boxShadow: 'sm' }}
+                 minH={{ base: '240px', md: '320px' }}>
 
               {/* IMAGE: fixed height for uniform cards */}
-              <Box bg='slate.100' position='relative' flexShrink={0} h={{ base: '140px', md: '160px', lg: '180px' }}>
+              <Box bg='slate.100' position='relative' flexShrink={0} h={{ base: '100px', md: '160px', lg: '170px' }}>
                 <Image src={props.pic}
                        alt={`${props.name} preview`}
                        loading='lazy'
@@ -115,39 +124,45 @@ function ProjectCard(props: any) {
                        h='100%'
                        objectFit='cover'
                        transform='translateZ(0)'
-                       transition='transform 0.4s ease, filter 0.4s ease'
-                       _groupHover={{ transform: imageHover }} />
-                {/* Light glass hover overlay */}
+                       transition='filter 0.4s ease, transform 0.4s ease'
+                       _groupHover={{ transform: prefersReducedMotion ? undefined : 'scale(1.01)' }} />
+                {/* Light glass hover overlay (softened) */}
                 <Box pointerEvents='none' position='absolute' inset={0} opacity={0}
                      transition='opacity 0.3s ease'
-                     _groupHover={{ opacity: 1 }}
+                     _groupHover={{ opacity: 0.4 }}
                      bg='blackAlpha.50'
-                     style={{ backdropFilter: 'blur(4px) saturate(1.1)' }} />
+                     style={{ backdropFilter: 'blur(2px) saturate(1.02)' }} />
               </Box>
 
               {/* CONTENT (minimalist) */}
-              <Stack p={6} spacing={3} flex={1}>
-                <Tag size='sm' bg='slate.50' color='slate.700' borderWidth='1px' borderColor='slate.200' rounded='none' w='fit-content'>
+              <Stack p={6} spacing={3} flex={1} pt={{ base: 4, md: 6 }} px={{ base: 5, md: 6 }}>
+                <Tag size='sm' bg='slate.50' color='slate.700' borderWidth='1px' borderColor='slate.200' rounded='none' w='fit-content'
+                     _dark={{ bg: 'slate.700', color: 'slate.200', borderColor: 'slate.600' }}>
                   {props.company}
                 </Tag>
 
                 <Heading as='h3' fontSize={{ base: 'md', md: 'lg' }} lineHeight='1.25' id={`${slug}-title`} fontWeight='semibold' noOfLines={2}
-                         color='slate.800' _groupHover={{ color: 'slate.900' }}>
+                         color='slate.800'
+                         transition='color 0.25s ease'
+                         _groupHover={{ color: 'slate.900', _dark: { color: 'white' } }}
+                         _dark={{ color: 'slate.100' }}>
                   {props.name}
                 </Heading>
 
                 {props.description && (
-                  <Text fontSize='sm' color='slate.700' noOfLines={1} display={{ base: 'none', md: 'block' }}>
+                  <Text fontSize='sm' color='slate.600' noOfLines={1} display={{ base: 'none', md: 'block' }}
+                        _dark={{ color: 'slate.300' }}>
                     {props.description}
                   </Text>
                 )}
 
                 {meta.length > 0 && (
                   <Box mt='auto' pt={1}>
-                    <Text fontSize='xs' color='slate.600' noOfLines={1}
-                          opacity={0.6}
+                    <Text fontSize='xs' color='slate.500' noOfLines={1}
+                          opacity={0.65}
                           transition='opacity 0.2s ease'
-                          _groupHover={{ opacity: 1 }}>
+                          _groupHover={{ opacity: 1, _dark: { opacity: 1 } }}
+                          _dark={{ color: 'slate.400', opacity: 0.7 }}>
                       {meta.join(' • ')}
                     </Text>
                   </Box>
@@ -157,77 +172,94 @@ function ProjectCard(props: any) {
           </LinkBox>
 
           {/* Modal with full description and details */}
-          <Modal isOpen={isOpen} onClose={closeModal} isCentered motionPreset={prefersReducedMotion ? 'none' : 'scale'}>
-            <ModalOverlay bg='blackAlpha.400' backdropFilter='blur(6px)' />
-            <ModalContent id={modalId} aria-labelledby={modalHeaderId} aria-describedby={`${slug}-desc`} rounded='none' maxW='container.lg' w='full'>
-              <ModalHeader as='h2' id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'>{props.name}</ModalHeader>
-              <ModalCloseButton _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }} />
-              <ModalBody px={{ base: 7, md: 10 }} py={{ base: 7, md: 10 }}>
-                {/* Summary band - improved readability & semantics */}
-                <Box as='dl'
-                     display='grid'
-                     gridTemplateColumns={{ base: '1fr', md: '160px 1fr' }}
-                     alignItems='start'
-                     columnGap={{ base: 0, md: 6 }}
-                     rowGap={3}
-                     mb={7}>
-                  {props.company && (
-                    <>
-                      <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'>
-                        Company
-                      </Box>
-                      <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8'>
-                        {props.company}
-                      </Box>
-                    </>
-                  )}
+          <Modal isOpen={isOpen} onClose={closeModal} isCentered motionPreset={prefersReducedMotion ? 'none' : 'scale'} closeOnOverlayClick={true}>
+            <ModalOverlay bg='blackAlpha.500' backdropFilter='blur(6px)' onClick={closeModal} />
+            <ModalContent id={modalId} aria-labelledby={modalHeaderId} aria-describedby={`${slug}-desc`} rounded='none' maxW='container.lg' w='full'
+                          bg='white'
+                          _dark={{ bg: 'slate.800', border: '1px solid', borderColor: 'slate.700', color: 'slate.200' }}
+                          onKeyDown={(e) => { if (e.key === 'Escape') closeModal(); }}
+                          // Close on ANY click inside content (including children)
+                          onClick={() => closeModal()}>
+              <ModalHeader as='h2' id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'
+                           _dark={{ color: 'slate.100' }}>{props.name}</ModalHeader>
+              <ModalCloseButton _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-slate-300)' }} />
+              <ModalBody px={{ base: 5, md: 10 }} py={{ base: 6, md: 10 }}>
+                {/* Clicking anywhere in body also closes now (no exceptions) */}
+                <Box position='relative'>
+                  {/* Summary band - improved readability & semantics */}
+                  <Box as='dl'
+                       display='grid'
+                       gridTemplateColumns={{ base: '1fr', md: '160px 1fr' }}
+                       alignItems='start'
+                       columnGap={{ base: 0, md: 6 }}
+                       rowGap={3}
+                       mb={7}>
+                    {props.company && (
+                      <>
+                        <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'
+                             _dark={{ color: 'slate.300' }}>
+                          Company
+                        </Box>
+                        <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8'
+                             _dark={{ color: 'slate.200' }}>
+                          {props.company}
+                        </Box>
+                      </>
+                    )}
 
-                  {(Array.isArray(props.technologies) && props.technologies.length > 0) && (
-                    <>
-                      <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'>
-                        Tech
-                      </Box>
-                      <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8' whiteSpace='normal' wordBreak='break-word'>
-                        {props.technologies.slice(0, 10).join(', ')}
-                      </Box>
-                    </>
-                  )}
+                    {(Array.isArray(props.technologies) && props.technologies.length > 0) && (
+                      <>
+                        <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'
+                             _dark={{ color: 'slate.300' }}>
+                          Tech
+                        </Box>
+                        <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8' whiteSpace='normal' wordBreak='break-word'
+                             _dark={{ color: 'slate.200' }}>
+                          {props.technologies.slice(0, 10).join(', ')}
+                        </Box>
+                      </>
+                    )}
 
-                  {(Array.isArray(props.skills) && props.skills.length > 0) && (
-                    <>
-                      <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'>
-                        Skills
-                      </Box>
-                      <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8' whiteSpace='normal' wordBreak='break-word'>
-                        {props.skills.slice(0, 8).join(', ')}
-                      </Box>
-                    </>
-                  )}
-                </Box>
-
-                {/* Separation */}
-                <Divider mb={6} />
-
-                {/* Long description, calmer text */}
-                <Text id={`${slug}-desc`} color='slate.700' whiteSpace='pre-wrap' fontSize='md' lineHeight='1.9'>
-                  {props.longDescription || 'No additional details available.'}
-                </Text>
-
-                {/* Media preview, compact size (no enforced aspect ratio) */}
-                {props.pic && (
-                  <Box mt={7} p={{ base: 2, md: 3 }} bg='slate.50' borderWidth='1px' borderColor='slate.200'>
-                    <Image src={props.pic}
-                           alt={`${props.name} preview`}
-                           loading='lazy'
-                           decoding='async'
-                           w='100%'
-                           h='auto'
-                           objectFit='cover'
-                           maxH={{ base: '160px', md: '180px' }} />
+                    {(Array.isArray(props.skills) && props.skills.length > 0) && (
+                      <>
+                        <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'
+                             _dark={{ color: 'slate.300' }}>
+                          Skills
+                        </Box>
+                        <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8' whiteSpace='normal' wordBreak='break-word'
+                             _dark={{ color: 'slate.200' }}>
+                          {props.skills.slice(0, 8).join(', ')}
+                        </Box>
+                      </>
+                    )}
                   </Box>
-                )}
 
-                {/* No actions per request */}
+                  {/* Separation */}
+                  <Divider mb={6} _dark={{ borderColor: 'slate.700' }} />
+
+                  {/* Long description, calmer text */}
+                  <Text id={`${slug}-desc`} color='slate.700' whiteSpace='pre-wrap' fontSize='md' lineHeight='1.9'
+                        _dark={{ color: 'slate.200' }}>
+                    {props.longDescription || 'No additional details available.'}
+                  </Text>
+
+                  {/* Media preview, compact size (no enforced aspect ratio) */}
+                  {props.pic && (
+                    <Box mt={7} p={{ base: 2, md: 3 }} bg='slate.50' borderWidth='1px' borderColor='slate.200'
+                         _dark={{ bg: 'slate.700', borderColor: 'slate.600' }}>
+                      <Image src={props.pic}
+                             alt={`${props.name} preview`}
+                             loading='lazy'
+                             decoding='async'
+                             w='100%'
+                             h='auto'
+                             objectFit='cover'
+                             maxH={{ base: '160px', md: '180px' }} />
+                    </Box>
+                  )}
+
+                  {/* No actions per request */}
+                </Box>
               </ModalBody>
             </ModalContent>
           </Modal>
@@ -474,18 +506,19 @@ function Projects() {
   }, [slugs, getProjectFromUrlLocal]);
 
   return (
-    <Box id='Projects' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='slate.100'>
-      <Container maxW='container.lg' py={{ base: 20, md: 24 }}>
+    <Box id='Projects' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='border-subtle'>
+      <Container maxW='container.lg' py={{ base: 16, md: 24 }}>
         <Heading maxW='500px' textTransform='none'>
           Projects
         </Heading>
 
         {/* Category descriptor + compact chips */}
         <HStack mt={6} spacing={2} flexWrap='wrap' alignItems='center'>
-          <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1}>{CATEGORY_LABEL}:</Text>
+          <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1} _dark={{ color: 'slate.300' }}>{CATEGORY_LABEL}:</Text>
           {GROUP_NAMES.map((cat) => {
             const isActive = activeGroup === cat;
             const count = categoryFilterCounts[cat] || 0;
+            const darkStyles = isActive ? { bg: 'brand.600', color: 'white', borderColor: 'brand.500', _hover: { borderColor: 'brand.400' } } : { bg: 'slate.800', color: 'slate.200', borderColor: 'slate.700', _hover: { borderColor: 'slate.600' } };
             return (
               <Tag key={cat}
                    as='button'
@@ -503,7 +536,7 @@ function Projects() {
                    color={isActive ? 'brand.900' : 'slate.800'}
                    borderWidth='1px'
                    borderColor={isActive ? 'brand.200' : 'slate.200'}
-                   _hover={{ borderColor: isActive ? 'brand.300' : 'slate.300' }}
+                   sx={{ _dark: darkStyles }}
                    _focus={{ boxShadow: 'none', outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}>
                 {cat} <Text as='span' ml={1} opacity={0.7} fontSize='xs'>({count})</Text>
@@ -514,10 +547,11 @@ function Projects() {
 
         {/* Technology descriptor + compact chips (limited list) */}
         <HStack mt={4} spacing={2} flexWrap='wrap' alignItems='center'>
-          <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1}>Technology:</Text>
+          <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1} _dark={{ color: 'slate.300' }}>Technology:</Text>
           {TECH_NAMES.map((tech) => {
             const isActive = activeTech === tech;
             const count = technologyFilterCounts[tech] || 0;
+            const darkStyles = isActive ? { bg: 'brand.600', color: 'white', borderColor: 'brand.500', _hover: { borderColor: 'brand.400' } } : { bg: 'slate.800', color: 'slate.200', borderColor: 'slate.700', _hover: { borderColor: 'slate.600' } };
             return (
               <Tag key={tech}
                    as='button'
@@ -535,7 +569,7 @@ function Projects() {
                    color={isActive ? 'brand.900' : 'slate.800'}
                    borderWidth='1px'
                    borderColor={isActive ? 'brand.200' : 'slate.200'}
-                   _hover={{ borderColor: isActive ? 'brand.300' : 'slate.300' }}
+                   sx={{ _dark: darkStyles }}
                    _focus={{ boxShadow: 'none', outline: 'none' }}
                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}>
                 {tech} <Text as='span' ml={1} opacity={0.7} fontSize='xs'>({count})</Text>
@@ -556,14 +590,15 @@ function Projects() {
                     _hover={{ bg: 'slate.50' }}
                     _focus={{ boxShadow: 'none', outline: 'none' }}
                     _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
-                    aria-label='Clear filters'>
+                    aria-label='Clear filters'
+                    _dark={{ color: 'slate.300', _hover: { bg: 'slate.800' }, borderColor: 'slate.700' }}>
               Clear filters
             </Button>
           )}
         </HStack>
 
         {/* 2 per row on md+ with improved spacing */}
-        <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={{ base: 12, md: 16 }}>
+        <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={{ base: 8, md: 16 }}>
           {items.map((item: any) => (
             // <div key={item.name}>
             //   {item.name}

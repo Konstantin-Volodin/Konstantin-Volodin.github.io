@@ -1,4 +1,4 @@
-import projectsData from '../projectsData';
+import projectsData from '../ProjectsData';
 
 // Expected technology names that should be present in TOP_TECHS for filtering
 const EXPECTED_TECH_NAMES = [

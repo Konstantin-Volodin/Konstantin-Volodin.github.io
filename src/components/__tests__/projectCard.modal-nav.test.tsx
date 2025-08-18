@@ -1,7 +1,7 @@
 import React from 'react'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, fireEvent } from '../../test-utils'
-import Projects from '../projects'
+import Projects from '../Projects'
 
 // Make animations and visibility deterministic
 vi.mock('react-visibility-sensor', () => {

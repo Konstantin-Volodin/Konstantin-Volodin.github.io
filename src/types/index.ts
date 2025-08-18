@@ -18,7 +18,7 @@ export interface Project {
 // Skills data types  
 export interface Skill {
   name: string;
-  image: string;
+  image?: string;
   proficiency?: number; // 1-5 scale
   yearsExperience?: number;
   description?: string;
