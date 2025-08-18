@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": false,
   "homepage": "https://konstantin-volodin.github.io/",
   "dependencies": {
@@ -40,6 +40,7 @@
     "@vitest/ui": "^3.2.4",
     "gh-pages": "^6.3.0",
     "jsdom": "^25.0.0",
+    "sharp": "^0.34.3",
     "vite": "^7.1.1",
     "vitest": "^3.2.4"
   }
