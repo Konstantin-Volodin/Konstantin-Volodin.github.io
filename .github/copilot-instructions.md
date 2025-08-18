@@ -3,8 +3,8 @@
 ## Project Overview
 
 This is a personal portfolio website for Konstantin Volodin built with:
-- **Framework**: React 17.0.2 + TypeScript 4.5.5
-- **Build Tool**: Vite 7.1.1 (migrated from Create React App)
+- **Framework**: React 18.3.x + TypeScript (strict)
+- **Build Tool**: Vite 7.x
 - **UI Library**: Chakra UI 2.10.9
 - **Styling**: Emotion (CSS-in-JS)
 - **Deployment**: GitHub Pages via gh-pages
@@ -22,14 +22,14 @@ This is a personal portfolio website for Konstantin Volodin built with:
 │   │   ├── skills.tsx     # Skills/technologies
 │   │   ├── projectsData.tsx # Project data
 │   │   └── skillsData.tsx # Skills data
-│   ├── static/           # Images, logos, fonts
-│   ├── App.tsx           # Main app component
-│   ├── index.tsx         # React app entry point
-│   └── index.css         # Global styles
-├── package.json          # Dependencies and scripts
-├── tsconfig.json         # TypeScript configuration
-├── vite.config.ts        # Vite build configuration
-└── build/                # Production build output
+│   ├── static/            # Images, logos, fonts
+│   ├── App.tsx            # Main app component
+│   ├── index.tsx          # React app entry point
+│   └── index.css          # Global styles
+├── package.json           # Dependencies and scripts
+├── tsconfig.json          # TypeScript configuration
+├── vite.config.ts         # Vite build configuration
+└── build/                 # Production build output
 ```
 
 ## Development Workflow
@@ -69,49 +69,60 @@ npm run deploy
 
 ## Technical Configuration
 
-### React Version Compatibility
-⚠️ **Important**: The project uses React 17 but Chakra UI v2.10.9 expects React 18+. This causes runtime errors with hooks like `useId` and `useSyncExternalStore`.
-
-**Current entry point** (`src/index.tsx`):
+### React 18 Entry Point
+Use createRoot with React 18.
 ```tsx
+// src/index.tsx
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+import App from './App';
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root')!);
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 ```
 
-**Recommended fixes**:
-1. **Upgrade to React 18** (preferred):
-   ```bash
-   npm install react@^18.3.1 react-dom@^18.3.1 @types/react@^18.2.0 @types/react-dom@^18.2.0
-   ```
-   Then update `src/index.tsx` to use `createRoot`:
-   ```tsx
-   import { createRoot } from 'react-dom/client';
-   const root = createRoot(document.getElementById('root')!);
-   root.render(<React.StrictMode><App /></React.StrictMode>);
-   ```
+### Head Management
+Use react-helmet-async (safe for concurrent rendering).
+```tsx
+// src/App.tsx
+// ...existing code...
+import { HelmetProvider } from 'react-helmet-async';
+// ...existing code...
+export default function App() {
+  return (
+    <HelmetProvider>
+      {/* ...existing app/providers... */}
+    </HelmetProvider>
+  );
+}
+```
 
-2. **Downgrade Chakra UI** (alternative):
-   ```bash
-   npm install @chakra-ui/react@^1.8.9
-   ```
+### Chakra UI and Color Mode
+- Import `useColorMode` where needed: `import { useColorMode } from '@chakra-ui/react'`
+- Add `ColorModeScript` once (e.g., in `index.tsx`) to persist theme.
+```tsx
+// src/index.tsx
+// ...existing code...
+import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
 
-### TypeScript Configuration
-- `tsconfig.json` - Main TypeScript config
-- `tsconfig.node.json` - Node.js specific config for Vite
-- Strict mode enabled
-- No explicit linting configuration found
+const theme = extendTheme({
+  config: { initialColorMode: 'system', useSystemColorMode: true },
+});
 
-### Build Warnings
-The build generates warnings about:
-- Bundle size >500KB (consider code splitting)
-- Peer dependency mismatches with React versions
+root.render(
+  <React.StrictMode>
+    <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <App />
+    </ChakraProvider>
+  </React.StrictMode>
+);
+```
+Common pitfall: “Cannot find name 'useColorMode'” means the hook isn’t imported. Ensure `import { useColorMode } from '@chakra-ui/react'` is present in the file using it.
 
 ## Deployment
 
@@ -172,22 +183,17 @@ npm run deploy     # Pushes to gh-pages branch
 
 ## Common Issues & Solutions
 
-### React Version Conflicts
-If you encounter `useId` or `useSyncExternalStore` errors:
-```bash
-# Upgrade React (recommended)
-npm install react@^18.3.1 react-dom@^18.3.1 @types/react@^18.2.0 @types/react-dom@^18.2.0
-```
+### React/Chakra Version Mismatch
+Project uses React 18 and Chakra UI 2.10.9. If you see `useId` or `useSyncExternalStore` errors, ensure React 18+ and `@types/react@18+` are installed.
+
+### Color Mode Hook
+- Error: “Cannot find name 'useColorMode'”
+  - Fix: `import { useColorMode } from '@chakra-ui/react'` in the component that uses it.
 
 ### Build Failures
-- Ensure all imports are correctly typed
-- Check for missing dependencies
-- Verify image imports exist
-
-### Performance Optimization
-- Consider lazy loading for large images
-- Implement code splitting for large bundles
-- Use Chakra UI's built-in responsive utilities
+- Verify import paths
+- Ensure images exist
+- Resolve missing types
 
 ## Testing
 
@@ -203,9 +209,10 @@ npm install --save-dev @testing-library/react @testing-library/jest-dom vitest j
 }
 ```
 
-## Monitoring & Analytics
-
-The project includes `reportWebVitals.ts` for performance monitoring. Connect to analytics services as needed.
+## Performance
+- Lazy-load large sections
+- Optimize and compress images
+- Consider code splitting to keep initial JS light
 
 ---
 
