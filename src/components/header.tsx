@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box, Flex, Text, IconButton, Stack, HStack,
   Collapse, useColorMode, useColorModeValue, useDisclosure,
@@ -26,7 +26,7 @@ interface NavLinkProps {
   children: React.ReactNode;
   href: string;
   external?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   // Allow style/layout props to be forwarded
   [key: string]: any;
 }
@@ -74,10 +74,8 @@ const MobileNavItem = ({ label, href, external, onNavigate }: NavItem & { onNavi
         onNavigate();
         if (href.startsWith('#')) {
           // smooth scroll for internal anchors
-          setTimeout(() => {
             const el = document.querySelector(href);
             el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 50);
         }
       }}
       w='full'
@@ -94,33 +92,11 @@ export default function HeaderEnhanced() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
-  const [activeId, setActiveId] = useState<string>('');
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // IntersectionObserver to highlight active section
-  useEffect(() => {
-    const sections = ['Projects', 'Skills'];
-    const opts: IntersectionObserverInit = { root: null, rootMargin: '-50% 0px -40% 0px', threshold: 0 };
-    observerRef.current?.disconnect();
-    observerRef.current = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
-          if (id) setActiveId(id);
-        }
-      });
-    }, opts);
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observerRef.current?.observe(el);
-    });
-    return () => observerRef.current?.disconnect();
   }, []);
 
   const bg = useColorModeValue('bg-glass', 'bg-glass');
@@ -158,30 +134,19 @@ export default function HeaderEnhanced() {
 
           {/* Desktop nav */}
           <HStack spacing={2} display={{ base: 'none', md: 'flex' }}>
-            {NAV_ITEMS.map((navItem) => {
-              const isActive = activeId && navItem.href === `#${activeId}`;
-              return (
-                <NavLink key={navItem.label} href={navItem.href} external={navItem.external}
-                  position='relative'
-                  fontWeight={isActive ? 600 : 500}
-                  color={isActive ? useColorModeValue('slate.900','white') : undefined}
-                  _after={{
-                    content: '""',
-                    position: 'absolute',
-                    left: 8,
-                    right: 8,
-                    bottom: 2,
-                    height: '2px',
-                    bg: 'brand.500',
-                    opacity: isActive ? 1 : 0,
-                    transform: isActive ? 'translateY(0)' : 'translateY(4px)',
-                    transition: 'all .25s'
-                  }}
-                >
-                  {navItem.label}
-                </NavLink>
-              );
-            })}
+            {NAV_ITEMS.map((navItem) => (
+              <NavLink key={navItem.label} href={navItem.href} external={navItem.external}
+                onClick={(e: React.MouseEvent) => {
+                  if (navItem.href.startsWith('#')) {
+                    e.preventDefault();
+                    const el = document.getElementById(navItem.href.slice(1));
+                    el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+              >
+                {navItem.label}
+              </NavLink>
+            ))}
           </HStack>
 
           {/* Controls */}
