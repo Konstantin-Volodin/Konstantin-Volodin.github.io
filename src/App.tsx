@@ -13,31 +13,48 @@ import SkillsSkeleton from './components/SkillsSkeleton';
 // Lazy load heavy components
 const Projects = lazy(() => import('./components/projects'));
 const Skills = lazy(() => import('./components/skills'));
+const Valentine = lazy(() => import('./components/Valentine'));
+
+function Portfolio() {
+  return (
+    <>
+      <Helmet>
+        <title>Konstantin Volodin's Portfolio</title>
+        <meta name="description" content="Konstantin Volodin's Portfolio" />
+      </Helmet>
+
+      <Fonts />
+      <Header />
+      <Intro />
+
+      {/* Lazy load Projects with skeleton fallback */}
+      <Suspense fallback={<ProjectsSkeleton />}>
+        <Projects />
+      </Suspense>
+
+      {/* Lazy load Skills with skeleton fallback */}
+      <Suspense fallback={<SkillsSkeleton />}>
+        <Skills />
+      </Suspense>
+
+      {/* <ContactMe /> */}
+    </>
+  );
+}
 
 function App() {
+  const isValentine = window.location.pathname === '/valentine';
+
   return (
     <HelmetProvider>
       <ChakraProvider theme={theme}>
-        <Helmet>
-          <title>Konstantin Volodin's Portfolio</title>
-          <meta name="description" content="Konstantin Volodin's Portfolio" />
-        </Helmet>
-
-        <Fonts />
-        <Header />
-        <Intro />
-
-        {/* Lazy load Projects with skeleton fallback */}
-        <Suspense fallback={<ProjectsSkeleton />}>
-          <Projects />
-        </Suspense>
-
-        {/* Lazy load Skills with skeleton fallback */}
-        <Suspense fallback={<SkillsSkeleton />}>
-          <Skills />
-        </Suspense>
-
-        {/* <ContactMe /> */}
+        {isValentine ? (
+          <Suspense fallback={null}>
+            <Valentine />
+          </Suspense>
+        ) : (
+          <Portfolio />
+        )}
       </ChakraProvider>
     </HelmetProvider>
   );
