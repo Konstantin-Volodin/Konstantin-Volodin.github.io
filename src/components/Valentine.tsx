@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
 import { Box, Button, Heading, Text, VStack } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react';
 
@@ -20,14 +20,6 @@ const yesGlow = keyframes`
 const confettiBurst = keyframes`
   0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
   100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
-`;
-
-const noWiggle = keyframes`
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-2px); }
-  40% { transform: translateX(2px); }
-  60% { transform: translateX(-1px); }
-  80% { transform: translateX(1px); }
 `;
 
 const HEARTS = ['❤️', '💕', '💖', '💗'];
@@ -55,16 +47,27 @@ function Valentine() {
   const [accepted, setAccepted] = useState(false);
   const [noCount, setNoCount] = useState(0);
   const [noPos, setNoPos] = useState<{ x: number; y: number } | null>(null);
+  const [noTransitionMs, setNoTransitionMs] = useState(0);
   const [floatingHearts, setFloatingHearts] = useState<{ id: number; x: number; heart: string }[]>([]);
   const [displayedAcceptedTitle, setDisplayedAcceptedTitle] = useState('');
-  const [noWiggleKey, setNoWiggleKey] = useState(0);
   const [confettiPieces, setConfettiPieces] = useState<
     { id: number; x: number; y: number; dx: string; dy: string; rot: string; color: string; size: number }[]
   >([]);
   const lastNoMoveAt = useRef(0);
+  const noPlaceholderRef = useRef<HTMLDivElement>(null);
 
   // YES button grows with a cap
   const yesScale = Math.min(1 + noCount * 0.15, 2);
+
+  // Measure placeholder position on mount so fixed button starts in the right spot
+  useLayoutEffect(() => {
+    if (noPlaceholderRef.current && !noPos) {
+      const rect = noPlaceholderRef.current.getBoundingClientRect();
+      setNoPos({ x: rect.left, y: rect.top });
+    }
+  }, []);
+
+  const FLEE_DISTANCE = 180;
 
   const getSafeNoPosition = (
     current: { x: number; y: number },
@@ -75,26 +78,55 @@ function Valentine() {
     const minY = NO_BUTTON_MARGIN;
     const maxY = Math.max(minY, window.innerHeight - NO_BUTTON_HEIGHT - NO_BUTTON_MARGIN);
 
-    const offset = () => (Math.random() < 0.5 ? -1 : 1) * (100 + Math.random() * 100);
-
-    for (let i = 0; i < 12; i += 1) {
-      const candidate = {
-        x: Math.max(minX, Math.min(maxX, current.x + offset())),
-        y: Math.max(minY, Math.min(maxY, current.y + offset())),
+    if (!pointer) {
+      return {
+        x: Math.max(minX, Math.min(maxX, current.x + (Math.random() - 0.5) * 200)),
+        y: Math.max(minY, Math.min(maxY, current.y + (Math.random() - 0.5) * 200)),
       };
-
-      if (!pointer) return candidate;
-
-      const distanceToPointer = Math.hypot(candidate.x - pointer.x, candidate.y - pointer.y);
-      if (distanceToPointer >= MIN_CURSOR_DISTANCE) return candidate;
     }
 
-    if (!pointer) return current;
+    // Flee directly away from cursor
+    const btnCenterX = current.x + NO_BUTTON_WIDTH / 2;
+    const btnCenterY = current.y + NO_BUTTON_HEIGHT / 2;
+    let dx = btnCenterX - pointer.x;
+    let dy = btnCenterY - pointer.y;
+    const dist = Math.hypot(dx, dy) || 1;
+    dx /= dist;
+    dy /= dist;
 
-    return {
-      x: pointer.x < window.innerWidth / 2 ? maxX : minX,
-      y: pointer.y < window.innerHeight / 2 ? maxY : minY,
+    // Add slight randomness so it doesn't feel robotic
+    dx += (Math.random() - 0.5) * 0.4;
+    dy += (Math.random() - 0.5) * 0.4;
+
+    const candidate = {
+      x: Math.max(minX, Math.min(maxX, current.x + dx * FLEE_DISTANCE)),
+      y: Math.max(minY, Math.min(maxY, current.y + dy * FLEE_DISTANCE)),
     };
+
+    // If cornered, try perpendicular directions before jumping far
+    const distToPointer = Math.hypot(candidate.x - pointer.x, candidate.y - pointer.y);
+    if (distToPointer < MIN_CURSOR_DISTANCE) {
+      // Try perpendicular (rotate flee direction 90 degrees both ways)
+      for (const sign of [1, -1]) {
+        const perpCandidate = {
+          x: Math.max(minX, Math.min(maxX, current.x + sign * -dy * FLEE_DISTANCE * 1.5)),
+          y: Math.max(minY, Math.min(maxY, current.y + sign * dx * FLEE_DISTANCE * 1.5)),
+        };
+        const perpDist = Math.hypot(perpCandidate.x - pointer.x, perpCandidate.y - pointer.y);
+        if (perpDist >= MIN_CURSOR_DISTANCE) return perpCandidate;
+      }
+
+      // Last resort: pick a random point on the opposite half of the screen
+      const oppositeX = pointer.x < window.innerWidth / 2
+        ? minX + (maxX - minX) * (0.5 + Math.random() * 0.5)
+        : minX + (maxX - minX) * Math.random() * 0.5;
+      const oppositeY = pointer.y < window.innerHeight / 2
+        ? minY + (maxY - minY) * (0.5 + Math.random() * 0.5)
+        : minY + (maxY - minY) * Math.random() * 0.5;
+      return { x: oppositeX, y: oppositeY };
+    }
+
+    return candidate;
   };
 
   const moveNoButton = useCallback((pointer?: { x: number; y: number }) => {
@@ -107,9 +139,12 @@ function Valentine() {
         x: window.innerWidth / 2 + 60,
         y: window.innerHeight / 2,
       };
-      return getSafeNoPosition(current, pointer);
+      const next = getSafeNoPosition(current, pointer);
+      const moveDist = Math.hypot(next.x - current.x, next.y - current.y);
+      // Scale transition: ~300ms for a normal flee, up to ~600ms for long jumps
+      setNoTransitionMs(Math.min(600, Math.max(250, moveDist * 0.5)));
+      return next;
     });
-    setNoWiggleKey((k) => k + 1);
     setNoCount((c) => c + 1);
   }, []);
 
@@ -246,7 +281,7 @@ function Valentine() {
           spacing={5}
           textAlign="center"
           zIndex={1}
-          bg="whiteAlpha.750"
+          bg="whiteAlpha.800"
           backdropFilter="blur(10px)"
           borderRadius="2xl"
           px={{ base: 6, md: 10 }}
@@ -312,7 +347,7 @@ function Valentine() {
           px={{ base: 5, md: 10 }}
           py={{ base: 8, md: 10 }}
           w="full"
-          bg="whiteAlpha.760"
+          bg="whiteAlpha.800"
           backdropFilter="blur(12px)"
           borderRadius="2xl"
           boxShadow="0 20px 60px rgba(214, 67, 120, 0.18)"
@@ -350,24 +385,8 @@ function Valentine() {
               Yes
             </Button>
 
-            {noPos === null ? (
-              <Button
-                onMouseEnter={(e) => moveNoButton({ x: e.clientX, y: e.clientY })}
-                onTouchStart={(e) => {
-                  const touch = e.touches[0];
-                  moveNoButton(touch ? { x: touch.clientX, y: touch.clientY } : undefined);
-                }}
-                variant="outline"
-                color="gray.400"
-                borderColor="gray.300"
-                _hover={{ bg: 'transparent' }}
-                rounded="lg"
-                px={6}
-                py={2}
-              >
-                No
-              </Button>
-            ) : null}
+            {/* Invisible placeholder to reserve space in flex layout */}
+            <Box ref={noPlaceholderRef} w="72px" h="40px" visibility="hidden" />
           </Box>
         </VStack>
 
@@ -384,7 +403,6 @@ function Valentine() {
 
       {noPos !== null && (
         <Button
-          key={`no-button-${noWiggleKey}`}
           position="fixed"
           left={`${noPos.x}px`}
           top={`${noPos.y}px`}
@@ -394,14 +412,15 @@ function Valentine() {
             moveNoButton(touch ? { x: touch.clientX, y: touch.clientY } : undefined);
           }}
           variant="outline"
-          color="gray.400"
-          borderColor="gray.300"
-          _hover={{ bg: 'transparent' }}
+          color="pink.400"
+          borderColor="pink.300"
+          bg="white"
+          _hover={{ bg: 'pink.50' }}
           rounded="lg"
           px={6}
           py={2}
-          animation={`${noWiggle} 0.22s ease-out`}
-          transition="left 0.15s ease, top 0.15s ease"
+          boxShadow="0 4px 16px rgba(236, 72, 153, 0.25)"
+          transition={`left ${noTransitionMs}ms cubic-bezier(0.34, 1.56, 0.64, 1), top ${noTransitionMs}ms cubic-bezier(0.34, 1.56, 0.64, 1)`}
           zIndex={10}
         >
           No
