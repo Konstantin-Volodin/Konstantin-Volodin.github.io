@@ -1,4 +1,4 @@
-Data_Science_Resume_Example.pdf
+# LaTeX build artifacts
 *.aux
 *.fdb_latexmk
 *.fls
@@ -6,15 +6,12 @@ Data_Science_Resume_Example.pdf
 *.out
 *.synctex.gz
 
-# Generated PDFs and images
+# Generated outputs
 *.pdf
 *.png
 
 # Utility scripts
 convert_pdfs.py
 
-# Private / sensitive
+# Private
 2025-applications/
-
-# Backup
-resume - backup!/
