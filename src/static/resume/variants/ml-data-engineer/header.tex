@@ -1,0 +1,28 @@
+%====================
+% Header: Contact (Tight margins for 1-page)
+%====================
+
+\RequirePackage{fancyhdr}
+\fancypagestyle{fancy}{%
+\fancyhf{}
+\lhead{
+	\href{mailto:\email}{\email} \\
+	\phone \\ % PHONE
+	\city  }% city
+\chead{%
+  \centering {\LARGE \skills \name \vspace{.12em}} \\% feel free to adjust vspace to 0
+
+  {\color{highlight} \large{\role}}}%
+
+   \rhead{\href{https://konstantin-volodin.github.io/}{konstantin-volodin.github.io}\\ % Portfolio
+    \href{https://github.com/Konstantin-Volodin/}{github.com/Konstantin-Volodin} \\% Github
+        \href{https://www.linkedin.com/in/konstantin-volodin/}{linkedin.com/konstantin-volodin}}
+
+\renewcommand{\headrulewidth}{0pt}% 2pt header rule
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{highlight}\leaders\hrule height \headrulewidth\hfill}}
+}
+\pagestyle{fancy}
+
+\setlength{\headheight}{60pt}
+\setlength{\headsep}{2pt}

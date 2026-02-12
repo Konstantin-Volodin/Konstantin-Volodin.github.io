@@ -5,3 +5,16 @@ Data_Science_Resume_Example.pdf
 *.log
 *.out
 *.synctex.gz
+
+# Generated PDFs and images
+*.pdf
+*.png
+
+# Utility scripts
+convert_pdfs.py
+
+# Private / sensitive
+2025-applications/
+
+# Backup
+resume - backup!/

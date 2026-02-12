@@ -1,11 +1,12 @@
 \subsection{{Infinite DnD \hfill July 2025 --- Present}}
-\subtext{Personal}
+\subtext{Personal Project (LLM Agents / Data Infrastructure)}
 \begin{zitemize}
     \setlength\itemsep{0.4em}
-    \item Developing an LLM-agent system using open-source models to run Dungeons \& Dragons campaigns from user-defined configurations; supports fully automated play or mixed human/agent interaction.
-    \item Architected modular LLM agents with scoped world knowledge to improve response accuracy and separation of concerns.
-    \item Implemented persistent world state, enabling agent to create lasting consequences (quests, NPCs, events).
-    \item Designed and implemented a React frontend to present narrative, visualize world state and agent logs, and capture user input.
+    \item Engineered modular open-source LLM agent system (Python) separating narrative generation, rule enforcement, and world simulation via scoped knowledge modules.
+    \item Implemented persistent, normalized world state (entities, attributes, events) enabling long-horizon consistency and queryable session analytics.
+    \item Built React + TypeScript interface to stream agent outputs, visualize state diffs, and surface structured logs; accelerated iteration cycle by <X%>.
+    \item Added structured JSON logging, session tracing, and evaluation harness tracking latency, token usage, and narrative quality across model variants.
+    \item Containerized services (agents API, state store, frontend) with Docker; designed for Azure deployment (env config, reproducible dev workflow, CI/CD ready).
 \end{zitemize}
 \vspace{0.75em}
 

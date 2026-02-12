@@ -1,0 +1,43 @@
+\documentclass[letter,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+%====================
+% ML/DATA ENGINEER RESUME (1-PAGE)
+% Optimized for: ML Engineer, MLOps, Data Engineer, Applied Scientist roles
+% Focus: Production systems, architecture, infrastructure, full-stack
+%====================
+
+\usepackage{TLCresume}
+
+%====================
+% CONTACT INFORMATION
+%====================
+\def\name{Konstantin Volodin} % Name
+\def\phone{+1-438-370-2046} % Phone Number
+\def\city{Montréal, QC, Canada} % City, Province/State
+\def\email{volodin.kostia@gmail.com} % Email
+\def\role{ML/Data Engineer} % Job Title
+
+%====================
+% RESUME CONTENT
+%====================
+\input{variants/ml-data-engineer/header}
+% Reduce extra vertical spacing for compact one-page layout
+\raggedbottom
+\setlength{\parskip}{0pt}
+
+\begin{document}
+
+\section{Skills}
+\input{variants/ml-data-engineer/skills}
+
+\section{Experience}
+\input{variants/ml-data-engineer/experience}
+
+\section{Education}
+\input{variants/ml-data-engineer/education}
+
+\section{Projects}
+\input{variants/ml-data-engineer/projects}
+
+\end{document}
