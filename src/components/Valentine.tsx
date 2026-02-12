@@ -306,79 +306,79 @@ function Valentine() {
         pointerEvents="none"
       />
 
-      <VStack
-        spacing={6}
-        textAlign="center"
-        zIndex={1}
-        px={{ base: 5, md: 10 }}
-        py={{ base: 8, md: 10 }}
-        mx={4}
-        maxW="760px"
-        w="full"
-        bg="whiteAlpha.760"
-        backdropFilter="blur(12px)"
-        borderRadius="2xl"
-        boxShadow="0 20px 60px rgba(214, 67, 120, 0.18)"
-        border="1px solid"
-        borderColor="whiteAlpha.700"
-      >
-        <Text fontSize="3rem">❤️</Text>
-
-        <Heading
-          fontSize={{ base: 'xl', md: '2xl' }}
-          color="gray.700"
-          fontFamily="heading"
-          fontWeight={500}
+      <VStack spacing={4} textAlign="center" zIndex={1} mx={4} maxW="760px" w="full">
+        <VStack
+          spacing={6}
+          px={{ base: 5, md: 10 }}
+          py={{ base: 8, md: 10 }}
+          w="full"
+          bg="whiteAlpha.760"
+          backdropFilter="blur(12px)"
+          borderRadius="2xl"
+          boxShadow="0 20px 60px rgba(214, 67, 120, 0.18)"
+          border="1px solid"
+          borderColor="whiteAlpha.700"
         >
-          Will you be my Valentine?
-        </Heading>
+          <Text fontSize="3rem">❤️</Text>
 
-        {noCount > 0 && (
-          <Text fontSize={{ base: 'sm', md: 'md' }} color="pink.700" fontWeight={500}>
-            {noCount >= EASTER_EGG_THRESHOLD
-              ? EASTER_EGG_MESSAGE
-              : DEADPAN_MESSAGES[Math.min(noCount - 1, DEADPAN_MESSAGES.length - 1)]}
-          </Text>
-        )}
-
-        <Box display="flex" gap={4} alignItems="center" justifyContent="center" mt={3}>
-          <Button
-            onClick={handleAccept}
-            bgGradient="linear(to-r, pink.500, red.400)"
-            color="white"
-            _hover={{ bgGradient: 'linear(to-r, pink.500, red.500)' }}
-            _active={{ bgGradient: 'linear(to-r, pink.600, red.600)' }}
-            rounded="lg"
-            px={8}
-            py={3}
-            fontWeight={700}
-            letterSpacing="0.2px"
-            transform={`scale(${yesScale})`}
-            boxShadow="0 10px 24px rgba(235, 87, 135, 0.35)"
-            transition="all 0.25s ease"
-            animation={`${yesGlow} 1.6s ease-in-out infinite`}
+          <Heading
+            fontSize={{ base: 'xl', md: '2xl' }}
+            color="gray.700"
+            fontFamily="heading"
+            fontWeight={500}
           >
-            Yes
-          </Button>
+            Will you be my Valentine?
+          </Heading>
 
-          {noPos === null ? (
+          <Box display="flex" gap={4} alignItems="center" justifyContent="center" mt={3}>
             <Button
-              onMouseEnter={(e) => moveNoButton({ x: e.clientX, y: e.clientY })}
-              onTouchStart={(e) => {
-                const touch = e.touches[0];
-                moveNoButton(touch ? { x: touch.clientX, y: touch.clientY } : undefined);
-              }}
-              variant="outline"
-              color="gray.400"
-              borderColor="gray.300"
-              _hover={{ bg: 'transparent' }}
+              onClick={handleAccept}
+              bgGradient="linear(to-r, pink.500, red.400)"
+              color="white"
+              _hover={{ bgGradient: 'linear(to-r, pink.500, red.500)' }}
+              _active={{ bgGradient: 'linear(to-r, pink.600, red.600)' }}
               rounded="lg"
-              px={6}
-              py={2}
+              px={8}
+              py={3}
+              fontWeight={700}
+              letterSpacing="0.2px"
+              transform={`scale(${yesScale})`}
+              boxShadow="0 10px 24px rgba(235, 87, 135, 0.35)"
+              transition="all 0.25s ease"
+              animation={`${yesGlow} 1.6s ease-in-out infinite`}
             >
-              No
+              Yes
             </Button>
-          ) : null}
+
+            {noPos === null ? (
+              <Button
+                onMouseEnter={(e) => moveNoButton({ x: e.clientX, y: e.clientY })}
+                onTouchStart={(e) => {
+                  const touch = e.touches[0];
+                  moveNoButton(touch ? { x: touch.clientX, y: touch.clientY } : undefined);
+                }}
+                variant="outline"
+                color="gray.400"
+                borderColor="gray.300"
+                _hover={{ bg: 'transparent' }}
+                rounded="lg"
+                px={6}
+                py={2}
+              >
+                No
+              </Button>
+            ) : null}
+          </Box>
+        </VStack>
+
+        <Box minH={{ base: '44px', md: '52px' }} px={2}>
+          {noCount > 0 && (
+            <Text fontSize={{ base: 'sm', md: 'md' }} color="pink.700" fontWeight={500}>
+              {noCount >= EASTER_EGG_THRESHOLD
+                ? EASTER_EGG_MESSAGE
+                : DEADPAN_MESSAGES[Math.min(noCount - 1, DEADPAN_MESSAGES.length - 1)]}
+            </Text>
+          )}
         </Box>
       </VStack>
 
