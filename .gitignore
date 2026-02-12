@@ -1,7 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-resume-backup/*
-src/static/resume - backup!/
+src/static/resume-backup/*
 
 # dependencies
 /node_modules
