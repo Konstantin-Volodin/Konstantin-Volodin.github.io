@@ -1,9 +1,5 @@
 # LaTeX build artifacts
-*.aux
-*.fdb_latexmk
-*.fls
-*.log
-*.out
+build/
 *.synctex.gz
 
 # Generated outputs
