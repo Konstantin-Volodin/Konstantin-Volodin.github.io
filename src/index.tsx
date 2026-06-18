@@ -3,8 +3,8 @@ import '@fontsource/inter';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ColorModeScript } from '@chakra-ui/react';
-import reportWebVitals from './reportWebVitals';
-import theme from './static/fonts/theme';
+import reportWebVitals from './shared/reportWebVitals';
+import theme from './shared/theme/theme';
 
 import './index.css';
 import App from './App';

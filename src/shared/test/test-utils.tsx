@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
 import { ChakraProvider } from '@chakra-ui/react'
-import theme from './static/fonts/theme'
+import theme from '../theme/theme'
 
 const AllProviders = ({ children }: PropsWithChildren) => {
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { render, screen, fireEvent } from '../../test-utils'
+import { render, screen, fireEvent } from '../../../shared/test/test-utils'
 import Projects from '../Projects'
 import { act } from 'react'
 

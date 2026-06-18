@@ -5,8 +5,8 @@ import {
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import VisibilitySensor from "react-visibility-sensor";
-import skillData from './SkillsData';
-import { Skill } from '../types';
+import skillData from './skillsData';
+import { Skill } from '../../shared/types';
 
 const MotionBox = motion(Box);
 

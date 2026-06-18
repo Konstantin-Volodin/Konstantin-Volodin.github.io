@@ -1,21 +1,21 @@
-import mcgillMonkey from '../static/assets/images/mcgill-monkey.jpg'
-import mcgillGlyph from '../static/assets/images/mcgill-glyphosates.jpg'
-import mcgillCapstone from "../static/assets/images/mcgill-capstone.png"
-import mcgillCase from '../static/assets/images/mcgill-case.jpg'
+import mcgillMonkey from '../../assets/images/mcgill-monkey.jpg'
+import mcgillGlyph from '../../assets/images/mcgill-glyphosates.jpg'
+import mcgillCapstone from "../../assets/images/mcgill-capstone.png"
+import mcgillCase from '../../assets/images/mcgill-case.jpg'
 
-import artfDashboard from "../static/assets/images/artf-dashboard.jpg"
-import artfBaselines from "../static/assets/images/artf-baselines.jpg"
-import artfAppTimes from "../static/assets/images/artf-apptimes.jpg"
+import artfDashboard from "../../assets/images/artf-dashboard.jpg"
+import artfBaselines from "../../assets/images/artf-baselines.jpg"
+import artfAppTimes from "../../assets/images/artf-apptimes.jpg"
 
-import ohriUrgentCare from "../static/assets/images/urgent-care.jpg"
-import ohriBlockScheduling from "../static/assets/images/block-scheduling.jpg"
+import ohriUrgentCare from "../../assets/images/urgent-care.jpg"
+import ohriBlockScheduling from "../../assets/images/block-scheduling.jpg"
 
-import uOttawaDynamicKnapsack from "../static/assets/images/dynamic-knapsack.jpg"
-import uOttawaWorkloadAllocation from "../static/assets/images/workload-allocation.png"
+import uOttawaDynamicKnapsack from "../../assets/images/dynamic-knapsack.jpg"
+import uOttawaWorkloadAllocation from "../../assets/images/workload-allocation.png"
 
-import personalHackathon from "../static/assets/images/personal-hackathon.jpg"
+import personalHackathon from "../../assets/images/personal-hackathon.jpg"
 
-import { Project } from '../types';
+import { Project } from '../../shared/types';
 
 const projectsData: Project[] = [
   {

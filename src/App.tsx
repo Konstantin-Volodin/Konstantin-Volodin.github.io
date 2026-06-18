@@ -2,18 +2,18 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Suspense, lazy } from 'react';
 
-import Fonts from './static/fonts/font'
-import theme from './static/fonts/theme'
+import Fonts from './shared/theme/font'
+import theme from './shared/theme/theme'
 
 import Header from './components/Header';
 import Intro from './components/Intro';
-import ProjectsSkeleton from './components/ProjectsSkeleton';
-import SkillsSkeleton from './components/SkillsSkeleton';
+import ProjectsSkeleton from './components/skeletons/ProjectsSkeleton';
+import SkillsSkeleton from './components/skeletons/SkillsSkeleton';
 
 // Lazy load heavy components
-const Projects = lazy(() => import('./components/projects'));
-const Skills = lazy(() => import('./components/skills'));
-const Valentine = lazy(() => import('./components/Valentine'));
+const Projects = lazy(() => import('./sections/projects/Projects'));
+const Skills = lazy(() => import('./sections/skills/Skills'));
+const Valentine = lazy(() => import('./sections/valentine/Valentine'));
 
 function Portfolio() {
   return (

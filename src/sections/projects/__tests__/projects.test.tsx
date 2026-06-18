@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { vi } from 'vitest';
 import Projects from '../Projects';
-import theme from '../../static/fonts/theme';
+import theme from '../../../shared/theme/theme';
 
 // Mock the project data to have a controlled test environment
 vi.mock('../projectsData', () => ({

@@ -1,26 +1,26 @@
-import sql from "../static/assets/logos/mysql-logo.png"
-import python from "../static/assets/logos/python-logo-notext.png"
-import nodejs from "../static/assets/logos/nodejs-logo.png"
-import aws from "../static/assets/logos/aws-logo.png"
-import gcp from "../static/assets/logos/gcp-logo.png"
+import sql from "../../assets/logos/mysql-logo.png"
+import python from "../../assets/logos/python-logo-notext.png"
+import nodejs from "../../assets/logos/nodejs-logo.png"
+import aws from "../../assets/logos/aws-logo.png"
+import gcp from "../../assets/logos/gcp-logo.png"
 
-import gurobi from "../static/assets/logos/gurobi-logo.png"
-import arena from "../static/assets/logos/arena-logo.png"
-import powerbi from '../static/assets/logos/power-bi.png'
-import pytorch from '../static/assets/logos/pytorch-logo.png'
-import databricks from "../static/assets/logos/databricks_logo.png"
+import gurobi from "../../assets/logos/gurobi-logo.png"
+import arena from "../../assets/logos/arena-logo.png"
+import powerbi from '../../assets/logos/power-bi.png'
+import pytorch from '../../assets/logos/pytorch-logo.png'
+import databricks from "../../assets/logos/databricks_logo.png"
 
-import docker from "../static/assets/logos/docker-logo.png"
-import rlogo from "../static/assets/logos/rlogo.png"
+import docker from "../../assets/logos/docker-logo.png"
+import rlogo from "../../assets/logos/rlogo.png"
 
-import azurelogo from "../static/assets/logos/azure-logo.png";
+import azurelogo from "../../assets/logos/azure-logo.png";
 
-import htmlLogo from "../static/assets/logos/html5-logo.png";
-import reactLogo from "../static/assets/logos/react-logo.png";
-import djangoLogo from "../static/assets/logos/django-logo.png";
-import githubLogo from "../static/assets/logos/github-logo.png";
+import htmlLogo from "../../assets/logos/html5-logo.png";
+import reactLogo from "../../assets/logos/react-logo.png";
+import djangoLogo from "../../assets/logos/django-logo.png";
+import githubLogo from "../../assets/logos/github-logo.png";
 
-import { SkillSection } from '../types';
+import { SkillSection } from '../../shared/types';
 
 const skillsData: SkillSection[] = [
     {

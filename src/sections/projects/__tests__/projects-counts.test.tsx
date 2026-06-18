@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { vi } from 'vitest';
 import Projects from '../Projects';
-import theme from '../../static/fonts/theme';
+import theme from '../../../shared/theme/theme';
 
 // Helper to render component with ChakraProvider
 const renderWithChakra = (component: React.ReactElement) => {

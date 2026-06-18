@@ -10,7 +10,7 @@ export default defineConfig({
       }
     },
     globals: true,
-    setupFiles: './src/setupTests.ts',
+    setupFiles: './src/shared/test/setupTests.ts',
     include: [
       'src/**/*.{test,spec}.{ts,tsx}',
       'src/**/__tests__/**/*.{ts,tsx}'

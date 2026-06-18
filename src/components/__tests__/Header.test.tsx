@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { vi } from 'vitest';
-import Header from '../header';
-import theme from '../../static/fonts/theme';
+import Header from '../Header';
+import theme from '../../shared/theme/theme';
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
