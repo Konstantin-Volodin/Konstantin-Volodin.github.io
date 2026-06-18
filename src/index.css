@@ -1,10 +1,147 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (toggled on <html> by useColorMode) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Modern Slate + Amber palette */
+  --color-brand-50: #fffbeb;
+  --color-brand-100: #fef3c7;
+  --color-brand-200: #fde68a;
+  --color-brand-300: #fcd34d;
+  --color-brand-400: #fbbf24;
+  --color-brand-500: #f59e0b;
+  --color-brand-600: #d97706;
+  --color-brand-700: #b45309;
+  --color-brand-800: #92400e;
+  --color-brand-900: #78350f;
+
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-heading: SpaceGroteskVariable, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-lift: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+  --animate-pulse-heart: pulse-heart 1.5s ease-in-out infinite;
+  --animate-rise: rise 5s linear forwards;
+  --animate-yes-glow: yes-glow 1.6s ease-in-out infinite;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out both;
+  --animate-underline: underline-grow 0.8s ease-out 1.5s both;
+  --animate-modal-in: modal-in 0.2s ease-out both;
+}
+
+/* Semantic tokens that flip with the `dark` class */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-content: var(--content);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-subtle: var(--line-subtle);
+  --color-accent: var(--accent);
+}
+
+:root {
+  --canvas: #f8fafc;
+  --surface: #ffffff;
+  --surface-alt: #f1f5f9;
+  --content: #0f172a;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --line-subtle: #f1f5f9;
+  --accent: #f59e0b;
+}
+
+.dark {
+  --canvas: #0f172a;
+  --surface: #1e293b;
+  --surface-alt: #1e293b;
+  --content: #f8fafc;
+  --muted: #94a3b8;
+  --line: #334155;
+  --line-subtle: #1e293b;
+  --accent: #fbbf24;
+}
+
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
 }
 
 body {
   margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-canvas);
+  color: var(--color-content);
+  transition: background-color 0.2s, color 0.2s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background: #f59e0b;
+  color: white;
+}
+
+@keyframes pulse-heart {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes rise {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+@keyframes yes-glow {
+  0%, 100% { box-shadow: 0 10px 24px rgba(235, 87, 135, 0.35); }
+  50% { box-shadow: 0 14px 34px rgba(235, 87, 135, 0.55); }
+}
+
+@keyframes confetti-burst {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(60px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes underline-grow {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+@keyframes modal-in {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Scroll-reveal helper used by Projects/Skills cards */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  [class*="animate-"], .fade-in-up { animation: none !important; }
+}

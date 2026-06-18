@@ -1,9 +1,5 @@
-import { ChakraProvider } from '@chakra-ui/react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Suspense, lazy } from 'react';
-
-import Fonts from './shared/theme/font'
-import theme from './shared/theme/theme'
 
 import Header from './components/Header';
 import Intro from './components/Intro';
@@ -23,7 +19,6 @@ function Portfolio() {
         <meta name="description" content="Konstantin Volodin's Portfolio" />
       </Helmet>
 
-      <Fonts />
       <Header />
       <Intro />
 
@@ -36,8 +31,6 @@ function Portfolio() {
       <Suspense fallback={<SkillsSkeleton />}>
         <Skills />
       </Suspense>
-
-      {/* <ContactMe /> */}
     </>
   );
 }
@@ -57,15 +50,13 @@ function App() {
 
   return (
     <HelmetProvider>
-      <ChakraProvider theme={theme}>
-        {isValentine ? (
-          <Suspense fallback={null}>
-            <Valentine />
-          </Suspense>
-        ) : (
-          <Portfolio />
-        )}
-      </ChakraProvider>
+      {isValentine ? (
+        <Suspense fallback={null}>
+          <Valentine />
+        </Suspense>
+      ) : (
+        <Portfolio />
+      )}
     </HelmetProvider>
   );
 }

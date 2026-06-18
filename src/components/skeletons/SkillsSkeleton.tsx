@@ -1,68 +1,55 @@
-import {
-  Box, Container, Grid, Skeleton, SkeletonText, Center,
-  Wrap, WrapItem, Flex, Divider, VStack
-} from '@chakra-ui/react';
+import Container from '../Container';
+
+const Bar = ({ className = '' }: { className?: string }) => (
+  <div className={`animate-pulse bg-slate-200 dark:bg-slate-700 ${className}`} />
+);
 
 function SkillIconSkeleton() {
   return (
-    <Flex align='center' direction='column' width='100px'>
-      <Skeleton height='50px' width='100px' mb={3} />
-      <SkeletonText noOfLines={1} spacing='4' skeletonHeight='16px' width='80px' />
-    </Flex>
+    <div className="flex w-[100px] flex-col items-center">
+      <Bar className="mb-3 h-12 w-[100px]" />
+      <Bar className="h-4 w-20" />
+    </div>
   );
 }
 
 function SkillCardSkeleton() {
   return (
-    <Box width="300px" p={5} borderRadius="xl" shadow="md" borderWidth="1px">
-      <VStack spacing={3} align="stretch">
-        <VStack spacing={1}>
-          <SkeletonText noOfLines={1} skeletonHeight='20px' width="60%" />
-          <Divider />
-        </VStack>
-        <Wrap spacing={4} align='center' justify='center' mt={2}>
-          {[1,2,3,4,5,6].map((i) => (
-            <WrapItem key={i}>
-              <SkillIconSkeleton />
-            </WrapItem>
+    <div className="w-[300px] border border-line bg-surface p-5 shadow-subtle dark:border-slate-600 dark:bg-slate-800">
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col items-center gap-1">
+          <Bar className="h-5 w-3/5" />
+          <hr className="w-full border-line" />
+        </div>
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-4">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <SkillIconSkeleton key={i} />
           ))}
-        </Wrap>
-      </VStack>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 }
 
-function SkillsSkeleton() {
+export default function SkillsSkeleton() {
   return (
-    <Box id='Skills' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='border-subtle'
-      sx={{
-        bg: "gray.50",
-        _dark: { bg: "gray.900" }
-      }}
-    >
-      <Container maxW='container.lg' py={{ base: 16, md: 20 }}>
-        <VStack spacing={12} align="stretch">
-          <VStack spacing={2} align="center">
-            <Skeleton height="36px" width="400px" />
-            <SkeletonText noOfLines={2} spacing={2} skeletonHeight="16px" width="80%" maxW="550px" mt={2} />
-          </VStack>
+    <section id="Skills" className="scroll-mt-20 border-t border-line-subtle bg-slate-100 dark:bg-slate-900">
+      <Container className="py-16 md:py-20">
+        <div className="flex flex-col gap-12">
+          <div className="flex flex-col items-center gap-2">
+            <Bar className="h-9 w-[400px] max-w-full" />
+            <Bar className="mt-2 h-4 w-4/5 max-w-[550px]" />
+          </div>
 
-          <Center>
-            <Grid
-              width="min-content"
-              columnGap={{ "base": "1rem", "md": "1.5rem", "xl": "2rem" }}
-              rowGap={{ base: 4, md: 6 }}
-              templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}
-            >
-              {[1,2,3,4,5].map((i) => (
+          <div className="flex justify-center">
+            <div className="grid w-max grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-2 md:gap-x-6 md:gap-y-6 xl:grid-cols-3 xl:gap-x-8">
+              {[1, 2, 3, 4, 5].map((i) => (
                 <SkillCardSkeleton key={i} />
               ))}
-            </Grid>
-          </Center>
-        </VStack>
+            </div>
+          </div>
+        </div>
       </Container>
-    </Box>
+    </section>
   );
 }
-
-export default SkillsSkeleton;

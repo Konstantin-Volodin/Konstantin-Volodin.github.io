@@ -1,10 +1,6 @@
-import '@fontsource/inter';
-
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { ColorModeScript } from '@chakra-ui/react';
 import reportWebVitals from './shared/reportWebVitals';
-import theme from './shared/theme/theme';
 
 import './index.css';
 import App from './App';
@@ -14,7 +10,6 @@ if (rootEl) {
   const root = createRoot(rootEl);
   root.render(
     <React.StrictMode>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <App />
     </React.StrictMode>
   );

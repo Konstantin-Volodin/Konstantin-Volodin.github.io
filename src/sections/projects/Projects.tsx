@@ -1,21 +1,23 @@
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { Box, Container, Heading, Grid, Text, Stack, Image, SlideFade, Tag, LinkBox, usePrefersReducedMotion, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button, Divider } from '@chakra-ui/react';
-import VisibilitySensor from "react-visibility-sensor";
-import projData from './projectsData'
+import Container from '../../components/Container';
+import Reveal from '../../components/Reveal';
+import projData from './projectsData';
+
+const chipClass = (isActive: boolean) =>
+  'rounded-full border px-3 py-1.5 text-sm font-medium tracking-wide transition-all duration-150 ' +
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 ' +
+  (isActive
+    ? 'border-brand-500 bg-brand-500 text-white dark:border-brand-500 dark:bg-brand-600 dark:hover:border-brand-400'
+    : 'border-slate-200 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600');
 
 function ProjectCard(props: any) {
-  // Initialize as visible when user prefers reduced motion (avoid hidden content)
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const [enteredScreen, setEnteredScreen] = useState(() => prefersReducedMotion);
+  const [isOpen, setIsOpen] = useState(false);
   const slug = String(props.name || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const onOpen = useCallback(() => setIsOpen(true), []);
+  const onClose = useCallback(() => setIsOpen(false), []);
   // IDs for a11y wiring
   const modalId = `${slug}-modal`;
   const modalHeaderId = `${slug}-header`;
-
-  function onChange(isVisible: boolean) {
-    if (isVisible && !enteredScreen) { setEnteredScreen(true); }
-  };
 
   const meta = useMemo(() => {
     // Prioritize technologies, then skills, unique, max 3
@@ -27,8 +29,6 @@ function ProjectCard(props: any) {
     return uniq.slice(0, 3);
   }, [props.technologies, props.skills]);
 
-  // Slightly more noticeable hover (small lift + shadow + bg tint)
-  // Respect reduced motion preference by only translating when animations are allowed.
   // URL helpers for deep-linking the modal
   const getProjectFromUrl = useCallback(() => {
     try {
@@ -87,185 +87,143 @@ function ProjectCard(props: any) {
   }, [openModal]);
 
   return (
-    <VisibilitySensor onChange={onChange} partialVisibility={true} delayedCall>
-      <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
+    <Reveal>
+      <article
+        role="group"
+        aria-labelledby={`${slug}-title`}
+        tabIndex={0}
+        onClick={openModal}
+        onKeyDown={onKeyDown}
+        className="group block h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 focus-within:ring-2 focus-within:ring-slate-300"
+      >
+        <div
+          className="flex h-full min-h-[240px] flex-col overflow-hidden border border-line bg-surface shadow-subtle transition-[box-shadow,border-color,transform,background-color] duration-[250ms] hover:border-brand-300 hover:bg-white hover:shadow-lift motion-safe:hover:-translate-y-1 motion-safe:active:-translate-y-0.5 active:shadow-sm md:min-h-[320px] dark:border-slate-700 dark:bg-slate-800 dark:hover:border-slate-600 dark:hover:bg-slate-700"
+        >
+          {/* IMAGE: fixed height for uniform cards */}
+          <div className="relative h-[110px] shrink-0 bg-slate-100 md:h-[170px]">
+            <img
+              src={props.pic}
+              alt={`${props.name} preview`}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover transition-[filter,transform] duration-[400ms] motion-safe:group-hover:scale-[1.01]"
+            />
+            {/* Light glass hover overlay */}
+            <div
+              className="pointer-events-none absolute inset-0 bg-black/5 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-40"
+            />
+          </div>
 
-        <>
-          <LinkBox as='article' aria-labelledby={`${slug}-title`} role='group'
-                   _focus={{ outline: 'none' }}
-                   // Removed brand (orange) focus ring in favor of neutral slate tone
-                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-slate-300)' }}
-                   _focusWithin={{ boxShadow: '0 0 0 2px var(--chakra-colors-slate-300)' }}
-                   onClick={openModal} onKeyDown={onKeyDown} tabIndex={0} cursor='pointer'>
-            <Box w='full' h='100%' display='flex' flexDirection='column'
-                 border='1px' borderColor='border' rounded='none' bg='bg-subtle' overflow='hidden'
-                 boxShadow='subtle'
-                 outline='1px solid transparent'
-                 _dark={{ bg: 'slate.800', borderColor: 'slate.700' }}
-                 transition='box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease, background-color 0.25s ease'
-                 _hover={{
-                   boxShadow: 'lift',
-                   borderColor: 'brand.300',
-                   bg: 'white',
-                   transform: prefersReducedMotion ? undefined : 'translateY(-4px)',
-                   _dark: { borderColor: 'slate.600', boxShadow: 'md', bg: 'slate.700', transform: prefersReducedMotion ? undefined : 'translateY(-4px)' }
-                 }}
-                 _active={{ transform: prefersReducedMotion ? undefined : 'translateY(-2px)', boxShadow: 'sm' }}
-                 minH={{ base: '240px', md: '320px' }}>
+          {/* CONTENT */}
+          <div className="flex flex-1 flex-col gap-3 px-5 pb-6 pt-4 md:px-6 md:pt-6">
+            <span className="w-fit border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">
+              {props.company}
+            </span>
 
-              {/* IMAGE: fixed height for uniform cards */}
-              <Box bg='slate.100' position='relative' flexShrink={0} h={{ base: '110px', md: '170px' }}>
-                <Image src={props.pic}
-                       alt={`${props.name} preview`}
-                       loading='lazy'
-                       decoding='async'
-                       w='100%'
-                       h='100%'
-                       objectFit='cover'
-                       transform='translateZ(0)'
-                       transition='filter 0.4s ease, transform 0.4s ease'
-                       _groupHover={{ transform: prefersReducedMotion ? undefined : 'scale(1.01)' }} />
-                {/* Light glass hover overlay (softened) */}
-                <Box pointerEvents='none' position='absolute' inset={0} opacity={0}
-                     transition='opacity 0.3s ease'
-                     _groupHover={{ opacity: 0.4 }}
-                     bg='blackAlpha.50'
-                     style={{ backdropFilter: 'blur(2px) saturate(1.02)' }} />
-              </Box>
+            <h3
+              id={`${slug}-title`}
+              className="line-clamp-2 font-heading text-lg font-semibold leading-[1.25] text-slate-800 transition-colors group-hover:text-slate-900 md:text-xl dark:text-slate-100 dark:group-hover:text-white"
+            >
+              {props.name}
+            </h3>
 
-              {/* CONTENT (minimalist) */}
-              <Stack p={6} spacing={3} flex={1} pt={{ base: 4, md: 6 }} px={{ base: 5, md: 6 }}>
-                <Tag size='sm' bg='slate.50' color='slate.700' borderWidth='1px' borderColor='slate.200' rounded='none' w='fit-content'
-                     _dark={{ bg: 'slate.700', color: 'slate.200', borderColor: 'slate.600' }}>
-                  {props.company}
-                </Tag>
+            {props.description && (
+              <p className="hidden line-clamp-2 text-sm text-slate-600 md:block dark:text-slate-300">
+                {props.description}
+              </p>
+            )}
 
-                <Heading as='h3' fontSize={{ base: 'lg', md: 'xl' }} lineHeight='1.25' id={`${slug}-title`} fontWeight='semibold' noOfLines={2}
-                         color='slate.800'
-                         transition='color 0.25s ease'
-                         _groupHover={{ color: 'slate.900', _dark: { color: 'white' } }}
-                         _dark={{ color: 'slate.100' }}>
-                  {props.name}
-                </Heading>
+            {meta.length > 0 && (
+              <div className="mt-auto pt-1">
+                <p className="line-clamp-1 text-xs text-slate-500 opacity-65 transition-opacity duration-200 group-hover:opacity-100 dark:text-slate-400">
+                  {meta.join(' • ')}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
 
-                {props.description && (
-                  <Text fontSize='sm' color='slate.600' noOfLines={2} display={{ base: 'none', md: 'block' }}
-                        _dark={{ color: 'slate.300' }}>
-                    {props.description}
-                  </Text>
-                )}
+        {/* Modal with full description and details */}
+        {isOpen && (
+          <div
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4 backdrop-blur-[6px]"
+            onClick={closeModal}
+          >
+            <div
+              id={modalId}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={modalHeaderId}
+              aria-describedby={`${slug}-desc`}
+              className="relative max-h-[90vh] w-full max-w-5xl overflow-y-auto bg-white text-content shadow-lift motion-safe:animate-modal-in dark:border dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+              onClick={closeModal}
+              onKeyDown={(e) => { if (e.key === 'Escape') closeModal(); }}
+            >
+              <h2 id={modalHeaderId} className="px-6 pb-4 pt-5 font-heading text-xl font-semibold leading-tight dark:text-slate-100">
+                {props.name}
+              </h2>
+              <button
+                aria-label="Close"
+                onClick={closeModal}
+                className="absolute right-2 top-2 rounded p-2 text-slate-500 transition-colors hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 dark:hover:bg-slate-700"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
 
-                {meta.length > 0 && (
-                  <Box mt='auto' pt={1}>
-                    <Text fontSize='xs' color='slate.500' noOfLines={1}
-                          opacity={0.65}
-                          transition='opacity 0.2s ease'
-                          _groupHover={{ opacity: 1, _dark: { opacity: 1 } }}
-                          _dark={{ color: 'slate.400', opacity: 0.7 }}>
-                      {meta.join(' • ')}
-                    </Text>
-                  </Box>
-                )}
-              </Stack>
-            </Box>
-          </LinkBox>
-
-          {/* Modal with full description and details */}
-          <Modal isOpen={isOpen} onClose={closeModal} isCentered motionPreset={prefersReducedMotion ? 'none' : 'scale'} closeOnOverlayClick={true}>
-            <ModalOverlay bg='blackAlpha.500' backdropFilter='blur(6px)' onClick={closeModal} />
-            <ModalContent id={modalId} aria-labelledby={modalHeaderId} aria-describedby={`${slug}-desc`} rounded='none' maxW='container.lg' w='full'
-                          bg='white'
-                          _dark={{ bg: 'slate.800', border: '1px solid', borderColor: 'slate.700', color: 'slate.200' }}
-                          onKeyDown={(e) => { if (e.key === 'Escape') closeModal(); }}
-                          // Close on ANY click inside content (including children)
-                          onClick={() => closeModal()}>
-              <ModalHeader as='h2' id={modalHeaderId} fontWeight='semibold' lineHeight='1.2'
-                           _dark={{ color: 'slate.100' }}>{props.name}</ModalHeader>
-              <ModalCloseButton _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-slate-300)' }} />
-              <ModalBody px={{ base: 5, md: 10 }} py={{ base: 6, md: 10 }}>
-                {/* Clicking anywhere in body also closes now (no exceptions) */}
-                <Box position='relative'>
-                  {/* Summary band - improved readability & semantics */}
-                  <Box as='dl'
-                       display='grid'
-                       gridTemplateColumns={{ base: '1fr', md: '160px 1fr' }}
-                       alignItems='start'
-                       columnGap={{ base: 0, md: 6 }}
-                       rowGap={3}
-                       mb={7}>
-                    {props.company && (
-                      <>
-                        <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'
-                             _dark={{ color: 'slate.300' }}>
-                          Company
-                        </Box>
-                        <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8'
-                             _dark={{ color: 'slate.200' }}>
-                          {props.company}
-                        </Box>
-                      </>
-                    )}
-
-                    {(Array.isArray(props.technologies) && props.technologies.length > 0) && (
-                      <>
-                        <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'
-                             _dark={{ color: 'slate.300' }}>
-                          Tech
-                        </Box>
-                        <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8' whiteSpace='normal' wordBreak='break-word'
-                             _dark={{ color: 'slate.200' }}>
-                          {props.technologies.slice(0, 10).join(', ')}
-                        </Box>
-                      </>
-                    )}
-
-                    {(Array.isArray(props.skills) && props.skills.length > 0) && (
-                      <>
-                        <Box as='dt' fontSize='sm' color='slate.700' fontWeight='semibold' letterSpacing='wide' textTransform='uppercase'
-                             _dark={{ color: 'slate.300' }}>
-                          Skills
-                        </Box>
-                        <Box as='dd' fontSize='md' color='slate.800' lineHeight='1.8' whiteSpace='normal' wordBreak='break-word'
-                             _dark={{ color: 'slate.200' }}>
-                          {props.skills.slice(0, 8).join(', ')}
-                        </Box>
-                      </>
-                    )}
-                  </Box>
-
-                  {/* Separation */}
-                  <Divider mb={6} _dark={{ borderColor: 'slate.700' }} />
-
-                  {/* Long description, calmer text */}
-                  <Text id={`${slug}-desc`} color='slate.700' whiteSpace='pre-wrap' fontSize='md' lineHeight='1.9'
-                        _dark={{ color: 'slate.200' }}>
-                    {props.longDescription || 'No additional details available.'}
-                  </Text>
-
-                  {/* Media preview, compact size (no enforced aspect ratio) */}
-                  {props.pic && (
-                    <Box mt={7} p={{ base: 2, md: 3 }} bg='slate.50' borderWidth='1px' borderColor='slate.200'
-                         _dark={{ bg: 'slate.700', borderColor: 'slate.600' }}>
-                      <Image src={props.pic}
-                             alt={`${props.name} preview`}
-                             loading='lazy'
-                             decoding='async'
-                             w='100%'
-                             h='auto'
-                             objectFit='cover'
-                             maxH={{ base: '160px', md: '180px' }} />
-                    </Box>
+              <div className="px-5 py-6 md:px-10 md:py-10">
+                {/* Summary band */}
+                <dl className="mb-7 grid grid-cols-1 items-start gap-y-3 md:grid-cols-[160px_1fr] md:gap-x-6">
+                  {props.company && (
+                    <>
+                      <dt className="text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">Company</dt>
+                      <dd className="text-base leading-[1.8] text-slate-800 dark:text-slate-200">{props.company}</dd>
+                    </>
                   )}
 
-                  {/* No actions per request */}
-                </Box>
-              </ModalBody>
-            </ModalContent>
-          </Modal>
-        </>
+                  {Array.isArray(props.technologies) && props.technologies.length > 0 && (
+                    <>
+                      <dt className="text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">Tech</dt>
+                      <dd className="break-words text-base leading-[1.8] text-slate-800 dark:text-slate-200">
+                        {props.technologies.slice(0, 10).join(', ')}
+                      </dd>
+                    </>
+                  )}
 
-      </SlideFade>
-    </VisibilitySensor>
+                  {Array.isArray(props.skills) && props.skills.length > 0 && (
+                    <>
+                      <dt className="text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">Skills</dt>
+                      <dd className="break-words text-base leading-[1.8] text-slate-800 dark:text-slate-200">
+                        {props.skills.slice(0, 8).join(', ')}
+                      </dd>
+                    </>
+                  )}
+                </dl>
+
+                <hr className="mb-6 border-line dark:border-slate-700" />
+
+                <p id={`${slug}-desc`} className="whitespace-pre-wrap text-base leading-[1.9] text-slate-700 dark:text-slate-200">
+                  {props.longDescription || 'No additional details available.'}
+                </p>
+
+                {props.pic && (
+                  <div className="mt-7 border border-slate-200 bg-slate-50 p-2 md:p-3 dark:border-slate-600 dark:bg-slate-700">
+                    <img
+                      src={props.pic}
+                      alt={`${props.name} preview`}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-auto max-h-40 w-full object-cover md:max-h-[180px]"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </article>
+    </Reveal>
   );
 }
 
@@ -505,103 +463,66 @@ function Projects() {
   }, [slugs, getProjectFromUrlLocal]);
 
   return (
-    <Box id='Projects' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='border-subtle'>
-      <Container maxW='container.lg' py={{ base: 16, md: 24 }}>
-        <Heading maxW='500px' textTransform='none'>
+    <section id="Projects" className="scroll-mt-20 border-t border-line-subtle">
+      <Container className="py-16 md:py-24">
+        <h2 className="max-w-[500px] font-heading text-3xl font-semibold tracking-[-0.25px] text-content md:text-4xl">
           Projects
-        </Heading>
+        </h2>
 
         {/* Category descriptor + compact chips */}
-        <HStack mt={6} spacing={2} flexWrap='wrap' alignItems='center'>
-          <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1} _dark={{ color: 'slate.300' }}>{CATEGORY_LABEL}:</Text>
+        <div className="mt-6 flex flex-wrap items-center gap-2">
+          <span className="mr-1 text-sm font-semibold text-slate-700 dark:text-slate-300">{CATEGORY_LABEL}:</span>
           {GROUP_NAMES.map((cat) => {
             const isActive = activeGroup === cat;
             const count = categoryFilterCounts[cat] || 0;
-            const darkStyles = isActive ? { bg: 'brand.600', color: 'white', borderColor: 'brand.500', _hover: { borderColor: 'brand.400' } } : { bg: 'slate.800', color: 'slate.200', borderColor: 'slate.700', _hover: { borderColor: 'slate.600' } };
             return (
-              <Tag key={cat}
-                   as='button'
-                   onMouseDown={(e) => e.preventDefault()}
-                   onClick={() => handleSelect(cat as any)}
-                   aria-pressed={isActive}
-                   rounded='full'
-                   px={3}
-                   py={1.5}
-                   fontSize={{ base: 'sm', md: 'sm' }}
-                   fontWeight='medium'
-                   letterSpacing='wide'
-                   transition='all 0.15s ease'
-                   bg={isActive ? 'brand.500' : 'slate.100'}
-                   color={isActive ? 'white' : 'slate.800'}
-                   borderWidth='1px'
-                   borderColor={isActive ? 'brand.500' : 'slate.200'}
-                   sx={{ _dark: darkStyles }}
-                   _focus={{ boxShadow: 'none', outline: 'none' }}
-                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-focus-ring)' }}>
-                {cat} <Text as='span' ml={1} opacity={0.75} fontSize='xs'>({count})</Text>
-              </Tag>
-            )
+              <button
+                key={cat}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => handleSelect(cat as any)}
+                aria-pressed={isActive}
+                className={chipClass(isActive)}
+              >
+                {cat} <span className="ml-1 text-xs opacity-75">({count})</span>
+              </button>
+            );
           })}
-        </HStack>
+        </div>
 
         {/* Technology descriptor + compact chips (limited list) */}
-        <HStack mt={4} spacing={2} flexWrap='wrap' alignItems='center'>
-          <Text as='span' fontSize='sm' fontWeight='semibold' color='slate.700' mr={1} _dark={{ color: 'slate.300' }}>Technology:</Text>
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <span className="mr-1 text-sm font-semibold text-slate-700 dark:text-slate-300">Technology:</span>
           {TECH_NAMES.map((tech) => {
             const isActive = activeTech === tech;
             const count = technologyFilterCounts[tech] || 0;
-            const darkStyles = isActive ? { bg: 'brand.600', color: 'white', borderColor: 'brand.500', _hover: { borderColor: 'brand.400' } } : { bg: 'slate.800', color: 'slate.200', borderColor: 'slate.700', _hover: { borderColor: 'slate.600' } };
             return (
-              <Tag key={tech}
-                   as='button'
-                   onMouseDown={(e) => e.preventDefault()}
-                   onClick={() => handleSelectTech(tech)}
-                   aria-pressed={isActive}
-                   rounded='full'
-                   px={3}
-                   py={1.5}
-                   fontSize={{ base: 'sm', md: 'sm' }}
-                   fontWeight='medium'
-                   letterSpacing='wide'
-                   transition='all 0.15s ease'
-                   bg={isActive ? 'brand.500' : 'slate.100'}
-                   color={isActive ? 'white' : 'slate.800'}
-                   borderWidth='1px'
-                   borderColor={isActive ? 'brand.500' : 'slate.200'}
-                   sx={{ _dark: darkStyles }}
-                   _focus={{ boxShadow: 'none', outline: 'none' }}
-                   _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-focus-ring)' }}>
-                {tech} <Text as='span' ml={1} opacity={0.75} fontSize='xs'>({count})</Text>
-              </Tag>
-            )
+              <button
+                key={tech}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => handleSelectTech(tech)}
+                aria-pressed={isActive}
+                className={chipClass(isActive)}
+              >
+                {tech} <span className="ml-1 text-xs opacity-75">({count})</span>
+              </button>
+            );
           })}
 
           {hasActiveFilters && (
-            <Button onMouseDown={(e) => e.preventDefault()}
-                    onClick={clearFilters}
-                    variant='ghost'
-                    size='sm'
-                    rounded='none'
-                    px={2}
-                    py={1}
-                    fontSize='sm'
-                    color='slate.700'
-                    _hover={{ bg: 'slate.50' }}
-                    _focus={{ boxShadow: 'none', outline: 'none' }}
-                    _focusVisible={{ boxShadow: '0 0 0 2px var(--chakra-colors-brand-200)' }}
-                    aria-label='Clear filters'
-                    _dark={{ color: 'slate.300', _hover: { bg: 'slate.800' }, borderColor: 'slate.700' }}>
+            <button
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={clearFilters}
+              aria-label="Clear filters"
+              className="px-2 py-1 text-sm text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-200 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
               Clear filters
-            </Button>
+            </button>
           )}
-        </HStack>
+        </div>
 
-        {/* 2 per row on md+ with improved spacing */}
-        <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={{ base: 8, md: 16 }}>
+        {/* 2 per row on md+ */}
+        <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">
           {items.map((item: any) => (
-            // <div key={item.name}>
-            //   {item.name}
-            // </div>
             <ProjectCard key={item.name}
               name={item.name}
               company={item.company}
@@ -613,11 +534,10 @@ function Projects() {
               link={item.link}
             />
           ))}
-        </Grid>
+        </div>
       </Container>
-    </Box>
-  )
+    </section>
+  );
 }
 
-export default Projects
-
+export default Projects;

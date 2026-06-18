@@ -1,74 +1,53 @@
-import {
-  Box, Container, Heading, Grid, Stack, Skeleton, SkeletonText,
-  HStack, Tag, Spacer
-} from '@chakra-ui/react';
+import Container from '../Container';
+
+const Bar = ({ className = '' }: { className?: string }) => (
+  <div className={`animate-pulse bg-slate-200 dark:bg-slate-700 ${className}`} />
+);
 
 function ProjectCardSkeleton() {
   return (
-    <Box w='full' h='100%' display='flex' flexDirection='column'
-         border='1px' borderColor='slate.200' rounded='none' bg='white' overflow='hidden'
-         boxShadow='xs'
-         minH={{ base: '340px', md: '360px' }}>
-      
-      {/* IMAGE placeholder */}
-      <Skeleton flexShrink={0} h={{ base: '140px', md: '160px', lg: '180px' }} />
-      
-      {/* CONTENT */}
-      <Stack p={{ base: '16px', md: '20px' }} spacing={3} flex={1}>
-        <Tag size='sm' bg='slate.50' color='transparent' borderWidth='1px' borderColor='slate.200' rounded='none' w='80px'>
-          <Skeleton height='12px' />
-        </Tag>
-        
-        <SkeletonText noOfLines={2} spacing='4' skeletonHeight='20px' />
-        
-        <SkeletonText noOfLines={1} spacing='4' skeletonHeight='14px' />
-        
-        <Spacer />
-        
-        <Box>
-          <SkeletonText noOfLines={1} spacing='4' skeletonHeight='12px' />
-        </Box>
-      </Stack>
-    </Box>
+    <div className="flex h-full min-h-[340px] flex-col overflow-hidden border border-line bg-surface shadow-subtle md:min-h-[360px] dark:border-slate-700 dark:bg-slate-800">
+      <Bar className="h-[140px] shrink-0 md:h-[160px] lg:h-[180px]" />
+      <div className="flex flex-1 flex-col gap-3 p-4 md:p-5">
+        <Bar className="h-5 w-20" />
+        <Bar className="h-5 w-full" />
+        <Bar className="h-5 w-3/4" />
+        <div className="mt-auto">
+          <Bar className="h-3 w-1/2" />
+        </div>
+      </div>
+    </div>
   );
 }
 
-function ProjectsSkeleton() {
+export default function ProjectsSkeleton() {
   return (
-    <Box id='Projects' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='border-subtle'>
-      <Container maxW='container.lg' py={'112px'}>
-        <Heading maxW='500px' textTransform='none'>
+    <section id="Projects" className="scroll-mt-20 border-t border-line-subtle">
+      <Container className="py-28">
+        <h2 className="max-w-[500px] font-heading text-3xl font-semibold tracking-[-0.25px] text-content md:text-4xl">
           Projects
-        </Heading>
+        </h2>
 
-        {/* Filter skeletons */}
-        <HStack mt={5} spacing={2} flexWrap='wrap' alignItems='center'>
-          <SkeletonText noOfLines={1} spacing='4' skeletonHeight='14px' w='50px' />
-          {[1,2,3,4,5].map((i) => (
-            <Tag key={i} rounded='none' px={3} py={1.5} bg='transparent' borderWidth='1px' borderColor='slate.200'>
-              <Skeleton height='14px' width='60px' />
-            </Tag>
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <Bar className="h-3.5 w-12" />
+          {[1, 2, 3, 4, 5].map((i) => (
+            <Bar key={i} className="h-7 w-16 rounded-full" />
           ))}
-        </HStack>
+        </div>
 
-        <HStack mt={3} spacing={2} flexWrap='wrap' alignItems='center'>
-          <SkeletonText noOfLines={1} spacing='4' skeletonHeight='14px' w='80px' />
-          {[1,2,3,4,5].map((i) => (
-            <Tag key={i} rounded='none' px={3} py={1.5} bg='transparent' borderWidth='1px' borderColor='slate.200'>
-              <Skeleton height='14px' width='50px' />
-            </Tag>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <Bar className="h-3.5 w-20" />
+          {[1, 2, 3, 4, 5].map((i) => (
+            <Bar key={i} className="h-7 w-14 rounded-full" />
           ))}
-        </HStack>
+        </div>
 
-        {/* Projects grid skeleton */}
-        <Grid mt={8} templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={16}>
-          {[1,2,3,4].map((i) => (
+        <div className="mt-8 grid grid-cols-1 gap-16 md:grid-cols-2">
+          {[1, 2, 3, 4].map((i) => (
             <ProjectCardSkeleton key={i} />
           ))}
-        </Grid>
+        </div>
       </Container>
-    </Box>
+    </section>
   );
 }
-
-export default ProjectsSkeleton;

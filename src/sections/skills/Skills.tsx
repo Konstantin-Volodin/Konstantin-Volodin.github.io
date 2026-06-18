@@ -1,147 +1,70 @@
-import { useState } from 'react';
-import {
-  Wrap, WrapItem, Box, Image, Heading, Text, Container, Divider, 
-  SlideFade, usePrefersReducedMotion, VStack, Center, Grid
-} from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import VisibilitySensor from "react-visibility-sensor";
+import Container from '../../components/Container';
+import Reveal from '../../components/Reveal';
 import skillData from './skillsData';
-import { Skill } from '../../shared/types';
+import { Skill, SkillSection } from '../../shared/types';
 
-const MotionBox = motion(Box);
-
-interface SkillIconProps {
-  skill: Skill;
-  variant?: 'default' | 'compact';
-}
-
-function SkillIcon({ skill, variant = 'default' }: SkillIconProps) {
+function SkillIcon({ skill }: { skill: Skill }) {
   const { name, image } = skill;
-  const hasImage = Boolean(image);
-
-  if (variant === 'compact') {
-    return (
-      <VStack spacing={2} width="80px" cursor="default" aria-label={name}>
-        {hasImage && <Image src={image} maxW="60px" maxH="40px" draggable={false} />}
-        <Text fontSize="sm" textAlign="center" noOfLines={2}>{name}</Text>
-      </VStack>
-    );
-  }
-
   return (
-    <MotionBox
-      whileHover={{ scale: 1.04 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 280, damping: 18 } as any}
+    <div
+      aria-label={name}
+      className="flex w-[104px] cursor-default flex-col items-center gap-2 p-3 transition-transform hover:scale-[1.04] hover:bg-slate-50 active:scale-[0.98] dark:hover:bg-slate-700"
     >
-      {/* Square design: remove rounding */}
-      <VStack spacing={2} width="104px" cursor="default" p={3} rounded='none' aria-label={name}
-        sx={{
-          _hover: { 
-            bg: 'gray.50',
-            _dark: { bg: 'gray.700' }
-          }
-        }}
-      >
-        {hasImage && <Image src={image} maxW="64px" maxH="44px" draggable={false} />}
-        <Text fontSize="sm" textAlign="center" fontWeight="medium" noOfLines={2}>{name}</Text>
-      </VStack>
-    </MotionBox>
+      {image && <img src={image} alt={name} draggable={false} className="max-h-11 max-w-16" />}
+      <span className="line-clamp-2 text-center text-sm font-medium">{name}</span>
+    </div>
   );
 }
 
-interface SkillCardProps {
-  data: any;
-}
-
-function SkillCard({ data }: SkillCardProps) {
-  const [enteredScreen, setEnteredScreen] = useState(false);
-  const prefersReducedMotion = usePrefersReducedMotion();
-
-  function onChange(isVisible: boolean) {
-    if (isVisible) { setEnteredScreen(true); }
-  }
-
+function SkillCard({ data }: { data: SkillSection }) {
   return (
-    <VisibilitySensor onChange={onChange} partialVisibility={true}>
-      <SlideFade in={enteredScreen} offsetY={prefersReducedMotion ? '0px' : '60px'} transition={{ enter: { duration: 0.25 } }}>
-        <Box 
-          w="full"
-          p={5}
-          rounded='none'
-          bg="bg-subtle"
-          shadow="subtle"
-          borderWidth="1px"
-          borderColor="border"
-          sx={{
-            _dark: { 
-              bg: 'slate.800',
-              borderColor: 'slate.600' 
-            }
-          }}
-        >
-          <VStack spacing={3} align="stretch">
-            <VStack spacing={1}>
-              <Heading fontSize="lg" textTransform="none" textAlign="center">
-                {data.section}
-              </Heading>
-              <Divider />
-            </VStack>
+    <Reveal>
+      <div className="w-full border border-line bg-surface p-5 shadow-subtle dark:border-slate-600 dark:bg-slate-800">
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col items-center gap-1">
+            <h3 className="text-center font-heading text-lg font-semibold tracking-[-0.25px] text-content">
+              {data.section}
+            </h3>
+            <hr className="w-full border-line" />
+          </div>
 
-            <Wrap spacing={{ base: 4, md: 5 }} align="center" justify="center">
-              {data.skills.map((skill: Skill, idx: number) => (
-                <WrapItem key={`${data.section}-${idx}-${skill.name}`}>
-                  <SkillIcon skill={skill} />
-                </WrapItem>
-              ))}
-            </Wrap>
-          </VStack>
-        </Box>
-      </SlideFade>
-    </VisibilitySensor>
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5">
+            {data.skills.map((skill, idx) => (
+              <SkillIcon key={`${data.section}-${idx}-${skill.name}`} skill={skill} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </Reveal>
   );
 }
 
-function Skills() {
+export default function Skills() {
   return (
-    <Box id='Skills' scrollMarginTop='5rem' borderTopWidth='1px' borderColor='border-subtle' 
-      sx={{
-        bg: 'bg-alt',
-        _dark: { bg: 'slate.900' }
-      }}
+    <section
+      id="Skills"
+      className="scroll-mt-20 border-t border-line-subtle bg-slate-100 dark:bg-slate-900"
     >
-      <Container maxW='container.lg' py={{ base: 16, md: 20 }}>
-        <VStack spacing={12} align="stretch">
-          <VStack spacing={2} align="center">
-            <Heading maxW='500px' textTransform='none' textAlign="center">
+      <Container className="py-16 md:py-20">
+        <div className="flex flex-col gap-12">
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="max-w-[500px] text-center font-heading text-3xl font-semibold tracking-[-0.25px] text-content md:text-4xl">
               Skills that drive outcomes
-            </Heading>
-            <Text maxW='600px' fontSize='md' textAlign="center" 
-              sx={{
-                color: "gray.600",
-                _dark: { color: "gray.400" }
-              }}
-            >
+            </h2>
+            <p className="max-w-[600px] text-center text-base text-slate-600 dark:text-slate-400">
               Practical tools I use to ship reliable data products and clear decision support.
-            </Text>
-          </VStack>
+            </p>
+          </div>
 
-          <Center>
-            <Grid
-              width="max-content"
-              columnGap={{ "base": "1rem", "md": "1.5rem", "xl": "2rem" }}
-              rowGap={{ base: 4, md: 6 }}
-              templateColumns={{ 'base': 'repeat(1,1fr)', 'md': 'repeat(2,1fr)', 'xl': 'repeat(3,1fr)' }}
-            >
+          <div className="flex justify-center">
+            <div className="grid w-max grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-2 md:gap-x-6 md:gap-y-6 xl:grid-cols-3 xl:gap-x-8">
               {skillData.map((item) => (
                 <SkillCard key={item.section} data={item} />
               ))}
-            </Grid>
-          </Center>
-        </VStack>
+            </div>
+          </div>
+        </div>
       </Container>
-    </Box>
+    </section>
   );
 }
-
-export default Skills;

@@ -1,14 +1,8 @@
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import { render, RenderOptions } from '@testing-library/react'
-import { ChakraProvider } from '@chakra-ui/react'
-import theme from '../theme/theme'
 
-const AllProviders = ({ children }: PropsWithChildren) => {
-  return <ChakraProvider theme={theme}>{children}</ChakraProvider>
-}
-
-function customRender(ui: React.ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
-  return render(ui, { wrapper: AllProviders, ...options })
+function customRender(ui: React.ReactElement, options?: RenderOptions) {
+  return render(ui, options)
 }
 
 export * from '@testing-library/react'

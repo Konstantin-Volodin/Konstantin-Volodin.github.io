@@ -1,8 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ChakraProvider } from '@chakra-ui/react';
 import { vi } from 'vitest';
 import Header from '../Header';
-import theme from '../../shared/theme/theme';
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
@@ -19,17 +17,9 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-const renderWithChakra = (component: React.ReactElement) => {
-  return render(
-    <ChakraProvider theme={theme}>
-      {component}
-    </ChakraProvider>
-  );
-};
-
 describe('Header Component', () => {
   test('renders navigation links', () => {
-    renderWithChakra(<Header />);
+    render(<Header />);
     
     expect(screen.getByText('konstantin volodin')).toBeInTheDocument();
     expect(screen.getByText('github')).toBeInTheDocument();
@@ -38,7 +28,7 @@ describe('Header Component', () => {
   });
 
   test('renders color mode toggle button', () => {
-    renderWithChakra(<Header />);
+    render(<Header />);
     
     // Should render either "Switch to dark mode" or "Switch to light mode"
     const toggleButton = screen.getByRole('button', { 
@@ -48,7 +38,7 @@ describe('Header Component', () => {
   });
 
   test('color mode toggle button changes on click', () => {
-    renderWithChakra(<Header />);
+    render(<Header />);
     
     const toggleButton = screen.getByRole('button', { 
       name: /Switch to (dark|light) mode/i 
@@ -63,7 +53,7 @@ describe('Header Component', () => {
   });
 
   test('mobile menu button exists', () => {
-    renderWithChakra(<Header />);
+    render(<Header />);
     
     const menuButton = screen.getByRole('button', { 
       name: 'Open navigation menu' 

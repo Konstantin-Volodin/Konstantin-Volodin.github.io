@@ -1,26 +1,4 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
-import { Box, Button, Heading, Text, VStack } from '@chakra-ui/react';
-import { keyframes } from '@emotion/react';
-
-const pulse = keyframes`
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-`;
-
-const rise = keyframes`
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-100vh); opacity: 0; }
-`;
-
-const yesGlow = keyframes`
-  0%, 100% { box-shadow: 0 10px 24px rgba(235, 87, 135, 0.35); }
-  50% { box-shadow: 0 14px 34px rgba(235, 87, 135, 0.55); }
-`;
-
-const confettiBurst = keyframes`
-  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
-`;
 
 const HEARTS = ['❤️', '💕', '💖', '💗'];
 const NO_BUTTON_WIDTH = 96;
@@ -42,6 +20,9 @@ const DEADPAN_MESSAGES = [
 ];
 
 const ACCEPTED_TITLE = 'Official update: you + me = very cute 💞';
+
+const ACCEPTED_BG = 'linear-gradient(160deg, #fff6fa 0%, #fff5f5 45%, #fdf3ff 100%)';
+const PROPOSAL_BG = 'linear-gradient(160deg, #fff9fb 0%, #fff7f7 45%, #f7f4ff 100%)';
 
 function Valentine() {
   const [accepted, setAccepted] = useState(false);
@@ -207,226 +188,119 @@ function Valentine() {
 
   if (accepted) {
     return (
-      <Box
-        minH="100vh"
-        bg="linear-gradient(160deg, #fff6fa 0%, #fff5f5 45%, #fdf3ff 100%)"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        overflow="hidden"
-        position="relative"
+      <div
+        className="relative flex min-h-screen items-center justify-center overflow-hidden"
+        style={{ background: ACCEPTED_BG }}
       >
-        <Box
-          position="absolute"
-          top="-120px"
-          right="-80px"
-          w="320px"
-          h="320px"
-          bg="pink.200"
-          opacity={0.35}
-          filter="blur(70px)"
-          borderRadius="full"
-          pointerEvents="none"
-        />
-        <Box
-          position="absolute"
-          bottom="-140px"
-          left="-80px"
-          w="340px"
-          h="340px"
-          bg="purple.200"
-          opacity={0.25}
-          filter="blur(80px)"
-          borderRadius="full"
-          pointerEvents="none"
-        />
+        <div className="pointer-events-none absolute -right-20 -top-[120px] h-80 w-80 rounded-full bg-pink-200 opacity-35 blur-[70px]" />
+        <div className="pointer-events-none absolute -bottom-[140px] -left-20 h-[340px] w-[340px] rounded-full bg-purple-200 opacity-25 blur-[80px]" />
 
         {floatingHearts.map(({ id, x, heart }) => (
-          <Text
+          <span
             key={id}
-            position="absolute"
-            bottom="-40px"
-            left={`${x}%`}
-            fontSize="1.5rem"
-            animation={`${rise} 5s linear forwards`}
-            pointerEvents="none"
             aria-hidden
+            className="animate-rise pointer-events-none absolute -bottom-10 text-2xl"
+            style={{ left: `${x}%` }}
           >
             {heart}
-          </Text>
+          </span>
         ))}
 
         {confettiPieces.map((piece) => (
-          <Box
+          <div
             key={piece.id}
-            position="fixed"
-            left={`${piece.x}px`}
-            top={`${piece.y}px`}
-            w={`${piece.size}px`}
-            h={`${piece.size * 0.55}px`}
-            bg={piece.color}
-            borderRadius="sm"
-            pointerEvents="none"
-            zIndex={20}
+            className="pointer-events-none fixed z-20 rounded-sm"
             style={{
+              left: `${piece.x}px`,
+              top: `${piece.y}px`,
+              width: `${piece.size}px`,
+              height: `${piece.size * 0.55}px`,
+              background: piece.color,
               ['--dx' as string]: piece.dx,
               ['--dy' as string]: piece.dy,
               ['--rot' as string]: piece.rot,
+              animation: 'confetti-burst 1s ease-out forwards',
             }}
-            animation={`${confettiBurst} 1s ease-out forwards`}
           />
         ))}
 
-        <VStack
-          spacing={5}
-          textAlign="center"
-          zIndex={1}
-          bg="whiteAlpha.800"
-          backdropFilter="blur(10px)"
-          borderRadius="2xl"
-          px={{ base: 6, md: 10 }}
-          py={{ base: 8, md: 10 }}
-          boxShadow="0 20px 60px rgba(214, 67, 120, 0.2)"
-          border="1px solid"
-          borderColor="whiteAlpha.600"
+        <div
+          className="z-[1] flex flex-col items-center gap-5 rounded-2xl border border-white/60 bg-white/80 px-6 py-8 text-center backdrop-blur-md md:px-10 md:py-10"
+          style={{ boxShadow: '0 20px 60px rgba(214, 67, 120, 0.2)' }}
         >
-          <Text fontSize="4rem" animation={`${pulse} 1.5s ease-in-out infinite`}>
-            ❤️
-          </Text>
-          <Heading
-            fontSize={{ base: 'xl', md: '2xl' }}
-            color="gray.700"
-            fontFamily="heading"
-            fontWeight={500}
-          >
-            {displayedAcceptedTitle || '\u00A0'}
-          </Heading>
-        </VStack>
-      </Box>
+          <span className="animate-pulse-heart text-[4rem]">❤️</span>
+          <h1 className="font-heading text-xl font-medium text-gray-700 md:text-2xl">
+            {displayedAcceptedTitle || ' '}
+          </h1>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box
-      minH="100vh"
-      bg="linear-gradient(160deg, #fff9fb 0%, #fff7f7 45%, #f7f4ff 100%)"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      position="relative"
-      overflow="hidden"
+    <div
+      className="relative flex min-h-screen items-center justify-center overflow-hidden"
+      style={{ background: PROPOSAL_BG }}
     >
-      <Box
-        position="absolute"
-        top="-120px"
-        right="-100px"
-        w="340px"
-        h="340px"
-        bg="pink.200"
-        opacity={0.28}
-        filter="blur(80px)"
-        borderRadius="full"
-        pointerEvents="none"
-      />
-      <Box
-        position="absolute"
-        bottom="-140px"
-        left="-120px"
-        w="360px"
-        h="360px"
-        bg="purple.200"
-        opacity={0.22}
-        filter="blur(90px)"
-        borderRadius="full"
-        pointerEvents="none"
-      />
+      <div className="pointer-events-none absolute -right-[100px] -top-[120px] h-[340px] w-[340px] rounded-full bg-pink-200 opacity-[0.28] blur-[80px]" />
+      <div className="pointer-events-none absolute -bottom-[140px] -left-[120px] h-[360px] w-[360px] rounded-full bg-purple-200 opacity-[0.22] blur-[90px]" />
 
-      <VStack spacing={4} textAlign="center" zIndex={1} mx={4} maxW="760px" w="full">
-        <VStack
-          spacing={6}
-          px={{ base: 5, md: 10 }}
-          py={{ base: 8, md: 10 }}
-          w="full"
-          bg="whiteAlpha.800"
-          backdropFilter="blur(12px)"
-          borderRadius="2xl"
-          boxShadow="0 20px 60px rgba(214, 67, 120, 0.18)"
-          border="1px solid"
-          borderColor="whiteAlpha.700"
+      <div className="z-[1] mx-4 flex w-full max-w-[760px] flex-col items-center gap-4 text-center">
+        <div
+          className="flex w-full flex-col items-center gap-6 rounded-2xl border border-white/70 bg-white/80 px-5 py-8 backdrop-blur-md md:px-10 md:py-10"
+          style={{ boxShadow: '0 20px 60px rgba(214, 67, 120, 0.18)' }}
         >
-          <Text fontSize="3rem">❤️</Text>
+          <span className="text-[3rem]">❤️</span>
 
-          <Heading
-            fontSize={{ base: 'xl', md: '2xl' }}
-            color="gray.700"
-            fontFamily="heading"
-            fontWeight={500}
-          >
+          <h1 className="font-heading text-xl font-medium text-gray-700 md:text-2xl">
             Will you be my Valentine?
-          </Heading>
+          </h1>
 
-          <Box display="flex" gap={4} alignItems="center" justifyContent="center" mt={3}>
-            <Button
+          <div className="mt-3 flex items-center justify-center gap-4">
+            <button
               onClick={handleAccept}
-              bgGradient="linear(to-r, pink.500, red.400)"
-              color="white"
-              _hover={{ bgGradient: 'linear(to-r, pink.500, red.500)' }}
-              _active={{ bgGradient: 'linear(to-r, pink.600, red.600)' }}
-              rounded="lg"
-              px={8}
-              py={3}
-              fontWeight={700}
-              letterSpacing="0.2px"
-              transform={`scale(${yesScale})`}
-              boxShadow="0 10px 24px rgba(235, 87, 135, 0.35)"
-              transition="all 0.25s ease"
-              animation={`${yesGlow} 1.6s ease-in-out infinite`}
+              className="animate-yes-glow bg-linear-to-r from-pink-500 to-red-400 px-8 py-3 font-bold tracking-[0.2px] text-white transition-all duration-[250ms] hover:to-red-500 active:from-pink-600 active:to-red-600"
+              style={{ borderRadius: '8px', transform: `scale(${yesScale})` }}
             >
               Yes
-            </Button>
+            </button>
 
             {/* Invisible placeholder to reserve space in flex layout */}
-            <Box ref={noPlaceholderRef} w="72px" h="40px" visibility="hidden" />
-          </Box>
-        </VStack>
+            <div ref={noPlaceholderRef} className="invisible h-10 w-[72px]" />
+          </div>
+        </div>
 
-        <Box minH={{ base: '44px', md: '52px' }} px={2}>
+        <div className="min-h-[44px] px-2 md:min-h-[52px]">
           {noCount > 0 && (
-            <Text fontSize={{ base: 'sm', md: 'md' }} color="pink.700" fontWeight={500}>
+            <p className="text-sm font-medium text-pink-700 md:text-base">
               {noCount >= EASTER_EGG_THRESHOLD
                 ? EASTER_EGG_MESSAGE
                 : DEADPAN_MESSAGES[Math.min(noCount - 1, DEADPAN_MESSAGES.length - 1)]}
-            </Text>
+            </p>
           )}
-        </Box>
-      </VStack>
+        </div>
+      </div>
 
       {noPos !== null && (
-        <Button
-          position="fixed"
-          left={`${noPos.x}px`}
-          top={`${noPos.y}px`}
+        <button
           onMouseEnter={(e) => moveNoButton({ x: e.clientX, y: e.clientY })}
           onTouchStart={(e) => {
             const touch = e.touches[0];
             moveNoButton(touch ? { x: touch.clientX, y: touch.clientY } : undefined);
           }}
-          variant="outline"
-          color="pink.400"
-          borderColor="pink.300"
-          bg="white"
-          _hover={{ bg: 'pink.50' }}
-          rounded="lg"
-          px={6}
-          py={2}
-          boxShadow="0 4px 16px rgba(236, 72, 153, 0.25)"
-          transition={`left ${noTransitionMs}ms cubic-bezier(0.34, 1.56, 0.64, 1), top ${noTransitionMs}ms cubic-bezier(0.34, 1.56, 0.64, 1)`}
-          zIndex={10}
+          className="fixed z-10 border border-pink-300 bg-white px-6 py-2 text-pink-400 hover:bg-pink-50"
+          style={{
+            left: `${noPos.x}px`,
+            top: `${noPos.y}px`,
+            borderRadius: '8px',
+            boxShadow: '0 4px 16px rgba(236, 72, 153, 0.25)',
+            transition: `left ${noTransitionMs}ms cubic-bezier(0.34, 1.56, 0.64, 1), top ${noTransitionMs}ms cubic-bezier(0.34, 1.56, 0.64, 1)`,
+          }}
         >
           No
-        </Button>
+        </button>
       )}
-    </Box>
+    </div>
   );
 }
 

@@ -1,13 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  Box, Flex, Text, IconButton, Stack, HStack,
-  Collapse, useColorMode, useColorModeValue, useDisclosure,
-  Link as ChakraLink, Container
-} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
-import { motion } from 'framer-motion';
-
-const MotionBox = motion(Box);
+import { useColorMode } from '../shared/hooks/useColorMode';
+import Container from './Container';
 
 interface NavItem {
   label: string;
@@ -22,75 +15,56 @@ const NAV_ITEMS: Array<NavItem> = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/konstantin-volodin/', external: true },
 ];
 
+const Icon = ({ children, className = 'h-5 w-5' }: { children: React.ReactNode; className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+    strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+    {children}
+  </svg>
+);
+
+const SunIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+  </Icon>
+);
+const MoonIcon = () => (
+  <Icon><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></Icon>
+);
+const HamburgerIcon = () => (
+  <Icon><path d="M3 6h18M3 12h18M3 18h18" /></Icon>
+);
+const CloseIcon = () => (
+  <Icon className="h-4 w-4"><path d="M18 6 6 18M6 6l12 12" /></Icon>
+);
+
 interface NavLinkProps {
   children: React.ReactNode;
   href: string;
   external?: boolean;
   onClick?: (e: React.MouseEvent) => void;
-  // Allow style/layout props to be forwarded
-  [key: string]: any;
+  className?: string;
 }
 
-const NavLink = ({ children, href, external, onClick, ...rest }: NavLinkProps) => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200');
-  const linkHoverColor = useColorModeValue('gray.800', 'white');
-  return (
-    <ChakraLink
-      px={2}
-      py={1}
-      rounded={'md'}
-      _hover={{
-        textDecoration: 'none',
-        color: linkHoverColor,
-        bg: useColorModeValue('gray.200', 'gray.700'),
-        transform: 'translateY(-2px)',
-      }}
-      transition="all 0.2s"
-      href={href}
-      onClick={onClick}
-      isExternal={external}
-      color={linkColor}
-      fontWeight={500}
-      {...rest}>
-      {children}
-    </ChakraLink>
-  );
-};
-
-const MobileNav = ({ onNavigate }: { onNavigate: () => void }) => (
-  <Stack bg={useColorModeValue('white', 'gray.800')} px={4} pb={4} pt={2} spacing={1} display={{ md: 'none' }}>
-    {NAV_ITEMS.map((navItem) => (
-      <MobileNavItem key={navItem.label} {...navItem} onNavigate={onNavigate} />
-    ))}
-  </Stack>
+const NavLink = ({ children, href, external, onClick, className = '' }: NavLinkProps) => (
+  <a
+    href={href}
+    onClick={onClick}
+    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    className={
+      'rounded px-2 py-1 font-medium text-slate-600 transition-all duration-200 ' +
+      'hover:-translate-y-0.5 hover:bg-slate-200 hover:text-slate-800 ' +
+      'dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white ' +
+      className
+    }
+  >
+    {children}
+  </a>
 );
 
-const MobileNavItem = ({ label, href, external, onNavigate }: NavItem & { onNavigate: () => void }) => (
-  <Box>
-    <NavLink
-      href={href}
-      external={external}
-      onClick={() => {
-        onNavigate();
-        if (href.startsWith('#')) {
-          // smooth scroll for internal anchors
-            const el = document.querySelector(href);
-            el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }}
-      w='full'
-      display='block'
-      fontSize='lg'
-      py={3}
-    >
-      <Text fontWeight={600}>{label}</Text>
-    </NavLink>
-  </Box>
-);
-
-export default function HeaderEnhanced() {
+export default function Header() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -99,84 +73,82 @@ export default function HeaderEnhanced() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const bg = useColorModeValue('bg-glass', 'bg-glass');
-  const borderClr = useColorModeValue('border', 'border');
+  const scrollToHash = (href: string) => {
+    const el = document.getElementById(href.slice(1));
+    el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
-    <MotionBox
-      position="fixed"
-      top={0}
-      w="full"
-      zIndex={999}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' } as any}
-      bg={bg}
-      backdropFilter="blur(12px) saturate(1.2)" shadow={scrolled ? 'sm' : 'none'}
-      borderBottom={'1px solid'} borderColor={borderClr}
+    <header
+      className={
+        'fixed top-0 z-[999] w-full border-b border-line bg-white/75 backdrop-blur-md ' +
+        'transition-shadow dark:bg-slate-900/75 ' + (scrolled ? 'shadow-sm' : '')
+      }
+      style={{ backdropFilter: 'blur(12px) saturate(1.2)' }}
     >
-      <Container maxW="container.lg">
-        <Flex minH={'60px'} py={{ base: 1, md: 2 }} align={'center'} justify={'space-between'}>
+      <Container>
+        <div className="flex min-h-[60px] items-center justify-between py-1 md:py-2">
           {/* Logo / Name */}
-          <MotionBox whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Text
-              fontFamily={'heading'}
-              fontSize={{ base: 'md', md: 'lg' }}
-              fontWeight={700}
-              letterSpacing='0.5px'
-              color={useColorModeValue('slate.800', 'white')}
-              cursor="pointer"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            >
-              konstantin <Box as='span' color='brand.500'>volodin</Box>
-            </Text>
-          </MotionBox>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="font-heading text-base font-bold tracking-wide text-slate-800 transition-transform hover:scale-105 active:scale-95 md:text-lg dark:text-white"
+          >
+            konstantin <span className="text-brand-500">volodin</span>
+          </button>
 
           {/* Desktop nav */}
-          <HStack spacing={2} display={{ base: 'none', md: 'flex' }}>
+          <nav className="hidden items-center gap-2 md:flex">
             {NAV_ITEMS.map((navItem) => (
               <NavLink key={navItem.label} href={navItem.href} external={navItem.external}
-                onClick={(e: React.MouseEvent) => {
+                onClick={(e) => {
                   if (navItem.href.startsWith('#')) {
                     e.preventDefault();
-                    const el = document.getElementById(navItem.href.slice(1));
-                    el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    scrollToHash(navItem.href);
                   }
                 }}
               >
                 {navItem.label}
               </NavLink>
             ))}
-          </HStack>
+          </nav>
 
           {/* Controls */}
-          <HStack spacing={1}>
-            <IconButton
-              size={'sm'}
-              icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-              aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+          <div className="flex items-center gap-1">
+            <button
               onClick={toggleColorMode}
-              variant={'ghost'}
-              _hover={{ bg: useColorModeValue('slate.200', 'slate.700'), transform: 'rotate(180deg)' }}
-              transition="all 0.3s"
-            />
-            <IconButton
-              onClick={onToggle}
-              icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
-              variant={'ghost'}
+              aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+              className="rounded p-2 text-slate-600 transition-all duration-300 hover:rotate-180 hover:bg-slate-200 dark:text-slate-200 dark:hover:bg-slate-700"
+            >
+              {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+            </button>
+            <button
+              onClick={() => setIsOpen((v) => !v)}
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              display={{ md: 'none' }}
               aria-expanded={isOpen}
-              _hover={{ bg: useColorModeValue('slate.200', 'slate.700') }}
-            />
-          </HStack>
-        </Flex>
+              className="rounded p-2 text-slate-600 hover:bg-slate-200 md:hidden dark:text-slate-200 dark:hover:bg-slate-700"
+            >
+              {isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            </button>
+          </div>
+        </div>
 
-        {/* Mobile navigation collapse */}
-        <Collapse in={isOpen} animateOpacity>
-          <MobileNav onNavigate={onClose} />
-        </Collapse>
+        {/* Mobile navigation */}
+        {isOpen && (
+          <nav className="flex flex-col gap-1 bg-white px-4 pb-4 pt-2 md:hidden dark:bg-slate-800">
+            {NAV_ITEMS.map((navItem) => (
+              <NavLink key={navItem.label} href={navItem.href} external={navItem.external}
+                className="block w-full py-3 text-lg font-semibold"
+                onClick={() => {
+                  setIsOpen(false);
+                  if (navItem.href.startsWith('#')) scrollToHash(navItem.href);
+                }}
+              >
+                {navItem.label}
+              </NavLink>
+            ))}
+          </nav>
+        )}
       </Container>
-    </MotionBox>
+    </header>
   );
 }
